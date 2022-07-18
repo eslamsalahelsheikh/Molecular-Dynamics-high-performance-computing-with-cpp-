@@ -49,12 +49,19 @@ cmake_ninja_workdir = /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/
 
 build cmake_object_order_depends_target_molecular_dynamics: phony || CMakeFiles/molecular_dynamics.dir
 
-build CMakeFiles/molecular_dynamics.dir/verlet.cpp.o: CXX_COMPILER__molecular_dynamics_Debug /home/eslam/Desktop/Molecular-Dynamics/verlet.cpp || cmake_object_order_depends_target_molecular_dynamics
-  DEP_FILE = CMakeFiles/molecular_dynamics.dir/verlet.cpp.o.d
+build CMakeFiles/molecular_dynamics.dir/src/main.cpp.o: CXX_COMPILER__molecular_dynamics_Debug /home/eslam/Desktop/Molecular-Dynamics/src/main.cpp || cmake_object_order_depends_target_molecular_dynamics
+  DEP_FILE = CMakeFiles/molecular_dynamics.dir/src/main.cpp.o.d
   FLAGS = -g -std=gnu++17
   INCLUDES = -isystem /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/external/Eigen3
   OBJECT_DIR = CMakeFiles/molecular_dynamics.dir
-  OBJECT_FILE_DIR = CMakeFiles/molecular_dynamics.dir
+  OBJECT_FILE_DIR = CMakeFiles/molecular_dynamics.dir/src
+
+build CMakeFiles/molecular_dynamics.dir/src/verlet.cpp.o: CXX_COMPILER__molecular_dynamics_Debug /home/eslam/Desktop/Molecular-Dynamics/src/verlet.cpp || cmake_object_order_depends_target_molecular_dynamics
+  DEP_FILE = CMakeFiles/molecular_dynamics.dir/src/verlet.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  INCLUDES = -isystem /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/external/Eigen3
+  OBJECT_DIR = CMakeFiles/molecular_dynamics.dir
+  OBJECT_FILE_DIR = CMakeFiles/molecular_dynamics.dir/src
 
 build CMakeFiles/molecular_dynamics.dir/tests/test_lj_direct_summation.cpp.o: CXX_COMPILER__molecular_dynamics_Debug /home/eslam/Desktop/Molecular-Dynamics/tests/test_lj_direct_summation.cpp || cmake_object_order_depends_target_molecular_dynamics
   DEP_FILE = CMakeFiles/molecular_dynamics.dir/tests/test_lj_direct_summation.cpp.o.d
@@ -63,12 +70,26 @@ build CMakeFiles/molecular_dynamics.dir/tests/test_lj_direct_summation.cpp.o: CX
   OBJECT_DIR = CMakeFiles/molecular_dynamics.dir
   OBJECT_FILE_DIR = CMakeFiles/molecular_dynamics.dir/tests
 
-build CMakeFiles/molecular_dynamics.dir/lj_direct_summation.cpp.o: CXX_COMPILER__molecular_dynamics_Debug /home/eslam/Desktop/Molecular-Dynamics/lj_direct_summation.cpp || cmake_object_order_depends_target_molecular_dynamics
-  DEP_FILE = CMakeFiles/molecular_dynamics.dir/lj_direct_summation.cpp.o.d
+build CMakeFiles/molecular_dynamics.dir/src/lj_direct_summation.cpp.o: CXX_COMPILER__molecular_dynamics_Debug /home/eslam/Desktop/Molecular-Dynamics/src/lj_direct_summation.cpp || cmake_object_order_depends_target_molecular_dynamics
+  DEP_FILE = CMakeFiles/molecular_dynamics.dir/src/lj_direct_summation.cpp.o.d
   FLAGS = -g -std=gnu++17
   INCLUDES = -isystem /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/external/Eigen3
   OBJECT_DIR = CMakeFiles/molecular_dynamics.dir
-  OBJECT_FILE_DIR = CMakeFiles/molecular_dynamics.dir
+  OBJECT_FILE_DIR = CMakeFiles/molecular_dynamics.dir/src
+
+build CMakeFiles/molecular_dynamics.dir/src/xyz.cpp.o: CXX_COMPILER__molecular_dynamics_Debug /home/eslam/Desktop/Molecular-Dynamics/src/xyz.cpp || cmake_object_order_depends_target_molecular_dynamics
+  DEP_FILE = CMakeFiles/molecular_dynamics.dir/src/xyz.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  INCLUDES = -isystem /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/external/Eigen3
+  OBJECT_DIR = CMakeFiles/molecular_dynamics.dir
+  OBJECT_FILE_DIR = CMakeFiles/molecular_dynamics.dir/src
+
+build CMakeFiles/molecular_dynamics.dir/src/energy.cpp.o: CXX_COMPILER__molecular_dynamics_Debug /home/eslam/Desktop/Molecular-Dynamics/src/energy.cpp || cmake_object_order_depends_target_molecular_dynamics
+  DEP_FILE = CMakeFiles/molecular_dynamics.dir/src/energy.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  INCLUDES = -isystem /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/external/Eigen3
+  OBJECT_DIR = CMakeFiles/molecular_dynamics.dir
+  OBJECT_FILE_DIR = CMakeFiles/molecular_dynamics.dir/src
 
 
 # =============================================================================
@@ -78,7 +99,7 @@ build CMakeFiles/molecular_dynamics.dir/lj_direct_summation.cpp.o: CXX_COMPILER_
 #############################################
 # Link the executable molecular_dynamics
 
-build molecular_dynamics: CXX_EXECUTABLE_LINKER__molecular_dynamics_Debug CMakeFiles/molecular_dynamics.dir/verlet.cpp.o CMakeFiles/molecular_dynamics.dir/tests/test_lj_direct_summation.cpp.o CMakeFiles/molecular_dynamics.dir/lj_direct_summation.cpp.o
+build molecular_dynamics: CXX_EXECUTABLE_LINKER__molecular_dynamics_Debug CMakeFiles/molecular_dynamics.dir/src/main.cpp.o CMakeFiles/molecular_dynamics.dir/src/verlet.cpp.o CMakeFiles/molecular_dynamics.dir/tests/test_lj_direct_summation.cpp.o CMakeFiles/molecular_dynamics.dir/src/lj_direct_summation.cpp.o CMakeFiles/molecular_dynamics.dir/src/xyz.cpp.o CMakeFiles/molecular_dynamics.dir/src/energy.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/molecular_dynamics.dir
   POST_BUILD = :

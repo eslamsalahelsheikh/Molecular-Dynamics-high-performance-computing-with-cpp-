@@ -11,18 +11,21 @@ add_external_package(Eigen3 VERSION 3.4.0 CONFIG)
 
 set(MYPROJECT_HDRS
         # Add header files here
-        ${CMAKE_CURRENT_SOURCE_DIR}/verlet.h
-        types.h
-        atoms.h lj_direct_summation.h)
+        include/Molecular-Dynamics/verlet.h
+        include/Molecular-Dynamics/types.h
+        include/Molecular-Dynamics/atoms.h
+        include/Molecular-Dynamics/lj_direct_summation.h include/Molecular-Dynamics/xyz.h include/Molecular-Dynamics/energy.h)
 
 set(MYPROJECT_SRCS
         # Add source files here
-        ${CMAKE_CURRENT_SOURCE_DIR}/verlet.cpp
-        tests/test_lj_direct_summation.cpp lj_direct_summation.cpp)
+        src/main.cpp
+        src/verlet.cpp
+        tests/test_lj_direct_summation.cpp
+        src/lj_direct_summation.cpp src/xyz.cpp src/energy.cpp)
 
 set(MYPROJECT_executable_SRCS
-        ${CMAKE_CURRENT_SOURCE_DIR}/verlet.cpp
-        )
+        # Add executable source files here
+        src/main.cpp)
 
 
 # Simulation code
