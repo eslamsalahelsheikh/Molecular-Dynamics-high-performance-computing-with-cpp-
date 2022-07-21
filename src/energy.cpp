@@ -7,7 +7,7 @@ double KineticEnergy(Atoms &atoms, double mass) {
     for (int i = 0; i < atoms.nb_atoms(); ++i) {
         kinetic_energy += 0.5 * mass * pow(atoms.velocities.col(i).matrix().norm(), 2);
     }
-    std::cout << "Kinetic energy: " << kinetic_energy << std::endl;
+//    std::cout << "Kinetic energy: " << kinetic_energy << std::endl;
     return kinetic_energy;
 }
 
