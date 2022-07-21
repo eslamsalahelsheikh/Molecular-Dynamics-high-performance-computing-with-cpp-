@@ -7,6 +7,17 @@ struct Atoms {
     Velocities_t velocities;
     Forces_t forces;
     Energies_t energies;
+    Names_t names;
+    Masses_t masses;
+    // number of atoms as input
+    Atoms(const int &nb_atoms) :
+            positions{3,nb_atoms}, velocities{3,nb_atoms}, forces{3, nb_atoms}, masses{nb_atoms}, names(nb_atoms) {
+        positions.setZero();
+        velocities.setZero();
+        forces.setZero();
+        masses.setOnes();
+        for(int i=0; i<nb_atoms; i++){names[i] = "H";}
+    }
     Atoms(Positions_t &p)
             : positions{p},
               velocities{3, p.cols()},

@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/verlet.cpp.dir/verlet.cpp.o  -o verlet.cpp 

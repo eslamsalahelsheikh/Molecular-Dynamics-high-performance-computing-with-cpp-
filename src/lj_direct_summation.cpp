@@ -15,7 +15,6 @@ double lj_direct_summation(Atoms &atoms, double epsilon, double sigma) {
 
             // TODO: check if this is correct
             atoms.forces.col(i) += F_ij;                              // add force to atom i
-            atoms.forces.col(j) -= F_ij;                           // add force to atom j (negative of force on atom i)
             potential_energy += LJ_potential;
         }
     }
