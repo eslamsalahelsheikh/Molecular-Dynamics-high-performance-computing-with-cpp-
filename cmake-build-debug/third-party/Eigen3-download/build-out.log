@@ -1,11 +1,7 @@
-[1/9] Creating directories for 'Eigen3'
-[2/9] Performing download step (git clone) for 'Eigen3'
-Cloning into 'Eigen3'...
-HEAD is now at 3147391d9 Change version to 3.4.0.
-[3/9] Performing update step for 'Eigen3'
-[4/9] No patch step for 'Eigen3'
-[5/9] No configure step for 'Eigen3'
-[6/9] No build step for 'Eigen3'
-[7/9] No install step for 'Eigen3'
-[8/9] No test step for 'Eigen3'
-[9/9] Completed 'Eigen3'
+[1/7] Performing update step for 'Eigen3'
+[2/7] No patch step for 'Eigen3'
+[3/7] No configure step for 'Eigen3'
+[4/7] No build step for 'Eigen3'
+[5/7] No install step for 'Eigen3'
+[6/7] No test step for 'Eigen3'
+[7/7] Completed 'Eigen3'

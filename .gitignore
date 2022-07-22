@@ -30,7 +30,8 @@
 *.exe
 *.out
 *.app
-
+.ninja*
+/cmake-build-debug/
 cmake-build-debug/*
 cmake-build-debug/CMakeFiles/*
 tests/cmake-build-debug/*
