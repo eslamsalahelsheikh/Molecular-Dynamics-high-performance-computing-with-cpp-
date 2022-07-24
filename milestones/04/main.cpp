@@ -15,7 +15,7 @@ int main() {
     // Reading initial positions and velocities from xyz file
     auto [names, positions, velocities]{read_xyz_with_velocities("lj54.xyz")};
     // Creating visualization file milestones/04/output
-    std::ofstream traj("/home/eslam/Desktop/Molecular-Dynamics/output/traj.xyz");
+    std::ofstream traj("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_04/traj.xyz");
     Energy energy; // initialize energy class
 
     // initializing atoms with poses and velocities
