@@ -17,7 +17,7 @@ public:
     double get_kinetic_energy() {return kinetic_energy_;}
     double get_total_energy() {return total_energy_;}
     double get_temperature() {return temperature_;}
-
+    double temperature(Atoms &atoms);
 private:
     // Private attributes
     double epsilon;
@@ -30,7 +30,7 @@ private:
     double kinetic_energy(Atoms &atoms, double mass);
     double potential_energy(Atoms &atoms, double epsilon, double sigma);
     double total_energy();
-    double temperature(Atoms &atoms);
+
 };
 
 
