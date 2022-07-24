@@ -6,7 +6,18 @@ enable_testing()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_CXX_STANDARD 17)
 
+find_package(MPI)
+if(NOT MPI_FOUND)
+    message(FATAL_ERROR "MPI is needed!")
+endif(NOT MPI_FOUND)
+include_directories(SYSTEM ${MPI_INCLUDE_PATH})
+add_definitions(-DCOSMO_MPI)
+if(NOT MPI_CXX_LIBRARIES)
+    message(FATAL_ERROR "MPI found but the MPI C++ libraries not found!")
+endif(NOT MPI_CXX_LIBRARIES)
+
 include(tools)
+add_external_package(Eigen3 VERSION 3.4.0 CONFIG)
 
 set(MolecularDynamics_HDRS
         # Add header files here
@@ -18,16 +29,15 @@ set(MolecularDynamics_HDRS
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/energy.h
         )
 
+
 set(MolecularDynamics_SRCS
         # Add source files here
         ${CMAKE_CURRENT_SOURCE_DIR}/src/verlet.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/lj_direct_summation.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/xyz.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/energy.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/energy.cpp
+        )
 
-set(MolecularDynamics_executable_SRCS
-        # Add executable source files here
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
-
-add_subdirectory(tests)
 add_subdirectory(milestones)
+add_subdirectory(tests)
+

@@ -38,4 +38,18 @@ struct Atoms {
     }
 };
 
+inline Atoms lattice(int nx, int ny, int nz, double sigma){
+    Atoms atoms(nx*ny*nz);
+    atoms.positions.setZero();
+    atoms.velocities.setZero();
+    for (int i = 0; i < nx; i++) {
+        for (int j = 0; j < ny; j++) {
+            for (int k = 0; k < nz; k++) {
+                int index = i + j*nx + k*nx*ny;
+                atoms.positions.col(index) << i*sigma, j*sigma, k*sigma;
+            }
+        }
+    }
+    return atoms;
+}
 #endif //MOLECULAR_DYNAMICS_ATOMS_H
