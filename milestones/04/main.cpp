@@ -8,7 +8,7 @@ int main() {
     double sigma = 1.0;
     double epsilon = 1.0;
     double time = sqrt(mass * pow(sigma,2) / epsilon);
-    double total_time = 100* time;
+    double total_time = 1000* time;
     std::cout << "total_time: " << total_time << std::endl;
     double time_step = time/1000.0;
     std::cout << "time_step: " << time_step << std::endl;
