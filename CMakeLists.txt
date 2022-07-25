@@ -27,6 +27,7 @@ set(MolecularDynamics_HDRS
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/lj_direct_summation.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/xyz.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/energy.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/neighbors.h
         )
 
 
@@ -36,6 +37,7 @@ set(MolecularDynamics_SRCS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/lj_direct_summation.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/xyz.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/energy.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/neighbors.cpp
         )
 
 add_subdirectory(milestones)

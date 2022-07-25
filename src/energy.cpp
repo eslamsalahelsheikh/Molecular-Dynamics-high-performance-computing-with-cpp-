@@ -22,6 +22,9 @@ double Energy::kinetic_energy(Atoms &atoms, double mass) {
 double Energy::potential_energy(Atoms &atoms, double epsilon, double sigma) {
     return lj_direct_summation(atoms, epsilon, sigma);
 }
+double Energy::potential_energy_neighbors(Atoms &atoms, NeighborList &neighbor_list, double epsilon, double sigma){
+    return lj_direct_summation_neighbors(atoms, neighbor_list, epsilon, sigma);
+}
 double Energy::total_energy() {
     return potential_energy_ + kinetic_energy_;
 }
@@ -47,4 +50,11 @@ void Energy::berendsen_thermostat(Atoms &atoms, double desired_temperature,
     double scaling_factor =
         sqrt(1 + ((temperature_ratio - 1) * timestep / relaxation_time));
     atoms.velocities *= scaling_factor; // scaling velocities
+}
+
+void Energy::update_neighbors(Atoms &atoms, NeighborList &neighbor_list, double epsilon, double sigma, double mass) {
+    kinetic_energy_ = kinetic_energy(atoms, mass);
+    potential_energy_ = potential_energy_neighbors(atoms, neighbor_list, epsilon, sigma);
+    total_energy_ = total_energy();
+    temperature_ = temperature(atoms);
 }

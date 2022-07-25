@@ -32,7 +32,12 @@ struct Atoms {
         assert(p.cols() == v.cols());
         forces.setZero();
     }
-
+    Atoms(const Names_t &names, const Positions_t &poses) :
+            names{names} ,positions{poses}, velocities{3, poses.cols()}, forces{3, poses.cols()}, masses{poses.cols()}{
+        velocities.setZero();
+        forces.setZero();
+        masses.setOnes();
+    }
     size_t nb_atoms() const {
         return positions.cols();
     }
