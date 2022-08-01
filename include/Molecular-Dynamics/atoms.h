@@ -10,6 +10,7 @@ struct Atoms {
     Names_t names;
     Masses_t masses;
     // number of atoms as input
+    Atoms(){}
     Atoms(const int &nb_atoms) :
             positions{3,nb_atoms}, velocities{3,nb_atoms}, forces{3, nb_atoms}, masses{nb_atoms}, names(nb_atoms) {
         positions.setZero();

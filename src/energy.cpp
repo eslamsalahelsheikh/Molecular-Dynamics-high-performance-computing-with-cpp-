@@ -8,7 +8,7 @@ Energy::Energy(Atoms &atoms, double epsilon, double sigma, double mass) {
     potential_energy_ = 0.0;
     total_energy_ = 0.0;
     temperature_ = 0.0;
-    update(atoms, epsilon, sigma, mass);
+    energy_update(atoms, epsilon, sigma, mass);
 }
 
 double Energy::kinetic_energy(Atoms &atoms, double mass) {
@@ -32,7 +32,7 @@ double Energy::temperature(Atoms &atoms) {
     return 2.0 / 3.0 * (kinetic_energy_ / atoms.nb_atoms()); // assuming kB=1
 }
 
-void Energy::update(Atoms &atoms, double epsilon, double sigma, double mass) {
+void Energy::energy_update(Atoms &atoms, double epsilon, double sigma, double mass) {
     kinetic_energy_ = kinetic_energy(atoms, mass);
     potential_energy_ = potential_energy(atoms, epsilon, sigma);
     total_energy_ = total_energy();
@@ -57,4 +57,15 @@ void Energy::update_neighbors(Atoms &atoms, NeighborList &neighbor_list, double 
     potential_energy_ = potential_energy_neighbors(atoms, neighbor_list, epsilon, sigma);
     total_energy_ = total_energy();
     temperature_ = temperature(atoms);
+}
+
+void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double mass,double cutoff_radius) {
+    kinetic_energy_ = kinetic_energy(atoms, mass);
+    potential_energy_ = gupta(atoms, neighbor_list,cutoff_radius);
+    total_energy_ = total_energy();
+    temperature_ = temperature(atoms);
+}
+
+void Energy::deposit_heat(Atoms &atoms, double heat) {
+    atoms.velocities *= sqrt(1. + (heat*atoms.nb_atoms()) / kinetic_energy_);
 }

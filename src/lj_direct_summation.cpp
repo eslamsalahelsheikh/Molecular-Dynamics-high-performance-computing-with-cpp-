@@ -27,7 +27,6 @@ double lj_direct_summation_neighbors(Atoms &atoms, NeighborList &neighbor_list, 
 
     double potential_energy = 0.0;
     atoms.forces.setZero();
-    neighbor_list.update(atoms);
     for (auto[i, j]: neighbor_list) {
         if (i < j) {
             Eigen::Array3d r_ij =atoms.positions.col(i) - atoms.positions.col(j); // r_ij

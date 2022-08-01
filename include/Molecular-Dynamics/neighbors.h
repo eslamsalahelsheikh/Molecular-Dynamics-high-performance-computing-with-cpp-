@@ -30,6 +30,7 @@
 class NeighborList {
 public:
     NeighborList(double interaction_range);
+    NeighborList(){};
 
     /*
      * Update neighbor list from the particle positons stores in the `atoms` argument

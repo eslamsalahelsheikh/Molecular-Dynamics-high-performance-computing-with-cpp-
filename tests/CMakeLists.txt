@@ -12,6 +12,7 @@ set(myproject_tests_SRCS
         ${CMAKE_CURRENT_SOURCE_DIR}/test_lj_direct_summation.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/test_berendsen_thermostat.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/test_neighbors.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/test_gupta.cpp
         )
 
 # Tests

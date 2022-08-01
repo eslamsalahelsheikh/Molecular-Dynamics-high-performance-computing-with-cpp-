@@ -24,7 +24,7 @@ int main() {
     for (int i = 0; i < total_time; ++i) {
         if (i % 10 == 0 ){ write_xyz(traj, atoms);}
         verlet_step1(atoms, time_step, mass);
-        energy.update(atoms, epsilon, sigma, mass);
+        energy.energy_update(atoms, epsilon, sigma, mass);
         verlet_step2(atoms, time_step, mass);
     }
     traj.close();
