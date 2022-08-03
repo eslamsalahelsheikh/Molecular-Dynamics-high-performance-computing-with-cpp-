@@ -1,7 +1,7 @@
 
 #include "../../../include/Molecular-Dynamics/simulation.h"
 
-Simulation::Simulation(Atoms &new_atoms) : atoms_{new_atoms} {
+Simulation::Simulation(Atoms &new_atoms) : atoms_{new_atoms}, Energy(atoms_,epsilon,sigma,mass) {
     energy_update(atoms_, epsilon, sigma, mass); // Update energy class
     neighbor_list_ = NeighborList(cutoff_radius); // NeighborList object for cutoff
     // Creating visualization file milestones/04/output
@@ -13,16 +13,16 @@ Simulation::~Simulation() {
 }
 
 // Main simulation loop
-void Simulation::initial_loop() {
+void Simulation::initial_loop(double total_steps) {
     for (int i = 0; i < total_steps; ++i) {
-        std::cout << "step: " << i << std::endl;
+        std::cout << "initial steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         if (i % 10 == 0) {write_xyz(traj_, atoms_);} // write xyz file every 10 steps
         double old_total_energy = get_total_energy();
         verlet_step1(atoms_, time_step, mass);
         neighbor_list_.update(atoms_);
 //        energy_update(atoms_, epsilon, sigma, mass);
 //        update_neighbors(atoms_, neighbor_list_, epsilon, sigma, mass);
-        update_gupta(atoms_, neighbor_list_, mass, cutoff_radius);
+        update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
         // thermal bathing
         // to preserve the temperature, we assume that the temperature is constant, and then we apply the Berendsen thermostat
@@ -38,16 +38,19 @@ void Simulation::initial_loop() {
 }
 
 double Simulation::relaxation_loop(double total_steps) {
-    std::cout << "starting relaxation loop" << std::endl;
     double total_temp = 0.0;
     for (int i = 0; i < total_steps; ++i) {
-        std::cout << "step: " << i << std::endl;
+        std::cout << "relaxation steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         total_temp += get_temperature();
         if (i % 10 == 0) {write_xyz(traj_, atoms_);} // write xyz file every 10 steps
         verlet_step1(atoms_, time_step, mass);
         neighbor_list_.update(atoms_);
-        update_gupta(atoms_, neighbor_list_, mass, cutoff_radius);
+        update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
     }
     return total_temp / total_steps;
+}
+
+void Simulation::add_heat(){
+    deposit_heat(atoms_);
 }

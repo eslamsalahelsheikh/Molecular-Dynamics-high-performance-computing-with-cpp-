@@ -30,6 +30,7 @@ set(MolecularDynamics_HDRS
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/neighbors.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/gupta.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/simulation.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/Molecular-Dynamics/utils.h
         )
 
 

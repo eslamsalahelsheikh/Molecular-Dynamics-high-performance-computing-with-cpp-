@@ -4,6 +4,7 @@
 #include "../../../include/Molecular-Dynamics/energy.h"
 #include "../../../include/Molecular-Dynamics/verlet.h"
 #include "../../../include/Molecular-Dynamics/xyz.h"
+#include "../../../include/Molecular-Dynamics/utils.h"
 
 class SimulationData {
 protected:
@@ -21,9 +22,9 @@ protected:
         mass = 196.9665; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
         sigma = 1.0;
         epsilon = 1.0;
-        total_steps = 5000;
+//        total_steps = 5000;
         time_step = 1.0; // time step in fs
-        cutoff_radius = 1.5;    // cutoff radius for LJ potential
+        cutoff_radius = 10.0;    // cutoff radius for LJ potential
         relaxation_time_multiplier = 10.0; // relaxation time in fs
     }
 };
@@ -36,15 +37,14 @@ public:
     // Destructor
     ~Simulation();
     // Methods
-    void initial_loop();
+    void initial_loop(double total_steps);
     double relaxation_loop(double total_steps);
-
+    void add_heat();
 private:
     // initialize members
     Atoms atoms_;
     NeighborList neighbor_list_;
     std::ofstream traj_;
-
 };
 
 

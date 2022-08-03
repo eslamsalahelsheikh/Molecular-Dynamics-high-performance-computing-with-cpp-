@@ -16,10 +16,11 @@ int main() {
     auto [names, positions, velocities]{read_xyz_with_velocities("lj54.xyz")};
     // Creating visualization file milestones/04/output
     std::ofstream traj("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_04/traj.xyz");
-    Energy energy; // initialize energy class
 
     // initializing atoms with poses and velocities
     Atoms atoms{positions,velocities};
+    Energy energy(atoms, epsilon, sigma, mass); // initialize energy class
+
     // Main simulation loop
     for (int i = 0; i < total_time; ++i) {
         if (i % 10 == 0 ){ write_xyz(traj, atoms);}

@@ -1,20 +1,19 @@
 #include "../include/Molecular-Dynamics/energy.h"
 #include <iostream>
 
-Energy::Energy() {
-}
 Energy::Energy(Atoms &atoms, double epsilon, double sigma, double mass) {
     kinetic_energy_ = 0.0;
     potential_energy_ = 0.0;
     total_energy_ = 0.0;
     temperature_ = 0.0;
-    energy_update(atoms, epsilon, sigma, mass);
+    mass_ = mass;
+    energy_update(atoms, epsilon, sigma, mass_);
 }
 
-double Energy::kinetic_energy(Atoms &atoms, double mass) {
+double Energy::kinetic_energy(Atoms &atoms) {
     double KE = 0.0;
     for (int i = 0; i < atoms.nb_atoms(); ++i) {
-        KE += 0.5 * mass * pow(atoms.velocities.col(i).matrix().norm(), 2);
+        KE += 0.5 * mass_ * pow(atoms.velocities.col(i).matrix().norm(), 2);
     }
     return KE;
 }
@@ -28,15 +27,15 @@ double Energy::potential_energy_neighbors(Atoms &atoms, NeighborList &neighbor_l
 double Energy::total_energy() {
     return potential_energy_ + kinetic_energy_;
 }
-double Energy::temperature(Atoms &atoms) {
-    return 2.0 / 3.0 * (kinetic_energy_ / atoms.nb_atoms()); // assuming kB=1
+double Energy::calculate_temperature(Atoms &atoms,bool use_exist_kinetic) {  // using precalculated kinetic energy
+    double KE = use_exist_kinetic? kinetic_energy_ : kinetic_energy(atoms);
+    return 2.0 / 3.0 * (KE / atoms.nb_atoms()); // assuming kB=1
 }
-
 void Energy::energy_update(Atoms &atoms, double epsilon, double sigma, double mass) {
-    kinetic_energy_ = kinetic_energy(atoms, mass);
+    kinetic_energy_ = kinetic_energy(atoms);
     potential_energy_ = potential_energy(atoms, epsilon, sigma);
     total_energy_ = total_energy();
-    temperature_ = temperature(atoms);
+    temperature_ = calculate_temperature(atoms, kinetic_energy_);
 //    std::cout << "total energy: " << total_energy_
 //              << " temperature: " << temperature_ << std::endl;
 }
@@ -45,7 +44,7 @@ void Energy::berendsen_thermostat(Atoms &atoms, double desired_temperature,
                                   double timestep, double relaxation_time) {
 //     std::cout << "relaxation time: " << relaxation_time << std::endl;
     double current_temperature =
-        temperature(atoms); // recalculate temperature after second verlet step
+            calculate_temperature(atoms, false); // recalculate temperature after second verlet step
     double temperature_ratio = desired_temperature / current_temperature;
     double scaling_factor =
         sqrt(1 + ((temperature_ratio - 1) * timestep / relaxation_time));
@@ -53,19 +52,22 @@ void Energy::berendsen_thermostat(Atoms &atoms, double desired_temperature,
 }
 
 void Energy::update_neighbors(Atoms &atoms, NeighborList &neighbor_list, double epsilon, double sigma, double mass) {
-    kinetic_energy_ = kinetic_energy(atoms, mass);
+    kinetic_energy_ = kinetic_energy(atoms);
     potential_energy_ = potential_energy_neighbors(atoms, neighbor_list, epsilon, sigma);
     total_energy_ = total_energy();
-    temperature_ = temperature(atoms);
+    temperature_ = calculate_temperature(atoms, true);
 }
 
-void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double mass,double cutoff_radius) {
-    kinetic_energy_ = kinetic_energy(atoms, mass);
+void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double cutoff_radius) {
+    kinetic_energy_ = kinetic_energy(atoms);
     potential_energy_ = gupta(atoms, neighbor_list,cutoff_radius);
     total_energy_ = total_energy();
-    temperature_ = temperature(atoms);
+    temperature_ = calculate_temperature(atoms, true);
 }
 
-void Energy::deposit_heat(Atoms &atoms, double heat) {
-    atoms.velocities *= sqrt(1. + (heat*atoms.nb_atoms()) / kinetic_energy_);
+void Energy::deposit_heat(Atoms &atoms) {
+    std::cout << "before adding heat, temp is: " << get_temperature() << std::endl;
+    double added_heat = 0.007 * atoms.nb_atoms(); // adding 3meV energy per atom
+    atoms.velocities *= sqrt(1. + added_heat/ kinetic_energy_);
+    std::cout << "after adding heat, temp is: " << calculate_temperature(atoms, false) << std::endl;
 }
