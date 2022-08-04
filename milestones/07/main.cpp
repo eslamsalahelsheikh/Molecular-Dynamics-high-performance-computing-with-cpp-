@@ -29,8 +29,10 @@ int main() {
         total_energies.push_back(simulation.get_total_energy());
     }
 //    TODO:: use relative paths
-    export_data("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/total_energies_"+std::to_string(atoms.nb_atoms())+".txt", total_energies);
-    export_data("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/average_temps_"+std::to_string(atoms.nb_atoms())+".txt", average_temps);
-    export_data("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/potential_energies_"+std::to_string(atoms.nb_atoms())+".txt", potential_energies);
+    std::string directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+ std::to_string(atoms.nb_atoms());
+    std::filesystem::create_directory(directory);
+    export_data(directory+"/total_energies_"+std::to_string(atoms.nb_atoms())+".txt", total_energies);
+    export_data(directory+"/average_temps_"+std::to_string(atoms.nb_atoms())+".txt", average_temps);
+    export_data(directory+"/potential_energies_"+std::to_string(atoms.nb_atoms())+".txt", potential_energies);
     return 0;
 }

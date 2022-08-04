@@ -4,8 +4,10 @@
 Simulation::Simulation(Atoms &new_atoms) : atoms_{new_atoms}, Energy(atoms_,epsilon,sigma,mass) {
     energy_update(atoms_, epsilon, sigma, mass); // Update energy class
     neighbor_list_ = NeighborList(cutoff_radius); // NeighborList object for cutoff
-    // Creating visualization file milestones/04/output
-    traj_ = std::ofstream("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/traj_"+std::to_string(new_atoms.nb_atoms())+".xyz");
+    // Creating visualization file
+    std::string directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+ std::to_string(new_atoms.nb_atoms());
+    std::filesystem::create_directory(directory);
+    traj_ = std::ofstream(directory+"/traj_"+std::to_string(new_atoms.nb_atoms())+".xyz");
     std::cout << "initialized Simulation parameters " << std::endl;
 }
 Simulation::~Simulation() {

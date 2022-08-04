@@ -5,6 +5,7 @@
 #include "../../../include/Molecular-Dynamics/verlet.h"
 #include "../../../include/Molecular-Dynamics/xyz.h"
 #include "../../../include/Molecular-Dynamics/utils.h"
+#include <filesystem>
 
 class SimulationData {
 protected:
