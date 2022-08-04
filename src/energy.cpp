@@ -7,7 +7,7 @@ Energy::Energy(Atoms &atoms, double epsilon, double sigma, double mass) {
     total_energy_ = 0.0;
     temperature_ = 0.0;
     mass_ = mass;
-    energy_update(atoms, epsilon, sigma, mass_);
+//    energy_update(atoms, epsilon, sigma, mass_);
 }
 
 double Energy::kinetic_energy(Atoms &atoms) {
