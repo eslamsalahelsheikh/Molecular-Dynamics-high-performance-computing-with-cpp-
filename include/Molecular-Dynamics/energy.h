@@ -21,7 +21,7 @@ public:
     double get_temperature() {return temperature_;}
     double calculate_temperature(Atoms &atoms,bool use_exist_kinetic);
 
-    void deposit_heat(Atoms &atoms);
+    void deposit_heat(Atoms &atoms, double added_energy);
 private:
     // Private attributes
     double kinetic_energy_;

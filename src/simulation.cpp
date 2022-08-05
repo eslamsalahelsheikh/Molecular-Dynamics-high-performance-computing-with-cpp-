@@ -15,8 +15,12 @@ Simulation::~Simulation() {
 }
 
 // Main simulation loop
-void Simulation::initial_loop(double total_steps) {
+void Simulation::initial_loop() {
+    bool equilibrum = false;
     for (int i = 0; i < total_steps; ++i) {
+        if (equilibrum) {
+            std::cout << " equlibruim reached" << std::endl;
+        }
         std::cout << "initial steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         if (i % 10 == 0) {write_xyz(traj_, atoms_);} // write xyz file every 10 steps
         double old_total_energy = get_total_energy();
@@ -28,10 +32,13 @@ void Simulation::initial_loop(double total_steps) {
         verlet_step2(atoms_, time_step, mass);
         // thermal bathing
         // to preserve the temperature, we assume that the temperature is constant, and then we apply the Berendsen thermostat
-        desired_temperature =
-                i == 0 ? get_temperature() : desired_temperature;
-        if (abs(get_total_energy() - old_total_energy) <= 0.01) { // reached equilibrium point, decrease coupling constant
-            relaxation_time_multiplier = 50;    // this should be big enough to reduce thermostat effect
+//        desired_temperature =
+//                i == 0 ? get_temperature() : desired_temperature;
+//        if (abs(get_total_energy() - old_total_energy) <= 0.01)  // reached equilibrium point, decrease coupling constant
+        if (i == 500)
+        {
+            equilibrum = true;
+            relaxation_time_multiplier = relaxation_time_multiplier_final_value;    // this should be big enough to reduce thermostat effect
         }
         relaxation_time =   relaxation_time_multiplier * time_step; // relaxation time
         berendsen_thermostat(atoms_, desired_temperature, time_step,
@@ -39,9 +46,9 @@ void Simulation::initial_loop(double total_steps) {
     }
 }
 
-double Simulation::relaxation_loop(double total_steps) {
+double Simulation::relaxation_loop() {
     double total_temp = 0.0;
-    for (int i = 0; i < total_steps; ++i) {
+    for (int i = 0; i < relaxation_steps; ++i) {
         std::cout << "relaxation steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         total_temp += get_temperature();
         if (i % 10 == 0) {write_xyz(traj_, atoms_);} // write xyz file every 10 steps
@@ -54,5 +61,5 @@ double Simulation::relaxation_loop(double total_steps) {
 }
 
 void Simulation::add_heat(){
-    deposit_heat(atoms_);
+    deposit_heat(atoms_,add_energy);
 }

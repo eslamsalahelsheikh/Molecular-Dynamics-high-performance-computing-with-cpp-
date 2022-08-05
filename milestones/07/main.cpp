@@ -3,27 +3,25 @@
 
 int main() {
     // Reading initial positions and velocities from xyz file
-    auto [names, positions]{read_xyz("/home/eslam/Desktop/Molecular-Dynamics/clusters/cluster_561.xyz")};
+    auto [names, positions]{read_xyz("/home/eslam/Desktop/Molecular-Dynamics/clusters/cluster_3871.xyz")};
     // initializing atoms with poses
     Atoms atoms{positions};
     std::cout << "number of atoms: " << atoms.nb_atoms() << std::endl;
     // Initialize simulation for given atoms
     Simulation simulation(atoms);
     // Run simulation
-    simulation.initial_loop(1000);
+    simulation.initial_loop();
 
     std::vector<double> average_temps{};
     std::vector<double> potential_energies{};
     std::vector<double> total_energies{};
 
-    int num_experiments = 30;
-    for (int i = 0; i < num_experiments; i++) {
+    for (int i = 0; i < simulation.expermint_num; i++) {
         std::cout << "--------------------starting relaxation loop number: "<< i << "---------------------------" << std::endl;
         // Deposit heat
         simulation.add_heat();
         // Run relaxation loop
-        int relax_steps = 200;
-        double average_temp = simulation.relaxation_loop(relax_steps);
+        double average_temp = simulation.relaxation_loop();
         average_temps.push_back(average_temp);
         potential_energies.push_back(simulation.get_potential_energy());
         total_energies.push_back(simulation.get_total_energy());

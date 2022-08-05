@@ -65,9 +65,9 @@ void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double cutof
     temperature_ = calculate_temperature(atoms, true);
 }
 
-void Energy::deposit_heat(Atoms &atoms) {
+void Energy::deposit_heat(Atoms &atoms, double added_energy) {
     std::cout << "before adding heat, temp is: " << get_temperature() << std::endl;
-    double added_heat = 0.007 * atoms.nb_atoms(); // adding 3meV energy per atom
-    atoms.velocities *= sqrt(1. + added_heat/ kinetic_energy_);
+    double total_added_energy = added_energy * atoms.nb_atoms(); // adding 7eV energy per atom
+    atoms.velocities *= sqrt(1. + total_added_energy/ kinetic_energy_);
     std::cout << "after adding heat, temp is: " << calculate_temperature(atoms, false) << std::endl;
 }
