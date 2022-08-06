@@ -3,14 +3,22 @@
 
 int main() {
     // Reading initial positions and velocities from xyz file
-    auto [names, positions]{read_xyz("/home/eslam/Desktop/Molecular-Dynamics/clusters/cluster_3871.xyz")};
+    Atoms atoms;
+    SimulationData data;
+    if (data.continue_old_experiment) {
+        auto [names, positions, Velocities_t]{read_xyz_with_velocities(data.old_experiment_file)};
+        atoms = Atoms{positions, Velocities_t};
+    } else {
+        auto [names, positions]{read_xyz("/home/eslam/Desktop/Molecular-Dynamics/clusters/"+data.cluster_name+".xyz")};
+        atoms = Atoms{positions};
+    }
     // initializing atoms with poses
-    Atoms atoms{positions};
     std::cout << "number of atoms: " << atoms.nb_atoms() << std::endl;
     // Initialize simulation for given atoms
     Simulation simulation(atoms);
-    // Run simulation
-    simulation.initial_loop();
+
+    // Run initial simulation
+    if (!data.continue_old_experiment) simulation.initial_loop();
 
     std::vector<double> average_temps{};
     std::vector<double> potential_energies{};
@@ -21,7 +29,7 @@ int main() {
         // Deposit heat
         simulation.add_heat();
         // Run relaxation loop
-        double average_temp = simulation.relaxation_loop();
+        double average_temp = simulation.relaxation_loop(i);
         average_temps.push_back(average_temp);
         potential_energies.push_back(simulation.get_potential_energy());
         total_energies.push_back(simulation.get_total_energy());

@@ -1,6 +1,8 @@
 #include "../include/Molecular-Dynamics/energy.h"
 #include <iostream>
 
+Energy::Energy(){};
+
 Energy::Energy(Atoms &atoms, double epsilon, double sigma, double mass) {
     kinetic_energy_ = 0.0;
     potential_energy_ = 0.0;

@@ -9,6 +9,7 @@ class Energy {
 public:
     // Constructors
     Energy(Atoms &atoms, double epsilon, double sigma, double mass);
+    Energy();
     // Methods
     void berendsen_thermostat(Atoms &atoms, double desired_temperature, double timestep, double relaxation_time);
     void energy_update(Atoms &atoms, double epsilon = 1.0, double sigma = 1.0, double mass = 1.0);
