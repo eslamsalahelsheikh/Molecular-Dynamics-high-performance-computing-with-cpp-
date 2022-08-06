@@ -33,7 +33,7 @@ double Energy::calculate_temperature(Atoms &atoms,bool use_exist_kinetic) {  // 
     double KE = use_exist_kinetic? kinetic_energy_ : kinetic_energy(atoms);
     return 2.0 / 3.0 * (KE / atoms.nb_atoms()); // assuming kB=1
 }
-void Energy::energy_update(Atoms &atoms, double epsilon, double sigma, double mass) {
+void Energy::energy_update(Atoms &atoms, double epsilon, double sigma) {
     kinetic_energy_ = kinetic_energy(atoms);
     potential_energy_ = potential_energy(atoms, epsilon, sigma);
     total_energy_ = total_energy();

@@ -3,7 +3,7 @@
 
 Simulation::Simulation(): Energy() {}
 Simulation::Simulation(Atoms &new_atoms) : atoms_{new_atoms}, Energy(atoms_,epsilon,sigma,mass) {
-    energy_update(atoms_, epsilon, sigma, mass); // Update energy class
+    energy_update(atoms_, epsilon, sigma); // Update energy class
     neighbor_list_ = NeighborList(cutoff_radius); // NeighborList object for cutoff
     // Creating visualization file
     std::string directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+ std::to_string(new_atoms.nb_atoms());
@@ -23,11 +23,7 @@ void Simulation::initial_loop() {
             std::cout << " equlibruim reached" << std::endl;
         }
         std::cout << "initial steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
-        if (i % 10 == 0) {
-            std::string directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+ std::to_string(atoms_.nb_atoms());
-            std::filesystem::create_directory(directory);
-            std::ofstream traj2 (directory+"/traj_"+std::to_string(atoms_.nb_atoms())+"_"+std::to_string(i)+"_initial.xyz");
-            write_xyz(traj2, atoms_);} // write xyz file every 10 steps
+        if (i % 10 == 0) {export_xyz_initial(i, atoms_);}
         double old_total_energy = get_total_energy();
         verlet_step1(atoms_, time_step, mass);
         neighbor_list_.update(atoms_);
@@ -56,11 +52,7 @@ double Simulation::relaxation_loop(int iteration) {
     for (int i = 0; i < relaxation_steps; ++i) {
         std::cout << "relaxation steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         total_temp += get_temperature();
-        if (i % 10 == 0) {
-            std::string directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+ std::to_string(atoms_.nb_atoms());
-            std::filesystem::create_directory(directory);
-            std::ofstream traj3 (directory+"/traj_"+std::to_string(atoms_.nb_atoms())+"_"+std::to_string(iteration*relaxation_steps+i)+"_relax.xyz");
-            write_xyz(traj3, atoms_);} // write xyz file every 10 steps        verlet_step1(atoms_, time_step, mass);
+        if (i % 10 == 0) {export_xyz_relax(iteration*relaxation_steps+i, atoms_);} // write xyz file every 10 steps
         neighbor_list_.update(atoms_);
         update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);

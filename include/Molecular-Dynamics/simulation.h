@@ -5,7 +5,6 @@
 #include "../../../include/Molecular-Dynamics/verlet.h"
 #include "../../../include/Molecular-Dynamics/xyz.h"
 #include "../../../include/Molecular-Dynamics/utils.h"
-#include <filesystem>
 
 class SimulationData {
 public:
@@ -24,7 +23,7 @@ public:
         expermint_num = 50;
         add_energy = 30;  // 30 is equivilant to 20 temp, 7 is around 4.5
         cluster_name = "cluster_3871";
-        continue_old_experiment = true;
+        continue_old_experiment = false;
         old_experiment_file = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/3871/traj_3871_990_initial.xyz";
     }
     double expermint_num; // number of experiments
