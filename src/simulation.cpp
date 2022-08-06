@@ -53,6 +53,7 @@ double Simulation::relaxation_loop(int iteration) {
         std::cout << "relaxation steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         total_temp += get_temperature();
         if (i % 10 == 0) {export_xyz_relax(iteration*relaxation_steps+i, atoms_);} // write xyz file every 10 steps
+        verlet_step1(atoms_, time_step, mass);
         neighbor_list_.update(atoms_);
         update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
