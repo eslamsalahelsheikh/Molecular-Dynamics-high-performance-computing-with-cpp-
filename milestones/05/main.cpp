@@ -34,7 +34,7 @@ int main() {
         }
         double old_total_energy = energy.get_total_energy();
         verlet_step1(atoms, time_step, mass);
-        energy.energy_update(atoms, epsilon, sigma, mass);
+        energy.energy_update(atoms, epsilon, sigma);
         verlet_step2(atoms, time_step, mass);
         // thermal bathing
         // to preserve the temperature, we assume that the temperature is constant, and then we apply the Berendsen thermostat

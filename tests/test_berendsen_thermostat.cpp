@@ -58,7 +58,7 @@ TEST(BerendsenThermostatTest, SingleAtomExponentialDecay) {
 //        std::cout << T_calc << std::endl; // print expected
         EXPECT_NEAR(T_curr, T_calc, T_calc*0.01); // check whether T_curr=T_calc+-1%
         verlet_step1(atoms, dt,1);
-        energy.energy_update(atoms, epsilon, sigma, mass);
+        energy.energy_update(atoms, epsilon, sigma);
         verlet_step2(atoms, dt,1);
         energy.berendsen_thermostat(atoms, T_target, dt, tau);
         t += dt;
