@@ -37,3 +37,4 @@ cmake-build-debug/CMakeFiles/*
 tests/cmake-build-debug/*
 cmake-build-release/*
 build/*
+*.xyz
