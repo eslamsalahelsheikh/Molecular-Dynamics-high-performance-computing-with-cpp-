@@ -49,7 +49,7 @@ void Simulation::relaxation_loop(int iteration) {
         if (i % 10 == 0) {export_xyz_relax(directory, iteration*relaxation_steps+i, atoms_);} // write xyz file every 10 steps
     }
     // adding energies to a file
-    double average_temperature = total_temp / total_steps;
+    double average_temperature = total_temp / relaxation_steps;
     export_data(iteration, energy_file, get_total_energy(), average_temperature, get_potential_energy());
 }
 
