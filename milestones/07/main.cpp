@@ -1,5 +1,5 @@
 #include "../../../include/Molecular-Dynamics/simulation.h"
-
+#include "../../../include/Molecular-Dynamics/ih.h"
 
 int main() {
     // Reading initial positions and velocities from xyz file
@@ -9,7 +9,7 @@ int main() {
         auto [names, positions, Velocities_t]{read_xyz_with_velocities(data.old_experiment_file)};
         atoms = Atoms{positions, Velocities_t};
     } else {
-        auto [names, positions]{read_xyz(data.cluster_file)};
+        Positions_t positions = generate_cluster(data.layer_numbers, data.atomic_distance);
         atoms = Atoms{positions};
     }
     // Initialize simulation for given atoms

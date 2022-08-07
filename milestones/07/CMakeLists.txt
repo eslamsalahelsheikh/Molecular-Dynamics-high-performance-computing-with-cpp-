@@ -1,5 +1,5 @@
-configure_file(../../clusters/cluster_923.xyz .)
-configure_file(../../clusters/cluster_3871.xyz .)
+#configure_file(../../clusters/cluster_923.xyz .)
+#configure_file(../../clusters/cluster_3871.xyz .)
 
 set(milestone7_SRCS
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp

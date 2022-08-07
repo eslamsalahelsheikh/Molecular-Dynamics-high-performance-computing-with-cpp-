@@ -2,8 +2,9 @@
 
 SimulationData::SimulationData() {
     // Initialize all simulation parameters
-    cluster_name = "cluster_923";
-
+//    cluster_name = "cluster_923"; // layer_number = 6
+    layer_numbers = 5;
+    atomic_distance = 2.885; // atomic distance from reference clusters - corresponds to 408 pm lattice constant
     mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
     total_steps = 5000;
     time_step = 10; // time step in fs
@@ -27,13 +28,15 @@ SimulationData::SimulationData() {
 
 void SimulationData::create_directories_and_files() {
     // getting number of atoms from the name of the cluster
-    std::size_t pos = cluster_name.find("_");      // position of "_" in str
-    std::string number_of_atoms = cluster_name.substr (pos+1);     // get from "live" to the end
+//    std::size_t pos = cluster_name.find("_");      // position of "_" in str
+//    std::string number_of_atoms = cluster_name.substr (pos+1);
+    std::string number_of_layers = std::to_string(layer_numbers);
+
     // creating directory for the experiment
-    directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+number_of_atoms+"/";
+    directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+number_of_layers+"/";
     std::filesystem::create_directory(directory);
     // creating energy file
-    energy_file = std::ofstream(directory +  number_of_atoms + "_energies.csv");
+    energy_file = std::ofstream(directory +  number_of_layers + "_energies.csv");
     // getting cluster file
-    cluster_file = "/home/eslam/Desktop/Molecular-Dynamics/clusters/"+cluster_name+".xyz";
+//    cluster_file = "/home/eslam/Desktop/Molecular-Dynamics/clusters/"+cluster_name+".xyz";
 }

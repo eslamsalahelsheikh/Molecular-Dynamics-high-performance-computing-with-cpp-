@@ -1,6 +1,16 @@
 /home/eslam/Downloads/CLion-2022.2/clion-2022.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/eslam/Downloads/CLion-2022.2/clion-2022.2/bin/ninja/linux/ninja -G Ninja -S /home/eslam/Desktop/Molecular-Dynamics -B /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug
 -- Downloading Eigen3 
 -- Eigen3 3.4.0
--- Configuring done
--- Generating done
--- Build files have been written to: /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug
+CMake Error: File /home/eslam/Desktop/Molecular-Dynamics/clusters/cluster_923.xyz does not exist.
+CMake Error at milestones/07/CMakeLists.txt:1 (configure_file):
+  configure_file Problem configuring file
+
+
+CMake Error: File /home/eslam/Desktop/Molecular-Dynamics/clusters/cluster_3871.xyz does not exist.
+CMake Error at milestones/07/CMakeLists.txt:2 (configure_file):
+  configure_file Problem configuring file
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "/home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/CMakeFiles/CMakeError.log".

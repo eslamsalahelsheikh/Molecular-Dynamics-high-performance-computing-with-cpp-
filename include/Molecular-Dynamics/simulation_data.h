@@ -15,6 +15,8 @@ public:
     std::ofstream energy_file; // file to write energies to
     std::string directory; // directory to write files to
     std::string cluster_file; // name of the cluster file
+    int layer_numbers; // number of layers in the cluster
+    double atomic_distance; // distance between atoms in the cluster
 protected:
     double mass;
     double sigma;
