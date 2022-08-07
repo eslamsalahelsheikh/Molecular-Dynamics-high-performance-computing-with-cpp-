@@ -10,21 +10,25 @@ class SimulationData {
 public:
     SimulationData() {
         // Initialize all simulation parameters
-        mass = 196.9665; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
-        sigma = 1.0;
-        epsilon = 1.0;
+        mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
+//        sigma = 1.0;
+//        epsilon = 1.0;
         total_steps = 1000;
-        time_step = 0.01; // time step in fs
-        cutoff_radius = 10.0;    // cutoff radius for LJ potential
-        relaxation_time_multiplier = 30.0; // relaxation time = relaxation time multiplier * time_step in fs
+//        initial simulation
+        time_step = 10; // time step in fs
+        cutoff_radius = 7.0;    // cutoff radius for LJ potential
+        relaxation_time_multiplier = 10000; // relaxation time = relaxation time multiplier * time_step in fs
         relaxation_time_multiplier_final_value = 1000; // after the system arrives at desired temp
-        desired_temperature = 0.01; // desired temperature in K
-        relaxation_steps = 100;  // 150 can be enough for 5 cutoff or 60 for 10 cutoff radius
-        expermint_num = 50;
-        add_energy = 30;  // 30 is equivilant to 20 temp, 7 is around 4.5
-        cluster_name = "cluster_3871";
-        continue_old_experiment = false;
-        old_experiment_file = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/3871/traj_3871_990_initial.xyz";
+        desired_temperature = 500; // desired temperature in K
+
+//        relaxation experiment
+        relaxation_steps = 500;
+        expermint_num = 500;
+        add_energy = 0.01;
+
+        cluster_name = "cluster_923";
+        continue_old_experiment = true;
+        old_experiment_file = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/923/traj_923_990_initial.xyz";
     }
     double expermint_num; // number of experiments
     bool continue_old_experiment; // continue old experiment or not

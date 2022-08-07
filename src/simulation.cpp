@@ -19,16 +19,11 @@ Simulation::~Simulation() {
 void Simulation::initial_loop() {
     bool equilibrum = false;
     for (int i = 0; i < total_steps; ++i) {
-        if (equilibrum) {
-            std::cout << " equlibruim reached" << std::endl;
-        }
+        if (equilibrum) std::cout << " equlibruim reached" << std::endl;
         std::cout << "initial steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         if (i % 10 == 0) {export_xyz_initial(i, atoms_);}
-        double old_total_energy = get_total_energy();
-        verlet_step1(atoms_, time_step, mass);
         neighbor_list_.update(atoms_);
-//        energy_update(atoms_, epsilon, sigma, mass);
-//        update_neighbors(atoms_, neighbor_list_, epsilon, sigma, mass);
+        verlet_step1(atoms_, time_step, mass);
         update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
         // thermal bathing
@@ -36,6 +31,7 @@ void Simulation::initial_loop() {
 //        desired_temperature =
 //                i == 0 ? get_temperature() : desired_temperature;
 //        if (abs(get_total_energy() - old_total_energy) <= 0.01)  // reached equilibrium point, decrease coupling constant
+//        if (i %100 == 0 && i != 0 && i <2000 ) { desired_temperature += 0.2 ;}
         if (i == 500)
         {
             equilibrum = true;
@@ -53,8 +49,8 @@ double Simulation::relaxation_loop(int iteration) {
         std::cout << "relaxation steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         total_temp += get_temperature();
         if (i % 10 == 0) {export_xyz_relax(iteration*relaxation_steps+i, atoms_);} // write xyz file every 10 steps
-        verlet_step1(atoms_, time_step, mass);
         neighbor_list_.update(atoms_);
+        verlet_step1(atoms_, time_step, mass);
         update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
     }

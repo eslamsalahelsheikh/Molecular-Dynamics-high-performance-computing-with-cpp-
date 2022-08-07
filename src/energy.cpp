@@ -31,7 +31,9 @@ double Energy::total_energy() {
 }
 double Energy::calculate_temperature(Atoms &atoms,bool use_exist_kinetic) {  // using precalculated kinetic energy
     double KE = use_exist_kinetic? kinetic_energy_ : kinetic_energy(atoms);
-    return 2.0 / 3.0 * (KE / atoms.nb_atoms()); // assuming kB=1
+    const double BOLTZMANN_CONSTANT = 8.617333262e-5; // eV/K
+    return 2.0 / 3.0 * (KE / (BOLTZMANN_CONSTANT * atoms.nb_atoms()));
+    //    return 2.0 / 3.0 * (KE / atoms.nb_atoms()); // assuming kB=1
 }
 void Energy::energy_update(Atoms &atoms, double epsilon, double sigma) {
     kinetic_energy_ = kinetic_energy(atoms);

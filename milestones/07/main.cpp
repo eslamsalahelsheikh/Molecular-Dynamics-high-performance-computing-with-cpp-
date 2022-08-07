@@ -19,7 +19,7 @@ int main() {
 
     // Run initial simulation
     if (!data.continue_old_experiment) simulation.initial_loop();
-
+    else simulation.energy_update(atoms);
     std::vector<double> average_temps{};
     std::vector<double> potential_energies{};
     std::vector<double> total_energies{};
@@ -27,7 +27,6 @@ int main() {
     std::string directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+ std::to_string(atoms.nb_atoms());
     std::filesystem::create_directory(directory);
 
-    simulation.energy_update(atoms);
     for (int i = 0; i < data.expermint_num; i++) {
         std::cout << "--------------------starting relaxation loop number: "<< i << "---------------------------" << std::endl;
         // Deposit heat
