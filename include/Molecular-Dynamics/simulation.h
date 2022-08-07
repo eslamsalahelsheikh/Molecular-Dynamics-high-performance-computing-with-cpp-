@@ -1,10 +1,7 @@
 #ifndef MOLECULARDYNAMICS_SIMULATION_H
 #define MOLECULARDYNAMICS_SIMULATION_H
 
-
 #include "simulation_data.h"
-
-
 
 class Simulation : public SimulationData, public Energy {
 

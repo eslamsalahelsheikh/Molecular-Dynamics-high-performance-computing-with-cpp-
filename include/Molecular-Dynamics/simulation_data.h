@@ -28,6 +28,7 @@ protected:
     double desired_temperature; // desired temperature
     double relaxation_steps; // steps for relaxation after adding heat
     double add_energy; // energy added in each experiment
+    double stop_thermostate_after_steps; // stop thermostat after this number of steps
 private:
     void create_directories_and_files();
     std::string cluster_name; // name of the cluster

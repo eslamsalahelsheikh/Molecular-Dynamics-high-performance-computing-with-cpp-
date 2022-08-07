@@ -38,3 +38,6 @@ tests/cmake-build-debug/*
 cmake-build-release/*
 build/*
 *.xyz
+*.ninja_log
+*.ninja_deps
+LastTest.log

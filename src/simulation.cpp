@@ -25,7 +25,7 @@ void Simulation::initial_loop() {
 //                i == 0 ? get_temperature() : desired_temperature;
 //        if (abs(get_total_energy() - old_total_energy) <= 0.01)  // reached equilibrium point, decrease coupling constant
 //        if (i %100 == 0 && i != 0 && i <2000 ) { desired_temperature += 0.2 ;}
-        if (i == 500)
+        if (i == stop_thermostate_after_steps)
         {
             equilibrum = true;
             relaxation_time_multiplier = relaxation_time_multiplier_final_value;    // this should be big enough to reduce thermostat effect

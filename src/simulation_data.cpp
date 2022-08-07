@@ -2,22 +2,26 @@
 
 SimulationData::SimulationData() {
     // Initialize all simulation parameters
+    cluster_name = "cluster_923";
+
     mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
-    total_steps = 1000;
+    total_steps = 5000;
     time_step = 10; // time step in fs
-    cutoff_radius = 7.0;    // cutoff radius for EAM potential
-    relaxation_time_multiplier = 10000; // relaxation time = relaxation time multiplier * time_step in fs
-    relaxation_time_multiplier_final_value = 1e10; // after the system arrives at desired temp
+    cutoff_radius = 5.0;    // cutoff radius for EAM potential
+    relaxation_time_multiplier = 10; // relaxation time = relaxation time multiplier * time_step in fs
+    stop_thermostate_after_steps = 2000; // stop thermostat after this number of steps
+    relaxation_time_multiplier_final_value = 1e10; // after the system arrives at desired temp (stop thermostat and relax system)
     desired_temperature = 500; // desired temperature (only in the start) in K
 
     // Relaxation experiment parameters
     relaxation_steps = 500; // number of relaxation steps
     expermint_num = 500;    // number of experiments
     add_energy = 0.01;    // energy added in each experiment
+
     // choose whether to continue old experiment or not
-    cluster_name = "cluster_923";
     continue_old_experiment = false;
     old_experiment_file = directory + "traj_923_114_relax.xyz"; // name of the old experiment file (ONLY if continuing old experiment)
+
     create_directories_and_files();
 }
 
