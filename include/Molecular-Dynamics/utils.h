@@ -13,9 +13,10 @@
 //    }
 //    file.close();
 //}
-inline void export_data(int iteration, std::ofstream &energy_file, double total_energy, double average_temp, double potential_energy){
+inline void export_data(int iteration, std::ofstream &energy_file, double total_energy, double average_temp, double potential_energy, bool &continue_old_experiment){
 
-    if (iteration == 0) {
+    if (iteration == 0 or continue_old_experiment) {
+        continue_old_experiment = false;
         //    TODO:: use relative paths
         energy_file << "iteration,total_energy,average_temp,potential_energy" << std::endl;
     }

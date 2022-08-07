@@ -21,7 +21,7 @@ SimulationData::SimulationData() {
 
     // choose whether to continue old experiment or not
     continue_old_experiment = false;
-    old_experiment_file = directory + "traj_923_114_relax.xyz"; // name of the old experiment file (ONLY if continuing old experiment)
+    old_experiment_file = "traj_1415_4990_initial.xyz"; // name of the old experiment file (ONLY if continuing old experiment)
 
     create_directories_and_files();
 }
@@ -39,4 +39,5 @@ void SimulationData::create_directories_and_files() {
     energy_file = std::ofstream(directory +  number_of_layers + "_energies.csv");
     // getting cluster file
 //    cluster_file = "/home/eslam/Desktop/Molecular-Dynamics/clusters/"+cluster_name+".xyz";
+    old_experiment_file = directory + old_experiment_file;
 }

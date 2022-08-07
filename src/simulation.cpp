@@ -50,7 +50,7 @@ void Simulation::relaxation_loop(int iteration) {
     }
     // adding energies to a file
     double average_temperature = total_temp / relaxation_steps;
-    export_data(iteration, energy_file, get_total_energy(), average_temperature, get_potential_energy());
+    export_data(iteration, energy_file, get_total_energy(), average_temperature, get_potential_energy(),continue_old_experiment);
 }
 
 void Simulation::add_heat(){
