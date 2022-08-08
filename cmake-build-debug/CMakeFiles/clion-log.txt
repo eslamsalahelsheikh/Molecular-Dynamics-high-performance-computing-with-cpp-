@@ -1,16 +1,30 @@
-/home/eslam/Downloads/CLion-2022.2/clion-2022.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/eslam/Downloads/CLion-2022.2/clion-2022.2/bin/ninja/linux/ninja -G Ninja -S /home/eslam/Desktop/Molecular-Dynamics -B /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug
+/opt/clion-2022.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/opt/clion-2022.1/bin/ninja/linux/ninja -G Ninja -S /home/eslam/Desktop/Molecular-Dynamics -B /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug
+-- The C compiler identification is GNU 9.4.0
+-- The CXX compiler identification is GNU 9.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found MPI_C: /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so (found version "3.1") 
+-- Found MPI_CXX: /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so (found version "3.1") 
+-- Found MPI: TRUE (found version "3.1")  
 -- Downloading Eigen3 
--- Eigen3 3.4.0
-CMake Error: File /home/eslam/Desktop/Molecular-Dynamics/clusters/cluster_923.xyz does not exist.
-CMake Error at milestones/07/CMakeLists.txt:1 (configure_file):
-  configure_file Problem configuring file
-
-
-CMake Error: File /home/eslam/Desktop/Molecular-Dynamics/clusters/cluster_3871.xyz does not exist.
-CMake Error at milestones/07/CMakeLists.txt:2 (configure_file):
-  configure_file Problem configuring file
+CMake Error at cmake/tools.cmake:76 (message):
+  Something went wrong (1) during the download process of Eigen3 check the
+  file
+  /home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/third-party/Eigen3-download/configure-error.log
+  for more details:
+Call Stack (most recent call first):
+  cmake/Eigen3.cmake:1 (download_external_project)
+  cmake/tools.cmake:149 (include)
+  CMakeLists.txt:20 (add_external_package)
 
 
 -- Configuring incomplete, errors occurred!
 See also "/home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/CMakeFiles/CMakeOutput.log".
-See also "/home/eslam/Desktop/Molecular-Dynamics/cmake-build-debug/CMakeFiles/CMakeError.log".

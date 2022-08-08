@@ -1,0 +1,10 @@
+CMake Error at CMakeLists.txt:3 (project):
+  Running
+
+   '/home/eslam/Downloads/CLion-2022.2/clion-2022.2/bin/ninja/linux/ninja' '--version'
+
+  failed with:
+
+   No such file or directory
+
+
