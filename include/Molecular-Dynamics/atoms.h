@@ -42,6 +42,14 @@ struct Atoms {
     size_t nb_atoms() const {
         return positions.cols();
     }
+    void resize(const int &nb_atoms) {
+        positions.resize(3, nb_atoms);
+        velocities.resize(3, nb_atoms);
+        forces.resize(3, nb_atoms);
+        energies.resize(3, nb_atoms);
+        masses.resize(nb_atoms);
+        names.resize(nb_atoms);
+    }
 };
 
 inline Atoms lattice(int nx, int ny, int nz, double sigma){

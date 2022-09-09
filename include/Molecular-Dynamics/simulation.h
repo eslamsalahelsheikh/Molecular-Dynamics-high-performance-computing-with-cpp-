@@ -2,6 +2,8 @@
 #define MOLECULARDYNAMICS_SIMULATION_H
 
 #include "simulation_data.h"
+#include "../../../include/Molecular-Dynamics/domain.h"
+#include "mpi.h"
 
 class Simulation : public SimulationData, public Energy {
 
@@ -12,7 +14,7 @@ public:
     // Destructor
     ~Simulation();
     // Methods
-    void initial_loop();
+    void initial_loop(Domain domain);
     void relaxation_loop(int iteration);
     void add_heat();
 private:

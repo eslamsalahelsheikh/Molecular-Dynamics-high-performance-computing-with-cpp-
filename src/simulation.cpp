@@ -10,13 +10,17 @@ Simulation::Simulation(Atoms &new_atoms) : atoms_{new_atoms}, Energy(atoms_,epsi
 Simulation::~Simulation() {}
 
 // Main simulation loop
-void Simulation::initial_loop() {
+void Simulation::initial_loop(Domain domain) {
     bool equilibrum = false;
+    domain.enable(atoms_);
+
     for (int i = 0; i < total_steps; ++i) {
         if (equilibrum) std::cout << " equlibruim reached" << std::endl;
         std::cout << "initial steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         neighbor_list_.update(atoms_);
         verlet_step1(atoms_, time_step, mass);
+        domain.exchange_atoms(atoms_);  // exchange atoms between domains after updating positions
+        domain.update_ghosts(atoms_, cutoff_radius*2); // update ghost atoms before calculating forces
         update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
         // thermal bathing
@@ -32,7 +36,11 @@ void Simulation::initial_loop() {
         }
         relaxation_time =   relaxation_time_multiplier * time_step; // relaxation time
         berendsen_thermostat(atoms_, desired_temperature, time_step, relaxation_time);
-        if (i % 10 == 0) {export_xyz_initial(directory, i, atoms_);}
+        if (i % 10 == 0) {
+            domain.disable(atoms_);
+            export_xyz_initial(directory, i, atoms_);
+            domain.enable(atoms_);
+        }
     }
 }
 
