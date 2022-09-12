@@ -86,6 +86,7 @@ void Simulation::relaxation_loop(int iteration) {
     double average_temperature = total_temp / relaxation_steps;
     export_data(iteration, energy_file, get_total_energy(), average_temperature, get_potential_energy(),continue_old_experiment);
 }
+}
 
 void Simulation::relaxation_loop(int iteration, Domain domain) {
     std::cout << "--------------------starting relaxation loop number: "<< iteration << "---------------------------" << std::endl;

@@ -6,7 +6,7 @@ enable_testing()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(MPI)
+find_package(MPI REQUIRED)
 if(NOT MPI_FOUND)
     message(FATAL_ERROR "MPI is needed!")
 endif(NOT MPI_FOUND)
@@ -18,8 +18,7 @@ endif(NOT MPI_CXX_LIBRARIES)
 
 include(tools)
 add_external_package(Eigen3 VERSION 3.4.0 CONFIG)
-find_package(MPI REQUIRED)
-include_directories(SYSTEM ${MPI_INCLUDE_PATH})
+link_libraries(stdc++fs)
 
 set(MolecularDynamics_HDRS
         # Add header files here
@@ -53,7 +52,7 @@ set(MolecularDynamics_SRCS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ih.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/domain.cpp
         )
-
+link_libraries(${MPI_CXX_LIBRARIES})
 add_subdirectory(milestones)
 add_subdirectory(tests)
 
