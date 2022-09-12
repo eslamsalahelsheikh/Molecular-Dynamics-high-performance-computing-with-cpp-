@@ -32,8 +32,11 @@ double Energy::total_energy() {
 double Energy::calculate_temperature(Atoms &atoms,bool use_exist_kinetic) {  // using precalculated kinetic energy
     double KE = use_exist_kinetic? kinetic_energy_ : kinetic_energy(atoms);
     const double BOLTZMANN_CONSTANT = 8.617333262e-5; // eV/K
-    return 2.0 / 3.0 * (KE / (BOLTZMANN_CONSTANT * atoms.nb_atoms()));
-    //    return 2.0 / 3.0 * (KE / atoms.nb_atoms()); // assuming kB=1
+    if (atoms.nb_atoms() > 0) {
+        return 2.0 / 3.0 * (KE / (BOLTZMANN_CONSTANT * atoms.nb_atoms()));
+    } else {
+        return 0.0;
+    }
 }
 void Energy::energy_update(Atoms &atoms, double epsilon, double sigma) {
     kinetic_energy_ = kinetic_energy(atoms);
@@ -46,6 +49,7 @@ void Energy::energy_update(Atoms &atoms, double epsilon, double sigma) {
 
 void Energy::berendsen_thermostat(Atoms &atoms, double desired_temperature,
                                   double timestep, double relaxation_time) {
+    if (atoms.nb_atoms() <= 0) return;
 //     std::cout << "relaxation time: " << relaxation_time << std::endl;
     double current_temperature =
             calculate_temperature(atoms, false); // recalculate temperature after second verlet step
@@ -68,8 +72,21 @@ void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double cutof
     total_energy_ = total_energy();
     temperature_ = calculate_temperature(atoms, true);
 }
+void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double cutoff_radius,Domain &domain) {
+    // discarding ghost atoms in potential & kinetic energy calculation
+    Atoms local_atoms = atoms;
+    local_atoms.resize(domain.nb_local());
+    double per_atom_potential_energy = gupta(local_atoms, neighbor_list,cutoff_radius);
+    double per_atom_kinetic_energy = kinetic_energy(local_atoms);
+    // summing up potential & kinetic energy
+    potential_energy_ = MPI::allreduce(per_atom_potential_energy, MPI::SUM, MPI_COMM_WORLD);
+    kinetic_energy_ = MPI::allreduce(per_atom_kinetic_energy, MPI::SUM, MPI_COMM_WORLD);
+    total_energy_ = total_energy();
+    temperature_ = calculate_temperature(atoms, true);
+}
 
 void Energy::deposit_heat(Atoms &atoms, double added_energy) {
+    if (atoms.nb_atoms() <= 0) return;
     std::cout << "before adding heat, temp is: " << get_temperature() << std::endl;
     double total_added_energy = added_energy * atoms.nb_atoms(); // adding 7eV energy per atom
     atoms.velocities *= sqrt(1. + total_added_energy/ kinetic_energy_);

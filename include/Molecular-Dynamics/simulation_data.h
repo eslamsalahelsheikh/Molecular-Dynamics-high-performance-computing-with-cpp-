@@ -17,6 +17,8 @@ public:
     std::string cluster_file; // name of the cluster file
     int layer_numbers; // number of layers in the cluster
     double atomic_distance; // distance between atoms in the cluster
+    Eigen::Array<double, 3, 1> domain_length; // domain length in Angstrom
+    Eigen::Array<int, 3, 1> domain_grid; // number of domains in each direction
 protected:
     double mass;
     double sigma;

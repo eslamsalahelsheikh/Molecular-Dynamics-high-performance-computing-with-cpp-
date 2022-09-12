@@ -41,3 +41,6 @@ build/*
 *.ninja_log
 *.ninja_deps
 LastTest.log
+cmake-build-debug/*
+*.log
+

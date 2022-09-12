@@ -4,6 +4,7 @@
 # include "atoms.h"
 # include "lj_direct_summation.h"
 # include "gupta.h"
+# include "domain.h"
 
 class Energy {
 public:
@@ -15,6 +16,7 @@ public:
     void energy_update(Atoms &atoms, double epsilon = 1.0, double sigma = 1.0);
     void update_neighbors(Atoms &atoms, NeighborList &neighbor_list, double epsilon = 1.0, double sigma = 1.0, double mass = 1.0);
     void update_gupta(Atoms &atoms, NeighborList &neighbor_list, double cutoff_radius= 10.0);
+    void update_gupta(Atoms &atoms, NeighborList &neighbor_list,double cutoff_radius,Domain &domain);
     // getters
     double get_potential_energy() { return potential_energy_;}
     double get_kinetic_energy() {return kinetic_energy_;}

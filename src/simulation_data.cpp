@@ -3,21 +3,25 @@
 SimulationData::SimulationData() {
     // Initialize all simulation parameters
 //    cluster_name = "cluster_923"; // layer_number = 6
-    layer_numbers = 5;
+    layer_numbers = 6;
     atomic_distance = 2.885; // atomic distance from reference clusters - corresponds to 408 pm lattice constant
     mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
     total_steps = 5000;
     time_step = 10; // time step in fs
-    cutoff_radius = 5.0;    // cutoff radius for EAM potential
+    cutoff_radius = 10.0;    // cutoff radius for EAM potential
     relaxation_time_multiplier = 10; // relaxation time = relaxation time multiplier * time_step in fs
     stop_thermostate_after_steps = 2000; // stop thermostat after this number of steps
     relaxation_time_multiplier_final_value = 1e10; // after the system arrives at desired temp (stop thermostat and relax system)
-    desired_temperature = 500; // desired temperature (only in the start) in K
+    desired_temperature = 100.0; // desired temperature (only in the start) in K
 
     // Relaxation experiment parameters
     relaxation_steps = 500; // number of relaxation steps
     expermint_num = 500;    // number of experiments
     add_energy = 0.01;    // energy added in each experiment
+
+    // MPI parameters
+    domain_length = {30.0, 30.0, 30.0}; // domain length in Angstrom
+    domain_grid = {1, 1, 2}; // number of domains in each direction
 
     // choose whether to continue old experiment or not
     continue_old_experiment = false;
@@ -33,7 +37,7 @@ void SimulationData::create_directories_and_files() {
     std::string number_of_layers = std::to_string(layer_numbers);
 
     // creating directory for the experiment
-    directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+number_of_layers+"/";
+    directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_08/"+number_of_layers+"/";
     std::filesystem::create_directory(directory);
     // creating energy file
     energy_file = std::ofstream(directory +  number_of_layers + "_energies.csv");

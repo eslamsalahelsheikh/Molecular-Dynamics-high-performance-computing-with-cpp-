@@ -1,6 +1,7 @@
 #ifndef MOLECULAR_DYNAMICS_ATOMS_H
 #define MOLECULAR_DYNAMICS_ATOMS_H
 #include "types.h"
+#include <iostream>
 
 struct Atoms {
     Positions_t positions;
@@ -23,10 +24,12 @@ struct Atoms {
             : positions{p},
               velocities{3, p.cols()},
               forces{3, p.cols()},
-              energies{3, p.cols()} {
+              energies{3, p.cols()},
+              masses{p.cols()}{
         velocities.setZero();
         forces.setZero();
         energies.setZero();
+        masses.setOnes();
     }
     Atoms(const Positions_t &p, const Velocities_t &v) :
             positions{p}, velocities{v}, forces{3, p.cols()} {
@@ -39,16 +42,16 @@ struct Atoms {
         forces.setZero();
         masses.setOnes();
     }
-    size_t nb_atoms() const {
-        return positions.cols();
+    int nb_atoms() const {
+        return static_cast<int>(positions.cols());
     }
-    void resize(const int &nb_atoms) {
-        positions.resize(3, nb_atoms);
-        velocities.resize(3, nb_atoms);
-        forces.resize(3, nb_atoms);
-        energies.resize(3, nb_atoms);
-        masses.resize(nb_atoms);
-        names.resize(nb_atoms);
+    void resize(const int local_length) {
+            if (local_length <= 0) throw std::runtime_error("local_length must be positive");
+            positions.conservativeResizeLike(Positions_t::Zero(3, local_length));
+            velocities.conservativeResizeLike(Velocities_t::Zero(3, local_length));
+            forces.conservativeResizeLike(Forces_t::Zero(3, local_length));
+            energies.conservativeResizeLike(Energies_t::Zero(3, local_length));
+            masses.conservativeResizeLike(Masses_t::Zero(local_length));
     }
 };
 

@@ -279,7 +279,7 @@ void Domain::update_ghosts(Atoms &atoms, double border_width) {
         // In the first iteration below, we consider all atoms for sending into the neighboring ghost buffers. For
         // the first Cartesian dimension, those are only the process-local atoms. For the y- and z-direction, those
         // include the ghost atoms received before in the other directions.
-        Eigen::Index left_start{0}, left_len{static_cast<int>(atoms.nb_atoms())}, right_start{0}, right_len{static_cast<int>(atoms.nb_atoms())};
+        Eigen::Index left_start{0}, left_len{atoms.nb_atoms()}, right_start{0}, right_len{atoms.nb_atoms()};
 
         // Loop as long as there is something left to be send/received. Multiple iterations happen if a subdomain is
         // smaller than the border width.
