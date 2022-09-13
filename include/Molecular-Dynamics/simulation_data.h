@@ -19,6 +19,8 @@ public:
     double atomic_distance; // distance between atoms in the cluster
     Eigen::Array<double, 3, 1> domain_length; // domain length in Angstrom
     Eigen::Array<int, 3, 1> domain_grid; // number of domains in each direction
+    Eigen::Array<int, 3, 1> domain_periodicity; // periodicity of the domain in each direction
+
 protected:
     double mass;
     double sigma;

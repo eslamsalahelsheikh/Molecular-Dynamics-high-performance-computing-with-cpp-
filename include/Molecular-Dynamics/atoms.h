@@ -51,7 +51,7 @@ struct Atoms {
             velocities.conservativeResizeLike(Velocities_t::Zero(3, local_length));
             forces.conservativeResizeLike(Forces_t::Zero(3, local_length));
             energies.conservativeResizeLike(Energies_t::Zero(3, local_length));
-            masses.conservativeResizeLike(Masses_t::Zero(local_length));
+            masses.conservativeResizeLike(Masses_t::Ones(local_length));
     }
 };
 

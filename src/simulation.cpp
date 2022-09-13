@@ -38,6 +38,8 @@ void Simulation::initial_loop() {
 }
 void Simulation::initial_loop(Domain domain) {
     bool equilibrum = false;
+    domain.exchange_atoms(atoms_);
+    domain.update_ghosts(atoms_,cutoff_radius*2);
     for (int i = 0; i < total_steps; ++i) {
         std::cout << "step: " << i << std::endl;
         if (equilibrum) std::cout << " equlibruim reached" << std::endl;

@@ -73,12 +73,14 @@ void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double cutof
     temperature_ = calculate_temperature(atoms, true);
 }
 void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double cutoff_radius,Domain &domain) {
-    // discarding ghost atoms in potential & kinetic energy calculation
-    Atoms local_atoms = atoms;
-    local_atoms.resize(domain.nb_local());
-    double per_atom_potential_energy = gupta(local_atoms, neighbor_list,cutoff_radius);
-    double per_atom_kinetic_energy = kinetic_energy(local_atoms);
-    // summing up potential & kinetic energy
+    double per_atom_potential_energy = 0.0;
+    double per_atom_kinetic_energy = 0.0;
+    if (atoms.nb_atoms() > 0) {
+        // discarding ghost atoms in potential calculation
+        per_atom_potential_energy = gupta(domain.nb_local(),atoms, neighbor_list,cutoff_radius);
+        per_atom_kinetic_energy = kinetic_energy(atoms);
+    }
+//    // summing up potential & kinetic energy
     potential_energy_ = MPI::allreduce(per_atom_potential_energy, MPI_SUM, MPI_COMM_WORLD);
     kinetic_energy_ = MPI::allreduce(per_atom_kinetic_energy, MPI_SUM, MPI_COMM_WORLD);
     total_energy_ = total_energy();

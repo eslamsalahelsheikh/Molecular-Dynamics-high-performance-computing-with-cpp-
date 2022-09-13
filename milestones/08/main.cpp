@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
         atoms = Atoms{positions};
     }
 
-    Domain domain(MPI_COMM_WORLD, data.domain_length, data.domain_grid, {1,1,1});
+    Domain domain(MPI_COMM_WORLD, data.domain_length, data.domain_grid, data.domain_periodicity);
     domain.enable(atoms);
     // Initialize simulation for given atoms
     Simulation simulation(atoms);
