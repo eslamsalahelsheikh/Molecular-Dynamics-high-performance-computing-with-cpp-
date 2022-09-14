@@ -16,8 +16,8 @@ void Simulation::initial_loop() {
         std::cout << "step: " << i << std::endl;
         if (equilibrum) std::cout << " equlibruim reached" << std::endl;
         std::cout << "initial steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
-        neighbor_list_.update(atoms_);
         verlet_step1(atoms_, time_step, mass);
+        neighbor_list_.update(atoms_);
         update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
         // thermal bathing
@@ -38,16 +38,14 @@ void Simulation::initial_loop() {
 }
 void Simulation::initial_loop(Domain domain) {
     bool equilibrum = false;
-    domain.exchange_atoms(atoms_);
-    domain.update_ghosts(atoms_,cutoff_radius*2);
     for (int i = 0; i < total_steps; ++i) {
         std::cout << "step: " << i << std::endl;
         if (equilibrum) std::cout << " equlibruim reached" << std::endl;
         std::cout << "initial steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
-        neighbor_list_.update(atoms_);
         verlet_step1(atoms_, time_step, mass);
         domain.exchange_atoms(atoms_);  // exchange atoms between domains after updating positions
         domain.update_ghosts(atoms_, cutoff_radius*2); // update ghost atoms before calculating forces
+        neighbor_list_.update(atoms_);
         update_gupta(atoms_, neighbor_list_, cutoff_radius, domain);
         verlet_step2(atoms_, time_step, mass);
         // thermal bathing
@@ -79,8 +77,8 @@ void Simulation::relaxation_loop(int iteration) {
     for (int i = 0; i < relaxation_steps; ++i) {
         std::cout << "relaxation steps: " << i << "  current_temp: " << get_temperature() << "  current_potential: " << get_potential_energy() << "  total_energy: " << get_total_energy() << std::endl;
         total_temp += get_temperature();
-        neighbor_list_.update(atoms_);
         verlet_step1(atoms_, time_step, mass);
+        neighbor_list_.update(atoms_);
         update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
         if (i % 10 == 0) {export_xyz_relax(directory, iteration*relaxation_steps+i, atoms_);} // write xyz file every 10 steps
@@ -98,10 +96,10 @@ void Simulation::relaxation_loop(int iteration, Domain domain) {
         domain.exchange_atoms(atoms_);  // exchange atoms between domains after updating positions
         domain.update_ghosts(atoms_, cutoff_radius*2); // update ghost atoms
         total_temp += get_temperature();
-        neighbor_list_.update(atoms_);
         verlet_step1(atoms_, time_step, mass);
         domain.exchange_atoms(atoms_);  // exchange atoms between domains after updating positions
         domain.update_ghosts(atoms_, cutoff_radius*2); // update ghost atoms before calculating forces
+        neighbor_list_.update(atoms_);
         update_gupta(atoms_, neighbor_list_, cutoff_radius,domain);
         verlet_step2(atoms_, time_step, mass);
         if (i % 10 == 0) {

@@ -39,7 +39,9 @@ double gupta(Atoms &atoms, const NeighborList &neighbor_list, double cutoff, dou
 
     // Reset energies and forces. This needs to be turned off if multiple potentials are present.
     atoms.forces.setZero();
-
+    if (atoms.nb_atoms() == 0) {
+        return 0.0;
+    }
     // compute embedding energies
     Eigen::ArrayXd embedding(atoms.nb_atoms());  // contains first density, later energy
     embedding.setZero();
