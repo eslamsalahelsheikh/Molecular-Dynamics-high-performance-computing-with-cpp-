@@ -24,13 +24,6 @@ int main(int argc, char *argv[]) {
     if (!data.continue_old_experiment) simulation.initial_loop(domain);
     else simulation.energy_update(atoms);
 
-    // Run heating and relaxation experiments
-    for (int i = 0; i < data.expermint_num; i++) {
-        // Deposit heat
-        simulation.add_heat();
-        // Run relaxation loop
-        simulation.relaxation_loop(i, domain);
-    }
     domain.disable(atoms);
     MPI_Finalize();
     return 0;

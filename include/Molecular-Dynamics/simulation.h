@@ -16,7 +16,6 @@ public:
     // Methods
     void initial_loop(Domain domain);
     void initial_loop();
-    void relaxation_loop(int iteration, Domain domain);
     void relaxation_loop(int iteration);
     void add_heat();
 private:
