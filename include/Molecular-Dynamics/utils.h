@@ -29,7 +29,7 @@ inline void export_xyz_relax(std::string directory, int iteration_num, Atoms &at
     write_xyz(traj3, atoms); // write xyz file every 10 steps        verlet_step1(atoms_, time_step, mass);
 }
 inline void export_xyz_initial(std::string directory, int iteration_num, Atoms &atoms){
-    std::ofstream traj2 (directory+"/traj_"+std::to_string(atoms.nb_atoms())+"_"+std::to_string(iteration_num)+"_initial.xyz");
+    std::ofstream traj2 (directory+"/traj_"+std::to_string(iteration_num)+"_initial.xyz");
     write_xyz(traj2, atoms); // write xyz file every 10 steps        verlet_step1(atoms_, time_step, mass);
 }
 
