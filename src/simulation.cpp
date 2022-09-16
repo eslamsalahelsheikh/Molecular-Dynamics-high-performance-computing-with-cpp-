@@ -49,7 +49,7 @@ void Simulation::initial_loop(Domain domain) {
         verlet_step2(atoms_, time_step, mass);
         // thermal bathing
         if (i == stop_thermostate_after_steps)  relaxation_time_multiplier = relaxation_time_multiplier_final_value;    // this should be big enough to reduce thermostat effect
-        if (abs(get_total_energy() - old_total_energy)<0.0001)
+        if (abs(get_total_energy() - old_total_energy)<0.01)
         {
             domain.disable(atoms_);
             std::cout << "quilibrium reached, exiting now!!" << std::endl;

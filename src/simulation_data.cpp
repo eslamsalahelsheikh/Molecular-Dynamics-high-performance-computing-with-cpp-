@@ -21,7 +21,7 @@ SimulationData::SimulationData() {
 
     // MPI parameters
     domain_length = {30.0, 30.0, 30.0}; // domain length in Angstrom
-    domain_grid = {1, 2, 8}; // number of domains in each direction
+    domain_grid = {2, 2, 2}; // number of domains in each direction
     domain_periodicity = {0, 0, 0}; // periodicity of the domain in each direction
 
     // choose whether to continue old experiment or not
