@@ -19,6 +19,13 @@ double Energy::kinetic_energy(Atoms &atoms) {
     }
     return KE;
 }
+double Energy::kinetic_energy(Atoms &atoms,double local_atoms_num) {
+    double KE = 0.0;
+    for (int i = 0; i < local_atoms_num; ++i) {
+        KE += 0.5 * mass_ * pow(atoms.velocities.col(i).matrix().norm(), 2);
+    }
+    return KE;
+}
 
 double Energy::potential_energy(Atoms &atoms, double epsilon, double sigma) {
     return lj_direct_summation(atoms, epsilon, sigma);
@@ -78,13 +85,14 @@ void Energy::update_gupta(Atoms &atoms, NeighborList &neighbor_list,double cutof
     if (atoms.nb_atoms() > 0) {
         // discarding ghost atoms in potential calculation
         per_atom_potential_energy = gupta(domain.nb_local(),atoms, neighbor_list,cutoff_radius);
-        per_atom_kinetic_energy = kinetic_energy(atoms);
+        per_atom_kinetic_energy = kinetic_energy(atoms,domain.nb_local());
     }
 //    // summing up potential & kinetic energy
     potential_energy_ = MPI::allreduce(per_atom_potential_energy, MPI_SUM, MPI_COMM_WORLD);
     kinetic_energy_ = MPI::allreduce(per_atom_kinetic_energy, MPI_SUM, MPI_COMM_WORLD);
     total_energy_ = total_energy();
     temperature_ = calculate_temperature(atoms, false);
+    std::cout << "total energy: " << total_energy_    << " temperature: " << temperature_ << " potential energy: " << potential_energy_ << std::endl;
 }
 
 void Energy::deposit_heat(Atoms &atoms, double added_energy) {

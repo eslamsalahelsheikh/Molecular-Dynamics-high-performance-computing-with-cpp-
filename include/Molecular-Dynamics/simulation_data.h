@@ -20,6 +20,7 @@ public:
     Eigen::Array<double, 3, 1> domain_length; // domain length in Angstrom
     Eigen::Array<int, 3, 1> domain_grid; // number of domains in each direction
     Eigen::Array<int, 3, 1> domain_periodicity; // periodicity of the domain in each direction
+    double cutoff_radius;
 
 protected:
     double mass;
@@ -27,7 +28,6 @@ protected:
     double epsilon;
     double total_steps;
     double time_step;
-    double cutoff_radius;
     double relaxation_time_multiplier;
     double relaxation_time_multiplier_final_value;
     double relaxation_time;     // relaxation time

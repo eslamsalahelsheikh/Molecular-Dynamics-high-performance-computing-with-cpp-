@@ -8,9 +8,9 @@ SimulationData::SimulationData() {
     mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
     total_steps = 10000;
     time_step = 10; // time step in fs
-    cutoff_radius = 15.0;    // cutoff radius for EAM potential
+    cutoff_radius = 10.0;    // cutoff radius for EAM potential
     relaxation_time_multiplier = 10; // relaxation time = relaxation time multiplier * time_step in fs
-    stop_thermostate_after_steps = 100; // stop thermostat after this number of steps
+    stop_thermostate_after_steps = 500; // stop thermostat after this number of steps
     relaxation_time_multiplier_final_value = 1e10; // after the system arrives at desired temp (stop thermostat and relax system)
     desired_temperature = 10.0; // desired temperature (only in the start) in K
 
@@ -21,7 +21,7 @@ SimulationData::SimulationData() {
 
     // MPI parameters
     domain_length = {30.0, 30.0, 30.0}; // domain length in Angstrom
-    domain_grid = {2, 2, 2}; // number of domains in each direction
+    domain_grid = {1, 2, 8}; // number of domains in each direction
     domain_periodicity = {0, 0, 0}; // periodicity of the domain in each direction
 
     // choose whether to continue old experiment or not

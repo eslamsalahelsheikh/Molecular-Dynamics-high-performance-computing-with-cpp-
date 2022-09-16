@@ -17,6 +17,8 @@ int main(int argc, char *argv[]) {
 
     Domain domain(MPI_COMM_WORLD, data.domain_length, data.domain_grid, data.domain_periodicity);
     domain.enable(atoms);
+    domain.exchange_atoms(atoms);  // exchange atoms between domains after updating positions
+    domain.update_ghosts(atoms, data.cutoff_radius*2); // update ghost atoms before calculating forces
     // Initialize simulation for given atoms
     Simulation simulation(atoms);
 

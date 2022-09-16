@@ -33,6 +33,7 @@ private:
     double temperature_;
     double mass_;
     // Private methods
+    double kinetic_energy(Atoms &atoms,double local_atoms_num);
     double kinetic_energy(Atoms &atoms);
     double potential_energy(Atoms &atoms, double epsilon, double sigma);
     double potential_energy_neighbors(Atoms &atoms, NeighborList &neighbor_list, double epsilon, double sigma);

@@ -40,6 +40,7 @@ void Simulation::initial_loop(Domain domain) {
     bool equilibrum = false;
     for (int i = 0; i < total_steps; ++i) {
         std::cout << "step: " << i << std::endl;
+        double old_total_energy = get_total_energy();
         verlet_step1(atoms_, time_step, mass);
         domain.exchange_atoms(atoms_);  // exchange atoms between domains after updating positions
         domain.update_ghosts(atoms_, cutoff_radius*2); // update ghost atoms before calculating forces
@@ -48,6 +49,13 @@ void Simulation::initial_loop(Domain domain) {
         verlet_step2(atoms_, time_step, mass);
         // thermal bathing
         if (i == stop_thermostate_after_steps)  relaxation_time_multiplier = relaxation_time_multiplier_final_value;    // this should be big enough to reduce thermostat effect
+        if (abs(get_total_energy() - old_total_energy)<0.0001)
+        {
+            domain.disable(atoms_);
+            std::cout << "quilibrium reached, exiting now!!" << std::endl;
+            MPI_Finalize();
+            exit(1);
+        }
         relaxation_time =   relaxation_time_multiplier * time_step; // relaxation time
         berendsen_thermostat(atoms_, desired_temperature, time_step, relaxation_time);
         if (i % 10 == 0) {
