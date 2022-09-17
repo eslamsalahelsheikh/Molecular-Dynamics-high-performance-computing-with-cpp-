@@ -1,4 +1,5 @@
 configure_file(./cluster_923.xyz .)
+configure_file(./cluster_3871.xyz .)
 
 set(milestone8_SRCS
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp

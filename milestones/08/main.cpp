@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
         atoms = Atoms{positions, Velocities_t};
     } else {
 //        Positions_t positions = generate_cluster(data.layer_numbers, data.atomic_distance);
-        auto [names, positions]{read_xyz("/home/eslam/Desktop/Molecular-Dynamics/milestones/08/cluster_923.xyz")};
+        auto [names, positions]{read_xyz("/home/eslam/Desktop/Molecular-Dynamics/milestones/08/cluster_3871.xyz")};
 
         atoms = Atoms{positions};
     }

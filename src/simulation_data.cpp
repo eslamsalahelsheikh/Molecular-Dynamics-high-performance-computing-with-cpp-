@@ -3,7 +3,7 @@
 SimulationData::SimulationData() {
     // Initialize all simulation parameters
 //    cluster_name = "cluster_923"; // layer_number = 6
-    layer_numbers = 6;
+    layer_numbers = 8;
     atomic_distance = 2.885; // atomic distance from reference clusters - corresponds to 408 pm lattice constant
     mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
     total_steps = 10000;
