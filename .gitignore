@@ -43,4 +43,4 @@ build/*
 LastTest.log
 cmake-build-debug/*
 *.log
-
+*.iml

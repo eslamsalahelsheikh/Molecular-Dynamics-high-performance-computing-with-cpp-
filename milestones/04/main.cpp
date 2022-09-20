@@ -8,25 +8,32 @@ int main() {
     double sigma = 1.0;
     double epsilon = 1.0;
     double time = sqrt(mass * pow(sigma,2) / epsilon);
-    double total_time = 1000* time;
-    std::cout << "total_time: " << total_time << std::endl;
-    double time_step = time/1000.0;
-    std::cout << "time_step: " << time_step << std::endl;
-    // Reading initial positions and velocities from xyz file
-    auto [names, positions, velocities]{read_xyz_with_velocities("lj54.xyz")};
+    double total_time = 5000* time;
+    // Reading initial initial_positions and initial_velocities from xyz file
+    auto [names, initial_positions, initial_velocities]{read_xyz_with_velocities("lj54.xyz")};
     // Creating visualization file milestones/04/output
     std::ofstream traj("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_04/traj.xyz");
 
-    // initializing atoms with poses and velocities
-    Atoms atoms{positions,velocities};
-    Energy energy(atoms, epsilon, sigma, mass); // initialize energy class
-
     // Main simulation loop
-    for (int i = 0; i < total_time; ++i) {
-        if (i % 10 == 0 ){ write_xyz(traj, atoms);}
-        verlet_step1(atoms, time_step, mass);
-        energy.energy_update(atoms, epsilon, sigma);
-        verlet_step2(atoms, time_step, mass);
+    std::ofstream energy_file("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_04/energies_vs_time_step.csv");
+    energy_file << "time_step,total_energy,kinetic_energy,potential_energy" << std::endl;
+    for (double time_step = 1e-4; time_step < 30e-3; time_step += 1e-3) {
+        // initializing atoms with poses and initial_velocities
+        Atoms atoms{initial_positions,initial_velocities};
+        Energy energy(atoms, epsilon, sigma, mass); // initialize energy class
+        std::cout << "time_step: " << time_step << std::endl;
+        for (int i = 0; i < total_time; ++i) {
+            if (i % 10 == 0) { write_xyz(traj, atoms); }
+            double old_total_energy = energy.get_total_energy();
+            verlet_step1(atoms, time_step, mass);
+            energy.energy_update(atoms, epsilon, sigma);
+            verlet_step2(atoms, time_step, mass);
+            if (abs(energy.get_total_energy() - old_total_energy) < 0.001 and i > 2) {
+                std::cout << "quilibrium reached for this step , exiting now!!" << std::endl;
+                energy_file << time_step << ", " << energy.get_total_energy() << ", " << energy.get_kinetic_energy() << ", " << energy.get_potential_energy() << std::endl;
+                break;
+            }
+        }
     }
     traj.close();
     std::cout << "Finished: Hoooooooooooooooray!!!!" << std::endl;
