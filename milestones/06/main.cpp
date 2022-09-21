@@ -17,7 +17,7 @@ int main() {
 
     // Initialize atoms on a cubic lattice
     double lattice_constant = sigma * 0.8;
-    Atoms atoms = lattice(3, 3, 3, lattice_constant);
+    Atoms atoms = lattice(5, 5, 5, lattice_constant);
     Energy energy(atoms, epsilon, sigma, mass); // initialize energy class
     NeighborList neighbor_list(cutoff_radius); // initialize NeighborList object for cutoff
     // Creating visualization file milestones/04/output
