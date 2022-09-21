@@ -18,7 +18,8 @@ int main() {
 
     // Initialize atoms on a cubic lattice
     double lattice_constant = sigma * 0.8;
-    Atoms atoms = lattice(3, 3, 3, lattice_constant);
+    Atoms atoms = lattice(7, 6, 7, lattice_constant);
+    std::cout << "atoms: " << atoms.nb_atoms() << std::endl;
     Energy energy(atoms, epsilon, sigma, mass); // initialize energy class
 
     // Creating visualization file milestones/04/output
@@ -28,7 +29,7 @@ int main() {
 
     // Main simulation loop
     for (int i = 0; i < total_time; ++i) {
-        std::cout << "step: " << i << std::endl;
+//        std::cout << "step: " << i << std::endl;
         if (i % 10 == 0) {
             write_xyz(traj, atoms);
         }
