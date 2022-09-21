@@ -48,7 +48,6 @@ TEST(BerendsenThermostatTest, SingleAtomExponentialDecay) {
     double T_init, T_curr, T_calc;
 
     for(int i=1; i<=steps; i++){ // main sim loop
-        EXPECT_NEAR(T_curr, T_calc, T_calc*0.01); // check whether T_curr=T_calc+-1%
         verlet_step1(atoms, dt,1);
         energy.energy_update(atoms, epsilon, sigma);
         verlet_step2(atoms, dt,1);
@@ -56,6 +55,7 @@ TEST(BerendsenThermostatTest, SingleAtomExponentialDecay) {
         energy.berendsen_thermostat(atoms, T_target, dt, tau);
         T_curr = energy.get_temperature();
         T_calc = T_target+(T_init-T_target)*exp(-dt/tau);
+        EXPECT_NEAR(T_curr, T_calc, T_calc*0.01); // check whether T_curr=T_calc+-1%
     }
 }
 
@@ -66,11 +66,10 @@ TEST(BerendsenThermostatTest, FinalConvergence) {
     double epsilon = 1.0;
     double sigma = 1.0;
 
-    double t_tot = 100; // total simulation time
     double dt = 0.01; // timestep
     double tau = 10.*dt; // relaxation time
-    int steps = t_tot/dt; // number of simulation steps
-    double T_target = 0.1;
+    int steps = 10000; // number of simulation steps
+    double T_target = 1.0;
 
     Atoms atoms(lattice(5, 5, 5, sigma*1.12)); // initialize 5x5x5 lattice
     Energy energy(atoms, epsilon, sigma, mass);
