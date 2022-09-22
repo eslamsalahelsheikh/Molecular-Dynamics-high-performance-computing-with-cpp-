@@ -80,10 +80,10 @@ void Simulation::relaxation_loop(int iteration) {
         update_gupta(atoms_, neighbor_list_, cutoff_radius);
         verlet_step2(atoms_, time_step, mass);
         if (i % 10 == 0) {export_xyz_relax(directory, iteration*relaxation_steps+i, atoms_);} // write xyz file every 10 steps
+    }
     // adding energies to a file
     double average_temperature = total_temp / relaxation_steps;
     export_data(iteration, energy_file, get_total_energy(), average_temperature, get_potential_energy(),continue_old_experiment);
-}
 }
 
 void Simulation::add_heat(){
