@@ -12,8 +12,9 @@ int main() {
     // Reading initial initial_positions and initial_velocities from xyz file
     auto [names, initial_positions, initial_velocities]{read_xyz_with_velocities("lj54.xyz")};
     // Creating visualization file milestones/04/output
-    std::ofstream traj("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_04/traj.xyz");
-    // creating a file to store the total energy of the system
+    std::ofstream traj("/home/fr/fr_fr/fr_ee64/Molecular-Dynamics/output/milestone_04/traj.xyz");
+
+    // Main simulation loop
     std::ofstream energy_file("/home/eslam/Desktop/Molecular-Dynamics/output/milestone_04/energies_vs_time_step.csv");
     energy_file << "time_step,total_energy,kinetic_energy,potential_energy" << std::endl;
     // Main simulation loop

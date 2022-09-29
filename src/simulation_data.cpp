@@ -2,7 +2,7 @@
 
 SimulationData::SimulationData() {
     // Initialize all simulation parameters
-    cluster_file = "/home/eslam/Desktop/Molecular-Dynamics/milestones/08/cluster_923.xyz";
+    cluster_file = "/home/fr/fr_fr/fr_ee64/Molecular-Dynamics/milestones/08/cluster_923.xyz";
     milestone = "08";   // milestone number
     layer_numbers = 12; // number of layers
     atomic_distance = 2.885; // atomic distance
@@ -37,11 +37,9 @@ void SimulationData::create_directories_and_files() {
     std::string number_of_layers = std::to_string(layer_numbers);   // number of layers
     std::string number_of_cores = std::to_string(domain_grid.prod());   // number of ranks
     // creating directory for the experiment
-    if (milestone == "07")
-        directory =
-                "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/" + number_of_layers +
-                "/";
-    else if (milestone == "08") directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_08/923/";
+    if (milestone == "07")  directory = "/home/fr/fr_fr/fr_ee64/Molecular-Dynamics/output/milestone_07/" + number_of_layers+"/";
+    else if (milestone == "08")  directory = "/home/fr/fr_fr/fr_ee64/Molecular-Dynamics/output/milestone_08/923/";
+    std::filesystem::create_directory(directory);
     // creating energy file
     std::filesystem::create_directory(directory); // create directory
     energy_file = std::ofstream(directory + number_of_cores + "_energies.csv");
