@@ -3,11 +3,11 @@
 SimulationData::SimulationData() {
     // Initialize all simulation parameters
 //    cluster_name = "cluster_923"; // layer_number = 6
-    layer_numbers = 6;
+    layer_numbers = 12;
     atomic_distance = 2.885; // atomic distance from reference clusters - corresponds to 408 pm lattice constant
     mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
-    total_steps = 10000;
-    time_step = 10; // time step in fs
+    total_steps = 5000;
+    time_step = 1.0; // time step in fs
     cutoff_radius = 10.0;    // cutoff radius for EAM potential
     relaxation_time_multiplier = 10; // relaxation time = relaxation time multiplier * time_step in fs
     stop_thermostate_after_steps = 500; // stop thermostat after this number of steps
@@ -15,8 +15,8 @@ SimulationData::SimulationData() {
     desired_temperature = 500.0; // desired temperature (only in the start) in K
 
     // Relaxation experiment parameters
-    relaxation_steps = 500; // number of relaxation steps
-    expermint_num = 26;    // number of experiments
+    relaxation_steps = 2000; // number of relaxation steps
+    expermint_num = 40;    // number of experiments
     add_energy = 0.01;    // energy added in each experiment
 
     // MPI parameters
