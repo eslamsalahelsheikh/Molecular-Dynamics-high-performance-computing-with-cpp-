@@ -38,11 +38,11 @@ void SimulationData::create_directories_and_files() {
     std::string number_of_layers = std::to_string(layer_numbers);
 
     // creating directory for the experiment
-    directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+number_of_layers+"/";
+    directory = "/home/fr/fr_fr/fr_ee64/Molecular-Dynamics/output/milestone_07/"+number_of_layers+"/";
     std::filesystem::create_directory(directory);
     // creating energy file
     energy_file = std::ofstream(directory +  number_of_layers + "_energies.csv");
     // getting cluster file
-//    cluster_file = "/home/eslam/Desktop/Molecular-Dynamics/clusters/"+cluster_name+".xyz";
+//    cluster_file = "/home/fr/fr_fr/fr_ee64/Molecular-Dynamics/clusters/"+cluster_name+".xyz";
     old_experiment_file = directory + old_experiment_file;
 }

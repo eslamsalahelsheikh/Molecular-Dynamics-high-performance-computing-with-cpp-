@@ -23,7 +23,7 @@ int main() {
     // Creating visualization file milestones/04/output
     std::cout << "checkpoint 1 " << std::endl;
     std::ofstream traj(
-            "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_06/traj.xyz");
+            "/home/fr/fr_fr/fr_ee64/Molecular-Dynamics/output/milestone_06/traj.xyz");
 
     // Main simulation loop
     for (int i = 0; i < total_time; ++i) {
