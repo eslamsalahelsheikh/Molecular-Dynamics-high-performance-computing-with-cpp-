@@ -22,7 +22,10 @@ inline void export_data(int iteration, std::ofstream &energy_file, double total_
     }
     energy_file << iteration << "," << total_energy << "," << average_temp << "," << potential_energy << std::endl;
 }
-
+inline void export_data(int iteration, std::ofstream &energy_file, double total_energy,double potential_energy){
+    energy_file << "iteration,total_energy,potential_energy" << std::endl;
+    energy_file << iteration << "," << total_energy << "," << "," << potential_energy << std::endl;
+}
 
 inline void export_xyz_relax(std::string directory, int iteration_num, Atoms &atoms){
     std::ofstream traj3 (directory+"/traj_"+std::to_string(atoms.nb_atoms())+"_"+std::to_string(iteration_num)+"_relax.xyz");

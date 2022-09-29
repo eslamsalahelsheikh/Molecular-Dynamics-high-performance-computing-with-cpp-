@@ -61,7 +61,8 @@ void Simulation::initial_loop(Domain domain) {
         if (i % 10 == 0) {
             // exporting xyz files
             domain.disable(atoms_);
-            export_xyz_initial(directory, i, atoms_);
+//            export_xyz_initial(directory, i, atoms_);
+            export_data(i,energy_file, get_total_energy(),get_potential_energy());
             domain.enable(atoms_);
             domain.exchange_atoms(atoms_);
             domain.update_ghosts(atoms_, cutoff_radius*2);

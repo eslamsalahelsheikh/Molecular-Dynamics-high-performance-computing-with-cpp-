@@ -38,7 +38,7 @@ protected:
 private:
     void create_directories_and_files();
     std::string cluster_name; // name of the cluster
-
+    std::string milestone; // milestone number
 };
 
 #endif //MOLECULARDYNAMICS_SIMULATION_DATA_H

@@ -1,0 +1,74 @@
+    layer_numbers = 12;
+    atomic_distance = 2.885; // atomic distance from reference clusters - corresponds to 408 pm lattice constant
+    mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
+    total_steps = 50000;
+    time_step = 1.0; // time step in fs
+    cutoff_radius = 15.0;    // cutoff radius for EAM potential
+    relaxation_time_multiplier = 10; // relaxation time = relaxation time multiplier * time_step in fs
+    stop_thermostate_after_steps = 2000; // stop thermostat after this number of steps
+    relaxation_time_multiplier_final_value = 1e10; // after the system arrives at desired temp (stop thermostat and relax system)
+    desired_temperature = 1.0; // desired temperature (only in the start) in K
+
+    // Relaxation experiment parameters
+    relaxation_steps = 2000; // number of relaxation steps
+    expermint_num = 40;    // number of experiments
+    add_energy = 0.01;    // energy added in each experiment
+
+    // MPI parameters
+    domain_length = {30.0, 30.0, 30.0}; // domain length in Angstrom
+
+
+1
+real    0m31.193s
+user    0m26.408s
+sys     0m1.418s
+------------------------------------
+2
+real    0m25.058s
+user    0m21.412s
+sys     0m1.323s
+------------------------------------
+4
+real    0m20.679s
+user    0m16.904s
+sys     0m1.288s
+------------------------------------
+6
+real    0m19.182s
+user    0m15.215s
+sys     0m1.330s
+---------------------------------------
+8
+real    0m18.472s
+user    0m13.456s
+sys     0m1.260s
+--------------------------------------
+9
+real    0m18.531s
+user    0m13.478s
+sys     0m1.294s
+-------------------------------------
+10
+real    0m16.667s
+user    0m13.512s
+sys     0m1.348s
+------------------------------------
+12
+real    0m17.671s
+user    0m12.444s
+sys     0m1.257s
+-----------------------------------
+14
+real    0m17.775s
+user    1m13.818s
+sys     0m7.182s
+-----------------------------------
+15
+real    0m18.951s
+user    0m13.206s
+sys     0m1.497s
+-----------------------------------
+16
+real    0m17.434s
+user    0m11.703s
+sys     0m1.528s
