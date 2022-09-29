@@ -7,7 +7,7 @@ SimulationData::SimulationData() {
     layer_numbers = 12;
     atomic_distance = 2.885; // atomic distance from reference clusters - corresponds to 408 pm lattice constant
     mass = 196.9665* 103.6; // atomic mass of Gold (https://www.nuclear-power.com/gold-atomic-number-mass-density/)
-    total_steps = 50000;
+    total_steps = 5000;
     time_step = 1.0; // time step in fs
     cutoff_radius = 15.0;    // cutoff radius for EAM potential
     relaxation_time_multiplier = 10; // relaxation time = relaxation time multiplier * time_step in fs
@@ -40,7 +40,7 @@ void SimulationData::create_directories_and_files() {
     std::string number_of_cores = std::to_string(domain_grid.prod());
     // creating directory for the experiment
     if (milestone == "07")  directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_07/"+number_of_layers+"/";
-    else if (milestone == "08")  directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_08/";
+    else if (milestone == "08")  directory = "/home/eslam/Desktop/Molecular-Dynamics/output/milestone_08/923/";
     std::filesystem::create_directory(directory);
     // creating energy file
     energy_file = std::ofstream(directory +  number_of_cores + "_energies.csv");
