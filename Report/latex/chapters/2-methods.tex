@@ -8,7 +8,7 @@
 \section{Lennard-Jones potential force}
     The Lennard-Jones potential is a potential that is used in molecular dynamics simulations to model the interatomic interactions between atoms and molecules. It models both the attractive and repulsive forces between atoms and molecules in a system in a simple way. It is a simple model because it only depends on the distance between the atoms and molecules. It is not a very accurate model though because it does not take into account the charge of the particles, and the different types of interactions between the particles. This potential is very popular to use in molecular dynamics simulations because it is simple to use, and it is computationally cheap. It can also be used to model different types of interactions between atoms and molecules, like the interaction between the electrons of an atom with the electrons of another atom, the interaction between the electrons of an atom with the nuclei of another atom, and the interaction between the nuclei of an atom with the nuclei of another atom.
 
-    The Lennard-Jones potential is given by:
+    The Lennard-Jones potential \cite{molDymCourse} is given by:
     \begin{equation}
         U(r) = 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
     \end{equation}
@@ -23,7 +23,7 @@
 \section{Thermostat}
     The thermostat is an algorithm that is used to preserve the atoms from evaporating. The idea is when we initialize the atoms in random positions, the atoms will try to get to the equilibrium position. This means that the atoms will move very fast and will collide with each other and the temperature of the system will increase very fast. This will lead to the atoms evaporation. The thermostat is used to prevent this from happening. The thermostat is used to slow down the atoms and make them move slower until they reach the equilibrium position and the temperature of the system is stable. 
     
-    The Berendsen thremostate is the thermostat that we will use in our simulation. It's one of the most popular thermostats. It is a simple thermostat that is easy to implement. To maintain the temperature, the system is coupled to an external heat bath with fixed Temperature $T_{0}$\cite{berendsen1984molecular}. The
+    The Berendsen thremostate\cite{berendsen1984molecular} is the thermostat that we will use in our simulation. It's one of the most popular thermostats. It is a simple thermostat that is easy to implement. To maintain the temperature, the system is coupled to an external heat bath with fixed Temperature $T_{0}$. The
     velocities of the particles are rescaled with a factor $\lambda$ at each time step:
     \begin{equation}
         \lambda = \sqrt{1+\frac{\Delta t}{\tau}\left(\frac{T_{0}}{T}-1\right)}
@@ -33,8 +33,9 @@
 
 
 \section{Neighbor list search}
-    The problem of using potential forces in molecular dynamics simulations is that the force is calculated between all pairs of atoms. This means that the computational cost of the simulation is proportional to $N^2$, where $N$ is the number of atoms in the system. This is a very big computational cost, and it is not very efficient. 
-    To solve this problem, we can use a neighbor list search. It's an algorithm that is used to speed up the calculation of the forces that act on the particles. 
+    The problem of using potential forces in molecular dynamics simulations is that the force is calculated between all pairs of atoms. This means that the computational cost of the simulation is proportional to $N^2$, where $N$ is the number of atoms in the system. This is a very big computational cost, and it is not very efficient.  
+
+    To solve this problem, we can use a neighbor list search\cite{arya1998optimal}. It's an algorithm that is used to speed up the calculation of the forces that act on the particles. 
     It is based on the idea of only calculating the force between atoms that are close to each other. This means that we will only calculate the force between atoms that are in the same cell, and the neighboring cells. Therefor the computational cost of the simulation becomes proportional to $N$ instead of $N^2$. And this is a very big improvement in the computational cost of the simulation. 
     
     
