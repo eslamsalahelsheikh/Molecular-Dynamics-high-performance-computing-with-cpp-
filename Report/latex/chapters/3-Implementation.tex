@@ -2,58 +2,25 @@
 
 \section{Velocity-Verlet integrator}
 \subsection{Test strategy for Verlet integrator}
-We test the Verlet integrator by comparing the results of the Verlet integrator with the results of the analytical solution of the equations of motion of a particle. We use the following equations of motion for a particle:
+We test the Verlet integrator by comparing the results of the Verlet integrator with the results of the analytical solution of the equations of motion of a particle. the analytical solution of the equations of motion of a particle is given by the following equations:
 \begin{equation}
-    \frac{d^2 x}{dt^2} = -\frac{k}{m}x
+\label{eq:analytical}
+    \begin{aligned}
+    x_i(t+dt) &= x_i(t) + v_i(t)dt + \frac{1}{2m}f_i(t)dt^2 \\
+    v_i(t+dt) &= v_i(t) + \frac{1}{2m_i}(f_i(t)+f_i(t+dt))dt
+    \end{aligned}
 \end{equation}
+If we assume that the there is no acting forces (constant and equal to zero) on the particles, then the analytical solution of the equations of motion of a particle after N time steps is given by the following equations:
 \begin{equation}
-    \frac{d^2 v}{dt^2} = -\frac{k}{m}v
+\label{eq:analytical2}
+    \begin{aligned}
+    x_i(t+N*dt) &= x_i(t) + \sum_{i=0}^{N}v_i(t)dt \\
+    v_i(t+N*dt) &= v_i(t)
+    \end{aligned}
 \end{equation}
-where $x$ is the position of the particle, $v$ is the velocity of the particle, $m$ is the mass of the particle, and $k$ is the spring constant. We use the following initial conditions:
-\begin{equation}
-    x(0) = 1
-\end{equation}
-\begin{equation}
-    v(0) = 0
-\end{equation}
-\begin{equation}
-    x'(0) = 0
-\end{equation}
-\begin{equation}
-    v'(0) = 1
-\end{equation}
-where $x'$ is the velocity of the particle, and $v'$ is the acceleration of the particle. We use the following values for the mass of the particle and the spring constant: 
-\begin{equation}
-    m = 1
-\end{equation}
-\begin{equation}
-    k = 1
-\end{equation}
-We use the following values for the time step:
-\begin{equation}
-    \Delta t = 0.01
-\end{equation}
-We use the following values for the number of steps:
-\begin{equation}
-    N = 1000
-\end{equation}
-We use the following values for the initial time:
-\begin{equation}
-    t_0 = 0
-\end{equation}
-We use the following values for the final time:
-\begin{equation}
-    t_f = 10
-\end{equation}
-We use the following values for the initial position:
-\begin{equation}
-    x_0 = 1
-\end{equation}
-We use the following values for the initial velocity:
-\begin{equation}
-    v_0 = 0
-\end{equation}
-We use the following values for the initial acceleration:
+where $dt$ is the time step, $N$ is the number of time steps, $x_i(t)$ is the position of the particle $i$ at time $t$, $v_i(t)$ is the velocity of the particle $i$ at time $t$, $f_i(t)$ is the force acting on the particle $i$ at time $t$, and $m_i$ is the mass of the particle $i$.
+
+That means if we compare the result after all the integration steps of the two Verlet steps with the expected output of the analytical solution, then we can be sure that the Verlet integrator is working correctly.
 
 \section{Lennard-Jones potential force}
 \subsection{Derivation of the analytical expression for the forces of the Lennard-Jones potential}
