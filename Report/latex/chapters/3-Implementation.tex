@@ -1,4 +1,75 @@
 \chapter{Implementation}\label{chap:Implementation}
-Explain the math and introduce notation. sds
+
+\section{Velocity-Verlet integrator}
+\subsection{Test strategy for Verlet integrator}
+We test the Verlet integrator by comparing the results of the Verlet integrator with the results of the analytical solution of the equations of motion of a particle. We use the following equations of motion for a particle:
+\begin{equation}
+    \frac{d^2 x}{dt^2} = -\frac{k}{m}x
+\end{equation}
+\begin{equation}
+    \frac{d^2 v}{dt^2} = -\frac{k}{m}v
+\end{equation}
+where $x$ is the position of the particle, $v$ is the velocity of the particle, $m$ is the mass of the particle, and $k$ is the spring constant. We use the following initial conditions:
+\begin{equation}
+    x(0) = 1
+\end{equation}
+\begin{equation}
+    v(0) = 0
+\end{equation}
+\begin{equation}
+    x'(0) = 0
+\end{equation}
+\begin{equation}
+    v'(0) = 1
+\end{equation}
+where $x'$ is the velocity of the particle, and $v'$ is the acceleration of the particle. We use the following values for the mass of the particle and the spring constant: 
+\begin{equation}
+    m = 1
+\end{equation}
+\begin{equation}
+    k = 1
+\end{equation}
+We use the following values for the time step:
+\begin{equation}
+    \Delta t = 0.01
+\end{equation}
+We use the following values for the number of steps:
+\begin{equation}
+    N = 1000
+\end{equation}
+We use the following values for the initial time:
+\begin{equation}
+    t_0 = 0
+\end{equation}
+We use the following values for the final time:
+\begin{equation}
+    t_f = 10
+\end{equation}
+We use the following values for the initial position:
+\begin{equation}
+    x_0 = 1
+\end{equation}
+We use the following values for the initial velocity:
+\begin{equation}
+    v_0 = 0
+\end{equation}
+We use the following values for the initial acceleration:
+
+\section{Lennard-Jones potential force}
+\subsection{Derivation of the analytical expression for the forces of the Lennard-Jones potential}
+
+\section{Berendsen thermostat}
+\subsection{Test strategy for Berendsen thermostat}
+
+\section{Embedded atom method}
+\section{units and specification of the time unit}
+\subsection{time step for the gold potential}
+
+
+\section{Neighbor List}
+
+\section{Parallelization using MPI}
+
+Explain the math and introduce notation.
 \input{figures/Implementation/algBackpropagation}
 \input{figures/Implementation/figTikz}

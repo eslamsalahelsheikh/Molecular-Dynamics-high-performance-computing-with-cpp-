@@ -1,2 +1,63 @@
 \chapter{Methods}\label{chap:Methods}
-Give a brief overview of the work relevant for your report.
+
+Here we will discuss the different methods that we will use in our simulation.
+
+\section{Velocity-Verlet integrator}
+The velocity-Verlet algorithm is a numerical method for solving the equations of motion of a system of particles. It is a symplectic integrator, which means that it conserves the total energy of the system. The algorithm is based on the Taylor expansion of the position and velocity of the particles. The algorithm is as follows:
+\begin{enumerate}
+    \item Calculate the acceleration of the particles at time $t$.
+    \item Calculate the velocity of the particles at time $t+\frac{1}{2}\Delta t$.
+    \item Calculate the position of the particles at time $t+\Delta t$.
+    \item Calculate the acceleration of the particles at time $t+\Delta t$.
+    \item Calculate the velocity of the particles at time $t+\Delta t$.
+\end{enumerate}
+
+
+\section{Lennard-Jones potential force}
+The Lennard-Jones potential is a potential that is used to model the interaction between atoms and molecules. It is a potential that is used in molecular dynamics simulations. LJ potential is a function of the distance between two particles. The LJ potential is given by the following equation:
+\begin{equation}
+    V(r) = 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
+\end{equation}
+where $\epsilon$ is the depth of the potential well, $\sigma$ is the distance at which the potential is zero, and $r$ is the distance between the two atoms. The force is given by the following equation:
+\begin{equation}
+    F(r) = -\frac{dV(r)}{dr} = 24\epsilon\left[\frac{2}{r}\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
+\end{equation}
+The force is calculated by using the following steps:
+\begin{enumerate}
+    \item Calculate the distance between all pairs of atoms.
+    \item Calculate the potential between all pairs of atoms.
+    \item Calculate the force between all pairs of atoms.
+\end{enumerate}
+
+\section{Thermostat}
+The thermostat is an algorithm that is used to preserve the atoms from evaporating. The idea is when we initialize the atoms in random positions, the atoms will try to get to the equilibrium position. This means that the atoms will move very fast and will collide with each other and the temperature of the system will increase very fast. This will lead to the atoms evaporation. The thermostat is used to prevent this from happening. The thermostat is used to slow down the atoms and make them move slower until they reach the equilibrium position and the temperature of the system is stable. The thermostat is based on the idea that the kinetic energy of the system is conserved. This means that if we change the velocity of the particles, then we must change the velocity of the other particles in the system in such a way that the total kinetic energy of the system is conserved. The algorithm is as follows:
+
+
+\section{Neighbor List}
+The neighbor list is an algorithm that is used to speed up the calculation of the forces that act on the particles. It is based on the idea that the forces between particles are only dependent on the distance between them. This means that if the distance between two particles is larger than a certain threshold value, then the force between them is zero. Therefore, we can calculate the forces between particles only if the distance between them is smaller than the threshold value. The algorithm is as follows:
+\begin{enumerate}
+    \item Calculate the distance between all particles.
+    \item If the distance between two particles is smaller than the threshold value, then calculate the force between them.
+    \item If the distance between two particles is larger than the threshold value, then do not calculate the force between them.
+\end{enumerate}
+
+\section{Embedded-atom method potential force}
+The embedded-atom method (EAM) is a method for calculating the forces between atoms. It is based on the idea that the forces between atoms are dependent on the density of the atoms. EAM is a potential force that is used in the simulation of metals, alloys, and intermetallic compounds. The EAM potential force is as follows:
+
+
+
+\section{Parallelization}
+The parallelization of the simulation is done using MPI. The algorithm is as follows:
+\begin{enumerate}
+    \item Initialize the MPI environment.
+    \item Get the number of processes.
+    \item Get the rank of the process.
+    \item Initialize the atoms.
+    \item Calculate the forces.
+    \item Calculate the total energy.
+    \item Calculate the total momentum.
+    \item Calculate the temperature.
+    \item Calculate the pressure.
+    \item Print the results.
+    \item Finalize the MPI environment.
+\end{enumerate}
