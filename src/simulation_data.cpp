@@ -2,6 +2,7 @@
 
 SimulationData::SimulationData() {
     // Initialize all simulation parameters
+    cluster_file = "/home/eslam/Desktop/Molecular-Dynamics/milestones/08/cluster_923.xyz";
     milestone = "08";   // milestone number
     layer_numbers = 12; // number of layers
     atomic_distance = 2.885; // atomic distance

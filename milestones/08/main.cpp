@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
     Atoms atoms;
     SimulationData data;
     // Reading initial positions from cluster xyz file
-    auto [names, positions]{read_xyz("/home/eslam/Desktop/Molecular-Dynamics/milestones/08/cluster_923.xyz")};
+    auto [names, positions]{read_xyz(data.cluster_file)};
     atoms = Atoms{positions};
     // initialize Domain class for domain decomposition
     Domain domain(MPI_COMM_WORLD, data.domain_length, data.domain_grid, data.domain_periodicity);
