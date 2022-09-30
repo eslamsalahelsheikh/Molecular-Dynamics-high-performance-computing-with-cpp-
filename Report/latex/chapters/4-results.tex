@@ -1,19 +1,31 @@
 \chapter{Results}\label{chap:results}
 
 \section{Total energy as a function of time for different time steps}
+    The setup for the simulation is as follows:
+    \begin{itemize}
+        \item The simulation is run for 5000 time steps.
+        \item The time step is varied from 1e-4 to 301e-3 with a step size of 1e-3.
+        \item Mass of the particle is 1.
+        \item Sigma is 1.
+        \item Epsilon is 1.
+        \item Using the Lennard-Jones potential.
+        \item Initial positions and velocities used are imported from the provided lj54.xyz file.
+    \end{itemize}
+
     \graphicspath{ {./figures/milestone04/} }
     \begin{figure}[!htb]
     % \captionsetup{justification=centering,margin=2cm}
     \centering
         \includegraphics[scale=0.9]{total_energy_vs_time_step.png}
-        \caption[Total energy vs Time steps using parameters]{\textbf{Total energy vs Time steps using parameters: start\_time\_step=1e-4, end\_time\_step=30e-3,step=1e-3, sigma=1, mass=1, epsilon=1, total\_time=5000}}
+        \caption{Total energy vs Time steps using parameters}
     \label{fig:total_energy_vs_time_step}
     \end{figure}
-As we increase the time step the total energy of the system increases and at some point the system becomes unstable and the atoms start to move away from each other
-and the simulation stops. This is because the time step is too large and the atoms are not able to move to the correct position in the next time step.
+    As we increase the time step the total energy of the system increases and at some point the system becomes unstable and the atoms start to move away from each other
+    and the simulation stops. This is because the time step is too large and the atoms are not able to move to the correct position in the next time step.
 
 
 \section{Snapshots sequence of LJ simulation}
+    The setup of the simulation is the same as in the previous section.
     \graphicspath{ {./figures/milestone04/} }
     \begin{figure}[h]
 
@@ -48,47 +60,59 @@ and the simulation stops. This is because the time step is too large and the ato
     \end{figure}
 
 
-
 \section{simulation time as a function of the size (number of atoms) without neighbor list}
+    The setup of the simulation is as follows:
+    \begin{itemize}
+        \item The simulation is run for 5000 time steps.
+        \item The time step is 1e-3.
+        \item Mass of the particle is 1.
+        \item Sigma is 1.
+        \item Epsilon is 1.
+        \item Using the Lennard-Jones potential.
+        \item Creating clusters of atoms with different number of atoms 9:294 atom with lattice constant of 0.8.
+        \item Relaxation time starts from 10 * time\_step and after reaching equilibrium  becomes 50 * time\_step.
+    \end{itemize}
     \graphicspath{ {./figures/milestone05/} }
     \begin{figure}[!htb]
     \centering
         \includegraphics[scale=0.9]{simulation_time_vs_atoms_number.png}
-        \caption[Simulation time vs Atoms number]{\textbf{Simulation time vs Atoms number using parameters: time\_step=1e-3, sigma=1, mass=1, epsilon=1, total\_time=5000, relaxation\_time\_start = 10* time\_step,then after reaching equilibrium, it increases to 50*time\_step.}}
+        \caption{Simulation time vs Atoms number}
     \label{fig:simulation_time_vs_atoms_number}
     \end{figure}
     Here we notice that the simulation time increases quadratically with the number of atoms in the system. This is because in the energy update step in the LJ simulation we have to calculate the energy between all the pairs of atoms in the system. So the time complexity of the energy update step is $O(N^2)$ where $N$ is the number of atoms in the system. For example, In the figure above,The  simulation time for 100 atoms is 3.5s and for 200 atoms is 12.9s which is almost 4 times more than the simulation time for 100 atoms.
 
 \section{simulation time as a function of the size (number of atoms) with neighbor list}
+    The setup of this simulation is same as the previous section except that we are using the neighbor list to update the energy of the system with cuttoff radius of 1.5.
     \graphicspath{ {./figures/milestone06/} }
     \begin{figure}[!htb]
     \centering
         \includegraphics[scale=0.9]{simulation_time_vs_atoms_number.png}
-        \caption[Simulation time vs Atoms number]{\textbf{Simulation time vs Atoms number using parameters: time\_step=1e-3, sigma=1, mass=1, epsilon=1, total\_time=5000, relaxation\_time\_start = 10* time\_step,then after reaching equilibrium, it increases to 50*time\_step, and cutoff\_radius = 1.5.}}
+        \caption{Simulation time vs Atoms number}
     \label{fig:simulation_time_vs_atoms_number}
-    \end{figure}
+    \end{figure}  
+
     Here, it's very clear the linearity of the simulation time with the number of atoms in the system. By introducing the concept of just calculating the energy between the atoms that are close to each other, we have reduced the time complexity of the energy update step from $O(N^2)$ to $O(N)$ where $N$ is the number of atoms in the system. For example, In the figure above,The  simulation time for 100 atoms is 0.56s and for 200 atoms is 1.05s which is almost 2 times more than the simulation time for 100 atoms.
 
 \section{total energy vs temperature}
 The setup for this section is as follows:
     \begin{itemize}
-        \item time\_step=1fs
-        \item mass=20405.7294 amu
-        \item relaxation\_time\_start = 10* time\_step,then after 500 step, it increases to 1e10*time\_step
-        \item cutoff\_radius = 10 Angstrom
-        \item added\_energy\_in\_each\_experiment=0.01*no\_atoms
-        \item atomic\_distance = 2.885
-        \item cluster\_sizes=3:12
-        \item for cluster sizes 3:8 
-        \subitem  target\_temp = 300 K
-        \subitem  initial\_simulation\_time=10000fs
-        \subitem  experiment\_simulation\_time=5000fs
-        \subitem  number\_experiments=26
-        \item for cluster sizes 9:12 
-        \subitem  target\_temp = 500 K
-        \subitem  initial\_simulation\_time=5000fs
-        \subitem  experiment\_simulation\_time=2000fs
-        \subitem  number\_experiments=40
+        \item Time\_step=1fs
+        \item Mass=20405.7294 amu
+        \item Relaxation\_time\_start = 10* time\_step,then after 500 step, it increases to 1e10*time\_step
+        \item Cutoff\_radius = 10 Angstrom
+        \item Added\_energy\_in\_each\_experiment=0.01*no\_atoms
+        \item Atomic\_distance = 2.885
+        \item Cluster\_sizes=3:12
+        \item For cluster sizes 3:8 
+        \subitem  Target\_temp = 300 K
+        \subitem  Initial\_simulation\_time=10000fs
+        \subitem  Experiment\_simulation\_time=5000fs
+        \subitem  Number\_experiments=26
+        \item For cluster sizes 9:12 
+        \subitem  Target\_temp = 500 K
+        \subitem  Initial\_simulation\_time=5000fs
+        \subitem  Experiment\_simulation\_time=2000fs
+        \subitem  Number\_experiments=40
     \end{itemize}
     \graphicspath{ {./figures/milestone07/} }
     \begin{figure}[!htb]
@@ -109,7 +133,8 @@ The setup for this section is as follows:
         \includegraphics[scale=0.35]
         {melting_point_vs_cluster_size.png}
         \caption{Melting point vs cluster size}
-    \end{figure}
+    \end{figure}  
+
     Here, as the cluster size increases the melting point increases because to melt a bigger cluster of atoms we need to add more energy to the system. This is because the atoms in the bigger cluster are more tightly packed and they are more difficult to melt.
 
 \section{heat capacity versus cluster size}
@@ -119,7 +144,8 @@ The setup for this section is as follows:
     \centering
         \includegraphics[scale=0.35]{heat_capacity_vs_cluster_size.png}
         \caption{Heat capacity vs cluster size}
-    \end{figure}
+    \end{figure}  
+
     Here, as the cluster size increases the heat capacity increases.
 
 \section{latent heat versus cluster size}
@@ -129,20 +155,20 @@ The setup for this section is as follows:
     \centering
         \includegraphics[scale=0.35]{latent_heat_vs_cluster_size.png}
         \caption{Latent heat vs cluster size}
-    \end{figure}
-    Here, as the cluster size increases the latent heat increases.
+    \end{figure}  
 
+    Here, as the cluster size increases the latent heat increases.
 
 \section{Energy conservation with MPI parallelization}
     \subsection{Total energy versus Time steps}
     The setup for this section is as follows:
     \begin{itemize}
-        \item time\_step=1fs
-        \item mass=20405.7294 amu
-        \item simulation\_time=5000fs
-        \item relaxation\_time\_start = 10* time\_step,then after 2000 step, it increases to 1e10*time\_step
-        \item cutoff\_radius = 15 Angstrom
-        \item using cluster file of 923 atoms
+        \item Time\_step=1fs
+        \item Mass=20405.7294 amu
+        \item Simulation\_time=5000fs
+        \item Relaxation\_time\_start = 10* time\_step,then after 2000 step, it increases to 1e10*time\_step
+        \item Cutoff\_radius = 15 Angstrom
+        \item Using cluster file of 923 atoms
         \item Cores number = 1,2,4,8
     \end{itemize}
     \graphicspath{ {./figures/milestone08/} }
@@ -151,6 +177,7 @@ The setup for this section is as follows:
             \includegraphics[scale=0.35]{total_energy_vs_time_steps.png}
             \caption{Total energy vs Time steps}
         \end{figure}
+
         Here, we can see that the total energy is still can be conserved even when we parallelize the code using MPI.
 
     \subsection{Time to reach equilibrium vs Cores number}
@@ -160,8 +187,9 @@ The setup for this section is as follows:
         \centering
             \includegraphics[scale=0.35]{time_to_demonstrate_energy_conservation_vs_cores_number.png}
             \caption{Time to reach equilibrium vs Cores number}
-        \end{figure}
+        \end{figure}  
+
         Here, we can see that the time to reach equilibrium decreases as the number of cores increases. This is because the number of atoms that each core is responsible for decreases as the number of cores increases. So the time to calculate the energy between the atoms decreases as the number of cores increases. This is why the time to reach equilibrium decreases as the number of cores increases.
 
 % \section{Nanowire σ/ɛ}
-\section{Nanowire defects}
+% \section{Nanowire defects}

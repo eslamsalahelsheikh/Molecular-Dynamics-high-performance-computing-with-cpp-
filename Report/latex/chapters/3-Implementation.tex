@@ -2,7 +2,9 @@
 
 \section{Velocity-Verlet integrator}
 
-    The velocity-Verlet algorithm consists of two steps: the first step is to calculate the new positions of the atoms, and the intermediate velocities, and the second step is to calculate the new velocities of the atoms. The first step is done by using the following equation:
+    The velocity-Verlet algorithm consists of two steps: the first step is to calculate the new positions of the atoms, and the intermediate velocities. The second step is to calculate the new velocities of the atoms.  
+
+    The first step is done by using the following equation:
     \begin{equation}
     \label{eq:verlet1}
         \begin{aligned}
@@ -29,6 +31,8 @@
         v_i(t+dt) &= v_i(t) + \frac{1}{2m_i}(f_i(t)+f_i(t+dt))dt
         \end{aligned}
     \end{equation}
+    where $f_i(t)$ is the force on atom $i$, $dt$ is the time step, $m_{i}$ is the mass of atom $i$, $v_{i}$ is the velocity of atom $i$ and $x_{i}$ is the position of atom $i$.  
+
     If we assume that the there is no acting forces (constant and equal to zero) on the particles, then the analytical solution of the equations of motion of a particle after N time steps is given by the following equations:
     \begin{equation}
     \label{eq:analytical2}
@@ -37,7 +41,7 @@
         v_i(t+N*dt) &= v_i(t)
         \end{aligned}
     \end{equation}
-    where $dt$ is the time step, $N$ is the number of time steps, $x_i(t)$ is the position of the particle $i$ at time $t$, $v_i(t)$ is the velocity of the particle $i$ at time $t$, $f_i(t)$ is the force acting on the particle $i$ at time $t$, and $m_i$ is the mass of the particle $i$.
+    where $dt$ is the time step, $N$ is the number of time steps, $x_i(t)$ is the position of the particle $i$ at time $t$, $x_i(t+N*dt)$ is the position of the particle at time $N$ , and $v_i(t)$ is the velocity of the particle $i$ at time $t$.
 
     That means if we compare the result after all the integration steps of the two Verlet steps with the expected output of the analytical solution, then we can be sure that the Verlet integrator is working correctly.
 
@@ -60,7 +64,7 @@
             \end{aligned}
         \end{equation}
     \end{enumerate}
-    where $\epsilon$ is the depth of the potential well, $\sigma$ is the distance at which the potential is zero, $r$ is the distance between the two atoms, and $\vec{r}$ is the vector between the two atoms.
+    where $\epsilon$ is the depth of the potential well, $\sigma$ is the distance at which the potential is zero, $r$ is the distance between the two atoms, $\vec{r}$ is the vector between the two atoms, and $dV/dr$ is the derivative of the potential with respect to the distance between the two atoms.
 
 
 \section{Berendsen thermostat}
@@ -75,10 +79,10 @@
 
 
     \subsection{Test strategy for Berendsen thermostat}
-    We have implemented two test cases for the Berendsen thermostat. The first test case is a test case where we test the Berendsen thermostat on a system with a single particle. The second test case is a test case where we test the Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12. The test cases are implemented in the file.
+    We have implemented two test cases for the Berendsen thermostat. The first test case is a test case where we test the Berendsen thermostat on a system with a single particle. The second test case is a test case where we test the Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12.
 
     \subsubsection{Test case 1: Berendsen thermostat on a system with a single particle}
-    Here, we make use of the derived equation in the lecture notes:
+    Here, we make use of the derived equation in the lecture notes\cite{molDymCourse}:
     \begin{equation}
     \label{eq:berendsen}
         \begin{aligned}
@@ -100,21 +104,22 @@
 \section{Neighbor List}
     The neighbor list search is calculated by using the following steps:
         \begin{enumerate}
-            \item Divide the simulation box into a grid of cells of size $cutoff$.
+            \item Divide the simulation box into a grid of cells of size $b$.
             \item Sort all the particles into the cells.
             \item Construct a neighbor list for each particle by looping over all the cells that are within a distance of $cutoff$ from the cell that the particle is in.
-            \item The $cutoff$ distance needs to be smaller than the cell size.
+            \item The $cutoff$ distance needs to be smaller than the cell size $b$.
             \item This $neighbor\_list$ is used to calculate the force between the particle and its neighbors.
-            \item Update the neighbor list in every time step.
-            \item Shift the potential energy by
+            \item While calculating the forces, shift the potential energy by:
             \begin{equation}
                 4 \epsilon [\left(\frac{\sigma}{cutoff}\right)^{12} - \left(\frac{\sigma}{cutoff}\right)^{6}]
             \end{equation}
+            where $\epsilon$ is the depth of the potential well, $\sigma$ is the distance at which the potential is zero, and $cutoff$ is the cutoff distance.
+            \item Update the neighbor list in every time step.
         \end{enumerate}
 
 
 \section{Embedded atom method}
-The used Gupta potential is following the steps:
+The used Gupta potential \cite{gupta1981lattice} is following the steps:
     \begin{enumerate}
         \item For each pair of atoms in the neighbour list, calculate the density contribution of the pair.
         \item Compute the embedding energies of the atoms.
@@ -128,7 +133,7 @@ The used Gupta potential is following the steps:
 
 
 \section{Units and specification of the time unit}
-    To work with EAM potential, we need to convert the units of the system to the units of the EAM potential. So, typically in Molecular dynamics simulations, the energy and the length are constants. and here we use E = eV and L = Angstrom. Where
+    To work with EAM potential, we need to convert the units of the system to the units of the EAM potential\cite{molDymCourse}. So, typically in Molecular dynamics simulations, the energy and the length are constants. and here we use E = eV and L = Angstrom. Where
     \begin{equation}
     \label{eq:units}
         \begin{aligned}
@@ -176,12 +181,11 @@ The parallelization of the simulation is done using MPI. The algorithm is as fol
     \item Calculate the first verlet step to update the positions and velocities.
     \item Exchange the atoms between the processes.
     \item Update the ghost atoms and the neighbor list.
-    \item Calculate the forces.
-    \item Calculate the total energy.
-    \item Calculate the temperature.
+    \item Calculate the forces, and energies.
+
     \item Calculate the second verlet step to correct the velocities.
     \item Do a Berendsen thermostat step.
     \item To export result we have to gather the atoms from all processes to the root process and export the results then distribute the atoms again.
-    \item Keep looping until reaching the equilibrium state.
+    \item Repeat the steps 5-11 for all the time steps.
     \item Finalize the MPI environment.
 \end{enumerate}
