@@ -1,0 +1,191 @@
+\chapter{Implementation}\label{chap:Implementation}
+
+\section{Velocity-Verlet integrator}
+
+    The velocity-Verlet algorithm consists of two steps: the first step is to calculate the new positions of the atoms, and the intermediate velocities. The second step is to calculate the new velocities of the atoms.  
+
+    The first step is done by using the following equation:
+    \begin{equation}
+    \label{eq:verlet1}
+        \begin{aligned}
+        \vec{v}_{i+1}= \vec{v}_{i} + 0.5 F_{i} \Delta t / m_{i} \\
+        \vec{r}_{i+1} = \vec{r}_i + \vec{v}_i \Delta t
+        \end{aligned}
+    \end{equation}
+    And the second step is done by using the following equation:
+    \begin{equation}
+    \label{eq:verlet2}
+        \begin{aligned}
+        \vec{v}_{i+1}= \vec{v}_{i} + 0.5 F_{i} \Delta t / m_{i}
+        \end{aligned}
+    \end{equation}
+    where $F_{i}$ is the force on atom $i$, $\Delta t$ is the time step, $m_{i}$ is the mass of atom $i$, $\vec{v}_{i}$ is the velocity of atom $i$ and $\vec{r}_{i}$ is the position of atom $i$. 
+
+
+    \subsection{Test strategy for Verlet integrator}
+    We test the Verlet integrator by comparing the results of the Verlet integrator with the results of the analytical solution of the equations of motion of a particle. the analytical solution of the equations of motion of a particle is given by the following equations:
+    \begin{equation}
+    \label{eq:analytical}
+        \begin{aligned}
+        x_i(t+dt) &= x_i(t) + v_i(t)dt + \frac{1}{2m}f_i(t)dt^2 \\
+        v_i(t+dt) &= v_i(t) + \frac{1}{2m_i}(f_i(t)+f_i(t+dt))dt
+        \end{aligned}
+    \end{equation}
+    where $f_i(t)$ is the force on atom $i$, $dt$ is the time step, $m_{i}$ is the mass of atom $i$, $v_{i}$ is the velocity of atom $i$ and $x_{i}$ is the position of atom $i$.  
+
+    If we assume that the there is no acting forces (constant and equal to zero) on the particles, then the analytical solution of the equations of motion of a particle after N time steps is given by the following equations:
+    \begin{equation}
+    \label{eq:analytical2}
+        \begin{aligned}
+        x_i(t+N*dt) &= x_i(t) + \sum_{i=0}^{N}v_i(t)dt \\
+        v_i(t+N*dt) &= v_i(t)
+        \end{aligned}
+    \end{equation}
+    where $dt$ is the time step, $N$ is the number of time steps, $x_i(t)$ is the position of the particle $i$ at time $t$, $x_i(t+N*dt)$ is the position of the particle at time $N$ , and $v_i(t)$ is the velocity of the particle $i$ at time $t$.
+
+    That means if we compare the result after all the integration steps of the two Verlet steps with the expected output of the analytical solution, then we can be sure that the Verlet integrator is working correctly.
+
+\section{Lennard-Jones potential force}
+    The implementation of the Lennard-Jones potential force is done by using the following steps:
+    \begin{enumerate}
+        \item Calculate the distance between all pairs of atoms.
+        \item Calculate the potential between all pairs of atoms using the Lennard-Jones potential:
+        \begin{equation}
+        \label{eq:LJ}
+            \begin{aligned}
+            V_{LJ} = 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^{6}\right]
+            \end{aligned}
+        \end{equation}
+        \item Calculate the force between all pairs of atoms using the following equation:
+        \begin{equation}
+        \label{eq:force}
+            \begin{aligned}
+            F_{LJ} = -\frac{\partial V_{LJ}}{\partial r} = \left[\frac{48 \epsilon \sigma^{12}}{r^{14}} - \frac{24 \epsilon \sigma^6}{r^{8}} \right] \vec{r}
+            \end{aligned}
+        \end{equation}
+    \end{enumerate}
+    where $\epsilon$ is the depth of the potential well, $\sigma$ is the distance at which the potential is zero, $r$ is the distance between the two atoms, $\vec{r}$ is the vector between the two atoms, and $dV/dr$ is the derivative of the potential with respect to the distance between the two atoms.
+
+
+\section{Berendsen thermostat}
+    The Berendsen thermostat is implemented by using the following steps:
+    \begin{enumerate}
+        \item Calculate the temperature of the system.
+        \item Calculate the temperature ratio $\frac{T_0}{T}$.
+        \item Calculate the scaling factor $\sqrt{\frac{T_0}{T}}$.
+        \item Rescale the velocity of the particles in the system with the scaling factor.
+    \end{enumerate}
+    where $T$ is the temperature of the system, $T_0$ is the target temperature, and $\frac{T}{T_0}$ is the temperature ratio.
+
+
+    \subsection{Test strategy for Berendsen thermostat}
+    We have implemented two test cases for the Berendsen thermostat. The first test case is a test case where we test the Berendsen thermostat on a system with a single particle. The second test case is a test case where we test the Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12.
+
+    \subsubsection{Test case 1: Berendsen thermostat on a system with a single particle}
+    Here, we make use of the derived equation in the lecture notes\cite{molDymCourse}:
+    \begin{equation}
+    \label{eq:berendsen}
+        \begin{aligned}
+            T(t) = T_0 + (T_1-T_0)*{exp(-\frac{t}{\tau})}
+        \end{aligned}
+    \end{equation}
+    where $T(t)$ is the temperature of the system at time $t$, $T_1$ is the initial temperature of the system, $T_0$ is the target temperature of the system, and $\tau$ is relaxation time constant. and using this equation we can calculate the temperature of the system at every iteration $t$ before and after the thermostat, and then make sure that the temperature relaxes exponentially to the target temperature.
+
+    \subsubsection{Test case 2: Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12}
+    This test is confirming if the temperature really converges to the target temperature after running the simulation for some time. So, the test is as follows:
+    \begin{enumerate}
+        \item Create a cubic lattice of size 5x5x5 with lattice constant=1.12.
+        \item using time\_step=0.01 , target temperature=1.0, and relaxation time constant= 10* time\_step.
+        \item Run the simulation for 10000 time steps with the Berendsen thermostat.
+        \item In the last half of the simulation (5000 time steps), calculate the system temperature in every time step and make sure that the temperature converges to the target temperature.
+    \end{enumerate}
+
+
+\section{Neighbor List}
+    The neighbor list search is calculated by using the following steps:
+        \begin{enumerate}
+            \item Divide the simulation box into a grid of cells of size $b$.
+            \item Sort all the particles into the cells.
+            \item Construct a neighbor list for each particle by looping over all the cells that are within a distance of $cutoff$ from the cell that the particle is in.
+            \item The $cutoff$ distance needs to be smaller than the cell size $b$.
+            \item This $neighbor\_list$ is used to calculate the force between the particle and its neighbors.
+            \item While calculating the forces, shift the potential energy by:
+            \begin{equation}
+                4 \epsilon [\left(\frac{\sigma}{cutoff}\right)^{12} - \left(\frac{\sigma}{cutoff}\right)^{6}]
+            \end{equation}
+            where $\epsilon$ is the depth of the potential well, $\sigma$ is the distance at which the potential is zero, and $cutoff$ is the cutoff distance.
+            \item Update the neighbor list in every time step.
+        \end{enumerate}
+
+
+\section{Embedded atom method}
+The used Gupta potential \cite{gupta1981lattice} is following the steps:
+    \begin{enumerate}
+        \item For each pair of atoms in the neighbour list, calculate the density contribution of the pair.
+        \item Compute the embedding energies of the atoms.
+        \item Compute embedding contribution to the potential energy.
+        \item Compute the repulsive energy and its derivative with respect to the distance between the atoms.
+        \item Compute the derivative of the embedded energy contributions.
+        \item Compute the pair force.
+        \item Sum up the pair forces to get the total force on each atom.
+        \item Sum up the repulsive energies to get the total potential energy.
+        \end{enumerate}
+
+
+\section{Units and specification of the time unit}
+    To work with EAM potential, we need to convert the units of the system to the units of the EAM potential\cite{molDymCourse}. So, typically in Molecular dynamics simulations, the energy and the length are constants. and here we use E = eV and L = Angstrom. Where
+    \begin{equation}
+    \label{eq:units}
+        \begin{aligned}
+            1 eV = 1.602176634 \times 10^{-19} J \\
+            1 Angstrom = 10^{-10} m
+        \end{aligned}
+    \end{equation}
+    and forces are typically calculated in units of eV/Angstrom, which is the natural force unit for this system of units.
+    To conclude, the units of the EAM potential used are:
+
+    \begin{itemize}
+        \item Energy: eV
+        \item Distance: Angstrom
+        \item Mass: amu
+        \item Temperature: K
+        \item Time: fs
+    \end{itemize}
+
+    \subsection{Time step for the gold potential}
+    We have to fix either the mass unit or the time unit. And in this implementation we fixed the time unit of 1 fs for the gold potential. because using this time step is small enough to keep the energy conservation and also large enough to get to the melting point of gold in a reasonable time for clusters of layers from 3:12. To convert to a 1 fs time step we use the equation below: 
+    \begin{equation}
+    \label{eq:time_step}
+        \begin{aligned}
+            m = \frac{[E][t^2]}{[L^2]} = 1.66*10^{-29} kg
+        \end{aligned}
+    \end{equation}
+    where $m$ is the mass of the particle, $E$ is the energy unit, $t$ is the time unit, and $L$ is the length unit.
+    and the commonly used mass unit is amu, so we can convert the mass unit to amu using the following equation:
+    \begin{equation}
+    \label{eq:amu}
+        \begin{aligned}
+            m = 1.66*10^{-29} kg * 6.022*10^{23} kg/mol * 1000 = 0.009648 amu
+        \end{aligned}
+    \end{equation}
+    And accordingly, we multiply all atoms masses by 103.642 to get a time step of 1 fs.
+
+
+\section{Parallelization using MPI}
+The parallelization of the simulation is done using MPI. The algorithm is as follows:
+\begin{enumerate}
+    \item Initialize the MPI environment.
+    \item Get the number of processes.
+    \item Get the rank of the process.
+    \item Initialize the atoms.
+    \item Calculate the first verlet step to update the positions and velocities.
+    \item Exchange the atoms between the processes.
+    \item Update the ghost atoms and the neighbor list.
+    \item Calculate the forces, and energies.
+
+    \item Calculate the second verlet step to correct the velocities.
+    \item Do a Berendsen thermostat step.
+    \item To export result we have to gather the atoms from all processes to the root process and export the results then distribute the atoms again.
+    \item Repeat the steps 5-11 for all the time steps.
+    \item Finalize the MPI environment.
+\end{enumerate}

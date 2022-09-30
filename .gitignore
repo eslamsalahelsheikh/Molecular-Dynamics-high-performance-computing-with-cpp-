@@ -43,4 +43,15 @@ build/*
 LastTest.log
 cmake-build-debug/*
 *.log
+
 *.iml
+Report/latex/report_main.aux
+Report/latex/report_main.bbl
+Report/latex/report_main.blg
+Report/latex/report_main.fdb_latexmk
+Report/latex/report_main.fls
+Report/latex/report_main.loa
+Report/latex/report_main.lof
+Report/latex/report_main.lot
+Report/latex/report_main.synctex.gz
+Report/latex/report_main.toc

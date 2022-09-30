@@ -1,0 +1,67 @@
+\chapter{Methods}\label{chap:Methods}
+
+    Here we will discuss the different methods that we will use in our simulation, then in the next chapter we will discuss the implementation of these methods.
+
+\section{Velocity-Verlet integrator}
+    The velocity-Verlet algorithm is a numerical method based on the Taylor expansion of the position and velocity of the particles for solving the equations of motion of a system of particles. It is a symplectic integrator, which means that it conserves the total energy of the system that's because the velocity is calculated at the middle of the time step, and the position is calculated at the end of the time step. This means that the velocity is calculated at the same time as the acceleration, and the position is calculated at the same time as the velocity. This means that the total energy of the system is conserved. A disadvantage of the velocity-Verlet algorithm is that it is not very accurate. The error in the position is proportional to $\Delta t^2$, and the error in the velocity is proportional to $\Delta t$. This means that the velocity-Verlet algorithm is not very accurate for large time steps.
+
+\section{Lennard-Jones potential force}
+    The Lennard-Jones potential is a potential that is used in molecular dynamics simulations to model the interatomic interactions between atoms and molecules. It models both the attractive and repulsive forces between atoms and molecules in a system in a simple way. It is a simple model because it only depends on the distance between the atoms and molecules. It is not a very accurate model though because it does not take into account the charge of the particles, and the different types of interactions between the particles. This potential is very popular to use in molecular dynamics simulations because it is simple to use, and it is computationally cheap. It can also be used to model different types of interactions between atoms and molecules, like the interaction between the electrons of an atom with the electrons of another atom, the interaction between the electrons of an atom with the nuclei of another atom, and the interaction between the nuclei of an atom with the nuclei of another atom.
+
+    The Lennard-Jones potential \cite{molDymCourse} is given by:
+    \begin{equation}
+        U(r) = 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
+    \end{equation}
+    where $\epsilon$ is the depth of the potential well, and $\sigma$ is the distance at which the potential is at a minimum.
+    The force is given by the following equation:
+    \begin{equation}
+        F(r) = -\frac{dV(r)}{dr} = 24\epsilon\left[\frac{2}{r}\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
+    \end{equation}
+    Where dV(r)/dr is the derivative of the potential with respect to the distance between the particles.
+
+
+\section{Thermostat}
+    The thermostat is an algorithm that is used to preserve the atoms from evaporating. The idea is when we initialize the atoms in random positions, the atoms will try to get to the equilibrium position. This means that the atoms will move very fast and will collide with each other and the temperature of the system will increase very fast. This will lead to the atoms evaporation. The thermostat is used to prevent this from happening. The thermostat is used to slow down the atoms and make them move slower until they reach the equilibrium position and the temperature of the system is stable. 
+    
+    The Berendsen thremostate\cite{berendsen1984molecular} is the thermostat that we will use in our simulation. It's one of the most popular thermostats. It is a simple thermostat that is easy to implement. To maintain the temperature, the system is coupled to an external heat bath with fixed Temperature $T_{0}$. The
+    velocities of the particles are rescaled with a factor $\lambda$ at each time step:
+    \begin{equation}
+        \lambda = \sqrt{1+\frac{\Delta t}{\tau}\left(\frac{T_{0}}{T}-1\right)}
+    \end{equation}
+    where $\tau$ is the relaxation time of the thermostat, and $T$ is the temperature of the system. The relaxation time is the time it takes for the system to reach the target temperature. The relaxation time is an important parameter in the thermostat. If the relaxation time is too small, there will be a strong coupling between the system and the heat bath, this means that the system will reach the target temperature very fast, but the system will take longer time to reach to the minimum potential energy. And if the relaxation time is too big, there will be a weak coupling between the system and the heat bath, this means that the system will take a long time to reach the target temperature, and maybe in that time the atoms are evaporated already.
+    And in any case it needs to be bigger than the time step, otherwise the system will not reach the target temperature.
+
+
+\section{Neighbor list search}
+    The problem of using potential forces in molecular dynamics simulations is that the force is calculated between all pairs of atoms. This means that the computational cost of the simulation is proportional to $N^2$, where $N$ is the number of atoms in the system. This is a very big computational cost, and it is not very efficient.  
+
+    To solve this problem, we can use a neighbor list search\cite{arya1998optimal}. It's an algorithm that is used to speed up the calculation of the forces that act on the particles. 
+    It is based on the idea of only calculating the force between atoms that are close to each other. This means that we will only calculate the force between atoms that are in the same cell, and the neighboring cells. Therefor the computational cost of the simulation becomes proportional to $N$ instead of $N^2$. And this is a very big improvement in the computational cost of the simulation. 
+    
+    
+
+\section{Embedded-atom method potential force}
+    The embedded-atom method (EAM) potentials are  methods for calculating the forces between atoms. EAM can describe many different scenarios from the crystalline structure of unary metals or alloy, to amorphous alloys (metallic glasses) and melts. The EAM is based on the assumption that the energy of an impurity in a host crystal lattice is a functional of the overall electron density of the system (that leads to an attraction), plus some form of repulsion (i.e. due to Pauli exclusion). This can be written as:
+    \begin{equation}
+        E_{pot} = F[\rho(r)] + \phi
+    \end{equation}
+    where $F[\rho(r)]$ is the embedding function, and $\phi$ is the electron electron repulsion function. The embedding function is a function of the electron density of the system, and it is used to describe the interaction between the impurity and the host crystal lattice.
+    The electron electron repulsion function is a function of the distance between two electrons, and it is used to describe the repulsion between the electrons. And when we consider each individual atom in the system as an impurity in the host crystal lattice, then the embedding function is a function of the local electron density around the atom. The embedding function is given by the following equation:
+    \begin{equation}
+        F[\rho(r)] = \sum_{i} F(\rho_i) + 0.5\sum_{i,j} \phi(r_{ij})
+    \end{equation}
+
+    And the local electron density around the atom is given by the following equation:
+    \begin{equation}
+        \rho_i = \sum_{j} f(r_{ij})
+    \end{equation}
+    where $f(r_{ij})$ is the electron density function, and $r_{ij}$ is the distance between the atom $i$ and the atom $j$.
+
+    In this simulation, we will use the Gupta potential \cite{gupta1981lattice} as the embedding function, and use the default parameters of Cleri \& Rosato \cite{cleri1993tight} for gold.
+
+
+\section{Parallelization}
+    To scale and improve the performance of the simulation, we will use parallelization. The parallelization is used to divide the simulation into multiple parts (domain decomposition), and each part is calculated by a different processor. This means that the simulation will be calculated faster, and we can simulate even bigger systems in the same amount of time that we need to simulate serialized small systems.  
+
+    The parallelization is done by using MPI (Message Passing Interface) to communicate messages between the processors. MPI is a standard for message passing between processors and for the communication between the processors. It is used to send and receive messages between the processors in the simulation.
+    Periodic boundary conditions are used in the simulation. This means that the simulation is a periodic system, and the atoms that are at the edge of the simulation will appear at the other edge of the simulation. This means that the simulation is a closed system, and the atoms will not escape the simulation.

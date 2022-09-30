@@ -18,8 +18,8 @@ int main() {
 
     // Initialize atoms on a cubic lattice
     double lattice_constant = sigma * 0.8;
-    Atoms atoms = lattice(7, 6, 7, lattice_constant);
-    std::cout << "atoms: " << atoms.nb_atoms() << std::endl;
+    Atoms atoms = lattice(5, 4, 5, lattice_constant);
+    std::cout << "atoms.nb_atoms(): " << atoms.nb_atoms() << std::endl;
     Energy energy(atoms, epsilon, sigma, mass); // initialize energy class
 
     // Creating visualization file milestones/04/output
