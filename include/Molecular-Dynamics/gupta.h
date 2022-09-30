@@ -37,6 +37,20 @@
 double gupta(Atoms &atoms, const NeighborList &neighbor_list, double cutoff = 10.0, double A = 0.2061,
              double xi = 1.790, double p = 10.229, double q = 4.036, double re = 4.079 / sqrt(2));
 
+/**
+ * @brief  calculate the potential energy of a cluster
+ * 
+ * @param local_atoms_num the number of atoms in the rank
+ * @param atoms Atoms object
+ * @param neighbor_list NeighborList object
+ * @param cutoff cutoff distance
+ * @param A A parameter
+ * @param xi xi parameter
+ * @param p p parameter
+ * @param q q parameter
+ * @param re re parameter
+ * @return The current potential energy
+ */
 double
 gupta(int local_atoms_num, Atoms &atoms, const NeighborList &neighbor_list, double cutoff = 10.0, double A = 0.2061,
       double xi = 1.790, double p = 10.229, double q = 4.036, double re = 4.079 / sqrt(2));
