@@ -52,7 +52,7 @@
 \begin{figure}[!htb]
 \centering
     \includegraphics[scale=0.9]{simulation_time_vs_atoms_number.png}
-    \caption[Simulation time vs Atoms number]{\textbf{caption[Simulation time vs Atoms number using parameters: time\_step=1e-3, sigma=1, mass=1, epsilon=1, total\_time=5000, relaxation\_time\_start = 10* time\_step,then after reaching equilibrium, it increases to 50*time\_step.}}
+    \caption[Simulation time vs Atoms number]{\textbf{Simulation time vs Atoms number using parameters: time\_step=1e-3, sigma=1, mass=1, epsilon=1, total\_time=5000, relaxation\_time\_start = 10* time\_step,then after reaching equilibrium, it increases to 50*time\_step.}}
 \label{fig:simulation_time_vs_atoms_number}
 \end{figure}
 Here we notice that the simulation time increases quadratically with the number of atoms in the system. This is because in the energy update step in the LJ simulation we have to calculate the energy between all the pairs of atoms in the system. So the time complexity of the energy update step is $O(N^2)$ where $N$ is the number of atoms in the system. For example, In the figure above,The  simulation time for 100 atoms is 3.5s and for 200 atoms is 12.9s which is almost 4 times more than the simulation time for 100 atoms.
@@ -62,15 +62,49 @@ Here we notice that the simulation time increases quadratically with the number 
 \begin{figure}[!htb]
 \centering
     \includegraphics[scale=0.9]{simulation_time_vs_atoms_number.png}
-    \caption[Simulation time vs Atoms number]{\textbf{caption[Simulation time vs Atoms number using parameters: time\_step=1e-3, sigma=1, mass=1, epsilon=1, total\_time=5000, relaxation\_time\_start = 10* time\_step,then after reaching equilibrium, it increases to 50*time\_step, and cutoff\_radius = 1.5.}}
+    \caption[Simulation time vs Atoms number]{\textbf{Simulation time vs Atoms number using parameters: time\_step=1e-3, sigma=1, mass=1, epsilon=1, total\_time=5000, relaxation\_time\_start = 10* time\_step,then after reaching equilibrium, it increases to 50*time\_step, and cutoff\_radius = 1.5.}}
 \label{fig:simulation_time_vs_atoms_number}
 \end{figure}
 Here, it's very clear the linearity of the simulation time with the number of atoms in the system. By introducing the concept of just calculating the energy between the atoms that are close to each other, we have reduced the time complexity of the energy update step from $O(N^2)$ to $O(N)$ where $N$ is the number of atoms in the system. For example, In the figure above,The  simulation time for 100 atoms is 0.56s and for 200 atoms is 1.05s which is almost 2 times more than the simulation time for 100 atoms.
 
 \section{total energy vs temperature}
+\graphicspath{ {./figures/milestone07/} }
+\begin{figure}[!htb]
+\centering
+    \includegraphics[scale=0.35]{total_energy_vs_average_temp.png}
+    \caption[Total energy vs Temp]{\textbf{Total energy vs Temp using parameters: time\_step=10fs, mass=20405.7294, initial\_simulation\_time=10000, relaxation\_time\_start = 10* time\_step,then after 500 step, it increases to 1e10*time\_step, and cutoff\_radius = 10,target\_temp = 500, number\_experiments=26, experiment\_simulation\_time=500, added\_energy\_in\_each\_experiment=0.01*no\_atoms, cluster\_sizes=3:10, and atomic\_distance = 2.885 }}
+\label{fig:simulation_time_vs_atoms_number}
+\end{figure}
+
 \section{melting point versus cluster size}
+\graphicspath{ {./figures/milestone07/} }
+\begin{figure}[!htb]
+\centering
+    \includegraphics[scale=0.35]
+    {melting_point_vs_cluster_size.png}
+    \caption[Melting point vs cluster size]{\textbf{Melting point vs cluster size using parameters: time\_step=10fs, mass=20405.7294, initial\_simulation\_time=10000, relaxation\_time\_start = 10* time\_step,then after 500 step, it increases to 1e10*time\_step, and cutoff\_radius = 10,target\_temp = 500, number\_experiments=26, experiment\_simulation\_time=500, added\_energy\_in\_each\_experiment=0.01*no\_atoms, cluster\_sizes=3:10, and atomic\_distance = 2.885}}
+\label{fig:melting_point_vs_cluster_size}
+\end{figure}
+
 \section{heat capacity versus cluster size}
+\graphicspath{ {./figures/milestone07/} }
+\begin{figure}[!htb]
+\centering
+    \includegraphics[scale=0.35]{heat_capacity_vs_cluster_size.png}
+    \caption[Heat capacity vs cluster size]{\textbf{Heat capacity vs cluster size using parameters: time\_step=10fs, mass=20405.7294, initial\_simulation\_time=10000, relaxation\_time\_start = 10* time\_step,then after 500 step, it increases to 1e10*time\_step, and cutoff\_radius = 10,target\_temp = 500, number\_experiments=26, experiment\_simulation\_time=500, added\_energy\_in\_each\_experiment=0.01*no\_atoms, cluster\_sizes=3:10, and atomic\_distance = 2.885}}
+\label{fig:heat_capacity_vs_cluster_size}
+\end{figure}
+
 \section{latent heat versus cluster size}
+\graphicspath{ {./figures/milestone07/} }
+\begin{figure}[!htb]
+\centering
+    \includegraphics[scale=0.35]{latent_heat_vs_cluster_size.png}
+    \caption[Latent heat vs cluster size]{\textbf{Latent heat vs cluster size using parameters: time\_step=10fs, mass=20405.7294, initial\_simulation\_time=10000, relaxation\_time\_start = 10* time\_step,then after 500 step, it increases to 1e10*time\_step, and cutoff\_radius = 10,target\_temp = 500, number\_experiments=26, experiment\_simulation\_time=500, added\_energy\_in\_each\_experiment=0.01*no\_atoms, cluster\_sizes=3:10, and atomic\_distance = 2.885}}
+\label{fig:latent_heat_vs_cluster_size}
+\end{figure}
+
+
 \section{Energy conservation with MPI parallelization}
 % \section{Nanowire σ/ɛ}
 \section{Nanowire defects}
