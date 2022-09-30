@@ -1,6 +1,25 @@
 \chapter{Implementation}\label{chap:Implementation}
 
 \section{Velocity-Verlet integrator}
+
+    The velocity-Verlet algorithm consists of two steps: the first step is to calculate the new positions of the atoms, and the intermediate velocities, and the second step is to calculate the new velocities of the atoms. The first step is done by using the following equation:
+    \begin{equation}
+    \label{eq:verlet1}
+        \begin{aligned}
+        \vec{v}_{i+1}= \vec{v}_{i} + 0.5 F_{i} \Delta t / m_{i} \\
+        \vec{r}_{i+1} = \vec{r}_i + \vec{v}_i \Delta t
+        \end{aligned}
+    \end{equation}
+    And the second step is done by using the following equation:
+    \begin{equation}
+    \label{eq:verlet2}
+        \begin{aligned}
+        \vec{v}_{i+1}= \vec{v}_{i} + 0.5 F_{i} \Delta t / m_{i}
+        \end{aligned}
+    \end{equation}
+    where $F_{i}$ is the force on atom $i$, $\Delta t$ is the time step, $m_{i}$ is the mass of atom $i$, $\vec{v}_{i}$ is the velocity of atom $i$ and $\vec{r}_{i}$ is the position of atom $i$. 
+
+
     \subsection{Test strategy for Verlet integrator}
     We test the Verlet integrator by comparing the results of the Verlet integrator with the results of the analytical solution of the equations of motion of a particle. the analytical solution of the equations of motion of a particle is given by the following equations:
     \begin{equation}
@@ -23,12 +42,38 @@
     That means if we compare the result after all the integration steps of the two Verlet steps with the expected output of the analytical solution, then we can be sure that the Verlet integrator is working correctly.
 
 \section{Lennard-Jones potential force}
-    \subsection{Derivation of the analytical expression for the forces of the Lennard-Jones potential}
+    The implementation of the Lennard-Jones potential force is done by using the following steps:
+    \begin{enumerate}
+        \item Calculate the distance between all pairs of atoms.
+        \item Calculate the potential between all pairs of atoms using the Lennard-Jones potential:
+        \begin{equation}
+        \label{eq:LJ}
+            \begin{aligned}
+            V_{LJ} = 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^{6}\right]
+            \end{aligned}
+        \end{equation}
+        \item Calculate the force between all pairs of atoms using the following equation:
+        \begin{equation}
+        \label{eq:force}
+            \begin{aligned}
+            F_{LJ} = -\frac{\partial V_{LJ}}{\partial r} = \left[\frac{48 \epsilon \sigma^{12}}{r^{14}} - \frac{24 \epsilon \sigma^6}{r^{8}} \right] \vec{r}
+            \end{aligned}
+        \end{equation}
+    \end{enumerate}
+    where $\epsilon$ is the depth of the potential well, $\sigma$ is the distance at which the potential is zero, $r$ is the distance between the two atoms, and $\vec{r}$ is the vector between the two atoms.
 
 
-    
 \section{Berendsen thermostat}
-    talk a little bit about the Berendsen thermostat implementation
+    The Berendsen thermostat is implemented by using the following steps:
+    \begin{enumerate}
+        \item Calculate the temperature of the system.
+        \item Calculate the temperature ratio $\frac{T_0}{T}$.
+        \item Calculate the scaling factor $\sqrt{\frac{T_0}{T}}$.
+        \item Rescale the velocity of the particles in the system with the scaling factor.
+    \end{enumerate}
+    where $T$ is the temperature of the system, $T_0$ is the target temperature, and $\frac{T}{T_0}$ is the temperature ratio.
+
+
     \subsection{Test strategy for Berendsen thermostat}
     We have implemented two test cases for the Berendsen thermostat. The first test case is a test case where we test the Berendsen thermostat on a system with a single particle. The second test case is a test case where we test the Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12. The test cases are implemented in the file.
 
@@ -52,7 +97,21 @@
     \end{enumerate}
 
 
-
+\section{Neighbor List}
+    The neighbor list search is calculated by using the following steps:
+        \begin{enumerate}
+            \item Divide the simulation box into a grid of cells of size $cutoff$.
+            \item Sort all the particles into the cells.
+            \item Construct a neighbor list for each particle by looping over all the cells that are within a distance of $cutoff$ from the cell that the particle is in.
+            \item The $cutoff$ distance needs to be smaller than the cell size.
+            \item This $neighbor\_list$ is used to calculate the force between the particle and its neighbors.
+            \item Update the neighbor list in every time step.
+            \item Shift the potential energy by
+            \begin{equation}
+                4 \epsilon [\left(\frac{\sigma}{cutoff}\right)^{12} - \left(\frac{\sigma}{cutoff}\right)^{6}]
+                % 4 \epsilon [(\sigma/cutoff)^{12} - (\sigma/cutoff)^{6}]
+            \end{equation}
+        \end{enumerate}
 \section{Embedded atom method}
 
 
@@ -94,6 +153,5 @@
     \end{equation}
     And accordingly, we multiply all atoms masses by 103.642 to get a time step of 1 fs.
 
-\section{Neighbor List}
 
 \section{Parallelization using MPI}
