@@ -11,7 +11,7 @@ Also there exist two branches to run milestones 7 and 8 on the cluster (it start
 
 Milestone 08 (main branch) in here: [milestone 08](https://github.com/eslamsalahelsheikh/Molecular-Dynamics/blob/main/milestones/08/main.cpp) has the parallel version of the code, so you need to compile it with `mpic++` compiler. and to use the parallel version you need to run the code with `mpirun` command. While all other milestones can be compiled and run with `g++` compiler.
 
-## How to change the number of the simulation according the report:
+## How to change the parameters of the simulation according the report:
 
 ### Milestones 4, 5, and 6:
   - The parameters exist in the corresponding `main.cpp` file, you can change the parameters there, and make sure to change the directories as well.
