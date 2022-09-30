@@ -45,9 +45,6 @@
     % and read about it in the KOMA script documentation, https://www.ctan.org/pkg/koma-script
     \frontmatter  % roman page numbers
     \tableofcontents
-    \listoffigures
-    \listoftables
-    \listofalgorithms
     \hypersetup{pageanchor=true}  % re-enable hyperlinking
 
     \mainmatter  % Arabic page numbers
@@ -62,11 +59,11 @@
     %\input{todo_list}
 
     \bibliographystyle{ieeetr}
-    \bibliography{bib/topic1,bib/topic2}
+    \bibliography{References}
     % bibliography is not in the table of contents per default, add it manually
     % enable the \renewcommand for german header
     % \renewcommand{\bibname}{Literaturverzeichnis}
-    \addcontentsline{toc}{chapter}{Bibliography}
+    \addcontentsline{toc}{chapter}{References}
     \newpage
     \thispagestyle{empty}
     \mbox{}

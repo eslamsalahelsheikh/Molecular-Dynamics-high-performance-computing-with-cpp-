@@ -1,60 +1,98 @@
 \chapter{Implementation}\label{chap:Implementation}
 
 \section{Velocity-Verlet integrator}
-\subsection{Test strategy for Verlet integrator}
-We test the Verlet integrator by comparing the results of the Verlet integrator with the results of the analytical solution of the equations of motion of a particle. the analytical solution of the equations of motion of a particle is given by the following equations:
-\begin{equation}
-\label{eq:analytical}
-    \begin{aligned}
-    x_i(t+dt) &= x_i(t) + v_i(t)dt + \frac{1}{2m}f_i(t)dt^2 \\
-    v_i(t+dt) &= v_i(t) + \frac{1}{2m_i}(f_i(t)+f_i(t+dt))dt
-    \end{aligned}
-\end{equation}
-If we assume that the there is no acting forces (constant and equal to zero) on the particles, then the analytical solution of the equations of motion of a particle after N time steps is given by the following equations:
-\begin{equation}
-\label{eq:analytical2}
-    \begin{aligned}
-    x_i(t+N*dt) &= x_i(t) + \sum_{i=0}^{N}v_i(t)dt \\
-    v_i(t+N*dt) &= v_i(t)
-    \end{aligned}
-\end{equation}
-where $dt$ is the time step, $N$ is the number of time steps, $x_i(t)$ is the position of the particle $i$ at time $t$, $v_i(t)$ is the velocity of the particle $i$ at time $t$, $f_i(t)$ is the force acting on the particle $i$ at time $t$, and $m_i$ is the mass of the particle $i$.
+    \subsection{Test strategy for Verlet integrator}
+    We test the Verlet integrator by comparing the results of the Verlet integrator with the results of the analytical solution of the equations of motion of a particle. the analytical solution of the equations of motion of a particle is given by the following equations:
+    \begin{equation}
+    \label{eq:analytical}
+        \begin{aligned}
+        x_i(t+dt) &= x_i(t) + v_i(t)dt + \frac{1}{2m}f_i(t)dt^2 \\
+        v_i(t+dt) &= v_i(t) + \frac{1}{2m_i}(f_i(t)+f_i(t+dt))dt
+        \end{aligned}
+    \end{equation}
+    If we assume that the there is no acting forces (constant and equal to zero) on the particles, then the analytical solution of the equations of motion of a particle after N time steps is given by the following equations:
+    \begin{equation}
+    \label{eq:analytical2}
+        \begin{aligned}
+        x_i(t+N*dt) &= x_i(t) + \sum_{i=0}^{N}v_i(t)dt \\
+        v_i(t+N*dt) &= v_i(t)
+        \end{aligned}
+    \end{equation}
+    where $dt$ is the time step, $N$ is the number of time steps, $x_i(t)$ is the position of the particle $i$ at time $t$, $v_i(t)$ is the velocity of the particle $i$ at time $t$, $f_i(t)$ is the force acting on the particle $i$ at time $t$, and $m_i$ is the mass of the particle $i$.
 
-That means if we compare the result after all the integration steps of the two Verlet steps with the expected output of the analytical solution, then we can be sure that the Verlet integrator is working correctly.
+    That means if we compare the result after all the integration steps of the two Verlet steps with the expected output of the analytical solution, then we can be sure that the Verlet integrator is working correctly.
 
 \section{Lennard-Jones potential force}
-\subsection{Derivation of the analytical expression for the forces of the Lennard-Jones potential}
+    \subsection{Derivation of the analytical expression for the forces of the Lennard-Jones potential}
 
+
+    
 \section{Berendsen thermostat}
-talk a little bit about the Berendsen thermostat implementation
-\subsection{Test strategy for Berendsen thermostat}
-We have implemented two test cases for the Berendsen thermostat. The first test case is a test case where we test the Berendsen thermostat on a system with a single particle. The second test case is a test case where we test the Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12. The test cases are implemented in the file.
+    talk a little bit about the Berendsen thermostat implementation
+    \subsection{Test strategy for Berendsen thermostat}
+    We have implemented two test cases for the Berendsen thermostat. The first test case is a test case where we test the Berendsen thermostat on a system with a single particle. The second test case is a test case where we test the Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12. The test cases are implemented in the file.
 
-\subsubsection{Test case 1: Berendsen thermostat on a system with a single particle}
-Here, we make use of the derived equation in the lecture notes:
-\begin{equation}
-\label{eq:berendsen}
-    \begin{aligned}
-        T(t) = T_0 + (T_1-T_0)*{exp(-\frac{t}{\tau})}
-    \end{aligned}
-\end{equation}
-where $T(t)$ is the temperature of the system at time $t$, $T_1$ is the initial temperature of the system, $T_0$ is the target temperature of the system, and $\tau$ is relaxation time constant. and using this equation we can calculate the temperature of the system at every iteration $t$ before and after the thermostat, and then make sure that the temperature relaxes exponentially to the target temperature.
+    \subsubsection{Test case 1: Berendsen thermostat on a system with a single particle}
+    Here, we make use of the derived equation in the lecture notes:
+    \begin{equation}
+    \label{eq:berendsen}
+        \begin{aligned}
+            T(t) = T_0 + (T_1-T_0)*{exp(-\frac{t}{\tau})}
+        \end{aligned}
+    \end{equation}
+    where $T(t)$ is the temperature of the system at time $t$, $T_1$ is the initial temperature of the system, $T_0$ is the target temperature of the system, and $\tau$ is relaxation time constant. and using this equation we can calculate the temperature of the system at every iteration $t$ before and after the thermostat, and then make sure that the temperature relaxes exponentially to the target temperature.
 
-\subsubsection{Test case 2: Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12}
-This test is confirming if the temperature really converges to the target temperature after running the simulation for some time. So, the test is as follows:
-\begin{enumerate}
-    \item Create a cubic lattice of size 5x5x5 with lattice constant=1.12.
-    \item using time\_step=0.01 , target temperature=1.0, and relaxation time constant= 10* time\_step.
-    \item Run the simulation for 10000 time steps with the Berendsen thermostat.
-    \item In the last half of the simulation (5000 time steps), calculate the system temperature in every time step and make sure that the temperature converges to the target temperature.
-\end{enumerate}
+    \subsubsection{Test case 2: Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12}
+    This test is confirming if the temperature really converges to the target temperature after running the simulation for some time. So, the test is as follows:
+    \begin{enumerate}
+        \item Create a cubic lattice of size 5x5x5 with lattice constant=1.12.
+        \item using time\_step=0.01 , target temperature=1.0, and relaxation time constant= 10* time\_step.
+        \item Run the simulation for 10000 time steps with the Berendsen thermostat.
+        \item In the last half of the simulation (5000 time steps), calculate the system temperature in every time step and make sure that the temperature converges to the target temperature.
+    \end{enumerate}
 
 
 
 \section{Embedded atom method}
-\section{units and specification of the time unit}
-\subsection{time step for the gold potential}
 
+
+\section{Units and specification of the time unit}
+    To work with EAM potential, we need to convert the units of the system to the units of the EAM potential. So, typically in Molecular dynamics simulations, the energy and the length are constants. and here we use E = eV and L = Angstrom. Where
+    \begin{equation}
+    \label{eq:units}
+        \begin{aligned}
+            1 eV = 1.602176634 \times 10^{-19} J \\
+            1 Angstrom = 10^{-10} m
+        \end{aligned}
+    \end{equation}
+    and forces are typically calculated in units of eV/Angstrom, which is the natural force unit for this system of units.
+    To conclude, the units of the EAM potential used are:
+
+    \begin{itemize}
+        \item Energy: eV
+        \item Distance: Angstrom
+        \item Mass: amu
+        \item Temperature: K
+        \item Time: fs
+    \end{itemize}
+
+    \subsection{time step for the gold potential}
+    We have to fix either the mass unit or the time unit. And in this implementation we fixed the time unit of 1 fs for the gold potential. because using this time step is small enough to keep the energy conservation and also large enough to get to the melting point of gold in a reasonable time for clusters of layers from 3:12. To convert to a 1 fs time step we use the equation below: 
+    \begin{equation}
+    \label{eq:time_step}
+        \begin{aligned}
+            m = \frac{[E][t^2]}{[L^2]} = 1.66*10^{-29} kg
+        \end{aligned}
+    \end{equation}
+    where $m$ is the mass of the particle, $E$ is the energy unit, $t$ is the time unit, and $L$ is the length unit.
+    and the commonly used mass unit is amu, so we can convert the mass unit to amu using the following equation:
+    \begin{equation}
+    \label{eq:amu}
+        \begin{aligned}
+            m = 1.66*10^{-29} kg * 6.022*10^{23} kg/mol * 1000 = 0.009648 amu
+        \end{aligned}
+    \end{equation}
+    And accordingly, we multiply all atoms masses by 103.642 to get a time step of 1 fs.
 
 \section{Neighbor List}
 

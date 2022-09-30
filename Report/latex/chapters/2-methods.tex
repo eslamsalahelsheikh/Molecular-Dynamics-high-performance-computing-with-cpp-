@@ -1,63 +1,89 @@
 \chapter{Methods}\label{chap:Methods}
 
-Here we will discuss the different methods that we will use in our simulation.
+    Here we will discuss the different methods that we will use in our simulation, then in the next chapter we will discuss the implementation of these methods.
 
 \section{Velocity-Verlet integrator}
-The velocity-Verlet algorithm is a numerical method for solving the equations of motion of a system of particles. It is a symplectic integrator, which means that it conserves the total energy of the system. The algorithm is based on the Taylor expansion of the position and velocity of the particles. The algorithm is as follows:
-\begin{enumerate}
-    \item Calculate the acceleration of the particles at time $t$.
-    \item Calculate the velocity of the particles at time $t+\frac{1}{2}\Delta t$.
-    \item Calculate the position of the particles at time $t+\Delta t$.
-    \item Calculate the acceleration of the particles at time $t+\Delta t$.
-    \item Calculate the velocity of the particles at time $t+\Delta t$.
-\end{enumerate}
-
+    The velocity-Verlet algorithm is a numerical method based on the Taylor expansion of the position and velocity of the particles for solving the equations of motion of a system of particles. It is a symplectic integrator, which means that it conserves the total energy of the system that's because the velocity is calculated at the middle of the time step, and the position is calculated at the end of the time step. This means that the velocity is calculated at the same time as the acceleration, and the position is calculated at the same time as the velocity. This means that the total energy of the system is conserved. A disadvantage of the velocity-Verlet algorithm is that it is not very accurate. The error in the position is proportional to $\Delta t^2$, and the error in the velocity is proportional to $\Delta t$. This means that the velocity-Verlet algorithm is not very accurate for large time steps. The velocity-Verlet algorithm is given by the following equations:
+    \begin{enumerate}
+        \item Calculate the acceleration of the particles at time $t$.
+        \item Calculate the velocity of the particles at time $t+\frac{1}{2}\Delta t$.
+        \item Calculate the position of the particles at time $t+\Delta t$.
+        \item Calculate the acceleration of the particles at time $t+\Delta t$.
+        \item Calculate the velocity of the particles at time $t+\Delta t$.
+    \end{enumerate}
+    where $\Delta t$ is the time step. 
 
 \section{Lennard-Jones potential force}
-The Lennard-Jones potential is a potential that is used to model the interaction between atoms and molecules. It is a potential that is used in molecular dynamics simulations. LJ potential is a function of the distance between two particles. The LJ potential is given by the following equation:
-\begin{equation}
-    V(r) = 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
-\end{equation}
-where $\epsilon$ is the depth of the potential well, $\sigma$ is the distance at which the potential is zero, and $r$ is the distance between the two atoms. The force is given by the following equation:
-\begin{equation}
-    F(r) = -\frac{dV(r)}{dr} = 24\epsilon\left[\frac{2}{r}\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
-\end{equation}
-The force is calculated by using the following steps:
-\begin{enumerate}
-    \item Calculate the distance between all pairs of atoms.
-    \item Calculate the potential between all pairs of atoms.
-    \item Calculate the force between all pairs of atoms.
-\end{enumerate}
+    The Lennard-Jones potential is a potential that is used in molecular dynamics simulations to model the interatomic interactions between atoms and molecules. It models both the attractive and repulsive forces between atoms and molecules in a system in a simple way. It is a simple model because it only depends on the distance between the atoms and molecules. It is not a very accurate model though because it does not take into account the charge of the particles, and the different types of interactions between the particles. This potential is very popular to use in molecular dynamics simulations because it is simple to use, and it is computationally cheap. It can also be used to model different types of interactions between atoms and molecules, like the interaction between the electrons of an atom with the electrons of another atom, the interaction between the electrons of an atom with the nuclei of another atom, and the interaction between the nuclei of an atom with the nuclei of another atom.
+
+    The Lennard-Jones potential is given by:
+    \begin{equation}
+        U(r) = 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
+    \end{equation}
+    where $\epsilon$ is the depth of the potential well, and $\sigma$ is the distance at which the potential is at a minimum.
+    The force is given by the following equation:
+    \begin{equation}
+        F(r) = -\frac{dV(r)}{dr} = 24\epsilon\left[\frac{2}{r}\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]
+    \end{equation}
+    The force is calculated by using the following steps:
+    \begin{enumerate}
+        \item Calculate the distance between all pairs of atoms.
+        \item Calculate the potential between all pairs of atoms.
+        \item Calculate the force between all pairs of atoms.
+    \end{enumerate}
 
 \section{Thermostat}
-The thermostat is an algorithm that is used to preserve the atoms from evaporating. The idea is when we initialize the atoms in random positions, the atoms will try to get to the equilibrium position. This means that the atoms will move very fast and will collide with each other and the temperature of the system will increase very fast. This will lead to the atoms evaporation. The thermostat is used to prevent this from happening. The thermostat is used to slow down the atoms and make them move slower until they reach the equilibrium position and the temperature of the system is stable. The thermostat is based on the idea that the kinetic energy of the system is conserved. This means that if we change the velocity of the particles, then we must change the velocity of the other particles in the system in such a way that the total kinetic energy of the system is conserved. The algorithm is as follows:
+    The thermostat is an algorithm that is used to preserve the atoms from evaporating. The idea is when we initialize the atoms in random positions, the atoms will try to get to the equilibrium position. This means that the atoms will move very fast and will collide with each other and the temperature of the system will increase very fast. This will lead to the atoms evaporation. The thermostat is used to prevent this from happening. The thermostat is used to slow down the atoms and make them move slower until they reach the equilibrium position and the temperature of the system is stable. 
+    
+    The Berendsen thremostate is the thermostat that we will use in our simulation. It's one of the most popular thermostats. It is a simple thermostat that is easy to implement. To maintain the temperature, the system is coupled to an external heat bath with fixed Temperature $T_{0}$\cite{berendsen1984molecular}. The
+    velocities of the particles are rescaled with a factor $\lambda$ at each time step:
+    \begin{equation}
+        \lambda = \sqrt{1+\frac{\Delta t}{\tau}\left(\frac{T_{0}}{T}-1\right)}
+    \end{equation}
+    where $\tau$ is the relaxation time of the thermostat, and $T$ is the temperature of the system. The relaxation time is the time it takes for the system to reach the equilibrium temperature. The relaxation time is an important parameter in the thermostat. If the relaxation time is too small, there will be a strong coupling between the system and the heat bath, this means that the system will reach the equilibrium temperature very fast. And if the relaxation time is too big, there will be a weak coupling between the system and the heat bath, this means that the system will take a long time to reach the equilibrium temperature.
+    And in any case it needs to be bigger than the time step, otherwise the system will not reach the equilibrium temperature.
 
+    The algorithm is as follows:
+    \begin{enumerate}
+        \item Calculate the temperature of the system.
+        \item Calculate the temperature ratio $\frac{T_0}{T}$.
+        \item Calculate the scaling factor $\sqrt{\frac{T_0}{T}}$.
+        \item Rescale the velocity of the particles in the system with the scaling factor.
+    \end{enumerate}
+    where $T$ is the temperature of the system, $T_0$ is the target temperature, and $\frac{T}{T_0}$ is the temperature ratio.
 
-\section{Neighbor List}
-The neighbor list is an algorithm that is used to speed up the calculation of the forces that act on the particles. It is based on the idea that the forces between particles are only dependent on the distance between them. This means that if the distance between two particles is larger than a certain threshold value, then the force between them is zero. Therefore, we can calculate the forces between particles only if the distance between them is smaller than the threshold value. The algorithm is as follows:
-\begin{enumerate}
-    \item Calculate the distance between all particles.
-    \item If the distance between two particles is smaller than the threshold value, then calculate the force between them.
-    \item If the distance between two particles is larger than the threshold value, then do not calculate the force between them.
-\end{enumerate}
+\section{Neighbor list search}
+    The problem of using potential forces in molecular dynamics simulations is that the force is calculated between all pairs of atoms. This means that the computational cost of the simulation is proportional to $N^2$, where $N$ is the number of atoms in the system. This is a very big computational cost, and it is not very efficient. 
+    To solve this problem, we can use a neighbor list search. It's an algorithm that is used to speed up the calculation of the forces that act on the particles. 
+    It is based on the idea of only calculating the force between atoms that are close to each other. This means that we will only calculate the force between atoms that are in the same cell, and the neighboring cells. Therefor the computational cost of the simulation becomes proportional to $N$ instead of $N^2$. And this is a very big improvement in the computational cost of the simulation. 
+    
+    The neighbor list search is calculated by using the following steps:
+    \begin{enumerate}
+        \item Calculate the distance between all particles.
+        \item If the distance between two particles is smaller than the threshold value, then calculate the force between them.
+        \item If the distance between two particles is larger than the threshold value, then do not calculate the force between them.
+    \end{enumerate}
 
 \section{Embedded-atom method potential force}
-The embedded-atom method (EAM) is a method for calculating the forces between atoms. It is based on the idea that the forces between atoms are dependent on the density of the atoms. EAM is a potential force that is used in the simulation of metals, alloys, and intermetallic compounds. The EAM potential force is as follows:
+    The embedded-atom method (EAM) is a method for calculating the forces between atoms. It is based on the idea that the forces between atoms are dependent on the density of the atoms. EAM is a potential force that is used in the simulation of metals, alloys, and intermetallic compounds.
+    
+    
+    The EAM potential force is as follows:
 
 
 
 \section{Parallelization}
-The parallelization of the simulation is done using MPI. The algorithm is as follows:
-\begin{enumerate}
-    \item Initialize the MPI environment.
-    \item Get the number of processes.
-    \item Get the rank of the process.
-    \item Initialize the atoms.
-    \item Calculate the forces.
-    \item Calculate the total energy.
-    \item Calculate the total momentum.
-    \item Calculate the temperature.
-    \item Calculate the pressure.
-    \item Print the results.
-    \item Finalize the MPI environment.
-\end{enumerate}
+    The parallelization of the simulation is done using MPI. The algorithm is as follows:
+    \begin{enumerate}
+        \item Initialize the MPI environment.
+        \item Get the number of processes.
+        \item Get the rank of the process.
+        \item Initialize the atoms.
+        \item Calculate the forces.
+        \item Calculate the total energy.
+        \item Calculate the total momentum.
+        \item Calculate the temperature.
+        \item Calculate the pressure.
+        \item Print the results.
+        \item Finalize the MPI environment.
+    \end{enumerate}
