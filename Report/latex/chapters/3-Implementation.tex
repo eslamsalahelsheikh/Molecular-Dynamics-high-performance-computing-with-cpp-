@@ -26,7 +26,30 @@ That means if we compare the result after all the integration steps of the two V
 \subsection{Derivation of the analytical expression for the forces of the Lennard-Jones potential}
 
 \section{Berendsen thermostat}
+talk a little bit about the Berendsen thermostat implementation
 \subsection{Test strategy for Berendsen thermostat}
+We have implemented two test cases for the Berendsen thermostat. The first test case is a test case where we test the Berendsen thermostat on a system with a single particle. The second test case is a test case where we test the Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12. The test cases are implemented in the file.
+
+\subsubsection{Test case 1: Berendsen thermostat on a system with a single particle}
+Here, we make use of the derived equation in the lecture notes:
+\begin{equation}
+\label{eq:berendsen}
+    \begin{aligned}
+        T(t) = T_0 + (T_1-T_0)*{exp(-\frac{t}{\tau})}
+    \end{aligned}
+\end{equation}
+where $T(t)$ is the temperature of the system at time $t$, $T_1$ is the initial temperature of the system, $T_0$ is the target temperature of the system, and $\tau$ is relaxation time constant. and using this equation we can calculate the temperature of the system at every iteration $t$ before and after the thermostat, and then make sure that the temperature relaxes exponentially to the target temperature.
+
+\subsubsection{Test case 2: Berendsen thermostat on a cubic lattice of size 5x5x5 with lattice constant=1.12}
+This test is confirming if the temperature really converges to the target temperature after running the simulation for some time. So, the test is as follows:
+\begin{enumerate}
+    \item Create a cubic lattice of size 5x5x5 with lattice constant=1.12.
+    \item using time\_step=0.01 , target temperature=1.0, and relaxation time constant= 10* time\_step.
+    \item Run the simulation for 10000 time steps with the Berendsen thermostat.
+    \item In the last half of the simulation (5000 time steps), calculate the system temperature in every time step and make sure that the temperature converges to the target temperature.
+\end{enumerate}
+
+
 
 \section{Embedded atom method}
 \section{units and specification of the time unit}
