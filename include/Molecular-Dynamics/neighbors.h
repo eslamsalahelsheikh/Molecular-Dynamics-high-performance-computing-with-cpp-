@@ -30,7 +30,8 @@
 class NeighborList {
 public:
     NeighborList(double interaction_range);
-    NeighborList(){};
+
+    NeighborList() {};
 
     /*
      * Update neighbor list from the particle positons stores in the `atoms` argument
@@ -64,9 +65,11 @@ public:
         assert(i < seed_.size());
         return seed_(i + 1) - seed_(i);
     }
+
     double get_cutoff_radius() const {
         return interaction_range_;
     }
+
     class iterator : public std::iterator<
             std::input_iterator_tag,
             std::tuple<int, int>,    // value_type

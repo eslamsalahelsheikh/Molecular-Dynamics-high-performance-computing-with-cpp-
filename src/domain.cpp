@@ -158,7 +158,7 @@ Eigen::Index Domain::_exchange_atoms(Atoms &atoms, int dim) {
                                             atoms.velocities.row(2))};
 
     // Delete atoms that are send to left and right
-    for (int i{nb_local_-1}; i >= 0; --i) {
+    for (int i{nb_local_ - 1}; i >= 0; --i) {
         if (left_mask(i) || right_mask(i)) {
             // Delete this atom
             nb_local_--;
@@ -289,8 +289,8 @@ void Domain::update_ghosts(Atoms &atoms, double border_width) {
             auto nb_atoms_before_recv{atoms.nb_atoms()};
 
             // Send/receive ghost atoms.
-            auto[nb_recv_left, nb_recv_right]{
-                _update_ghosts(atoms, border_width, dim, left_start, left_len, right_start, right_len)};
+            auto [nb_recv_left, nb_recv_right]{
+                    _update_ghosts(atoms, border_width, dim, left_start, left_len, right_start, right_len)};
 
             // In the next iterations, we only consider ghosts that were just received. We only consider sending those
             // ghost received from the left to the right.

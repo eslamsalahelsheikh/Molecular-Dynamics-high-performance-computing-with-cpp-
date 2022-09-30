@@ -59,7 +59,7 @@ public:
      * Communicate atoms into the ghost buffers of neighboring cells.
      */
     void update_ghosts(Atoms &atoms, double border_width);
-    
+
     /*
      * Set new domain length and (affinely) rescale atom positions.
      */
@@ -123,7 +123,7 @@ protected:
      */
     Eigen::ArrayXi get_coordinates(const Eigen::Array3Xd &positions, int dim) {
         return (positions.row(dim) * (static_cast<double>(decomposition_(dim) / domain_length_(dim))))
-            .floor().cast<int>();
+                .floor().cast<int>();
     }
 
     /*

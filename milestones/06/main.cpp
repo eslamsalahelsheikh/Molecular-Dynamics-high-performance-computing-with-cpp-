@@ -40,10 +40,11 @@ int main() {
         // to preserve the temperature, we assume that the temperature is constant, and then we apply the Berendsen thermostat
         desired_temperature =
                 i == 0 ? energy.get_temperature() : desired_temperature;
-        if (abs(energy.get_total_energy() - old_total_energy) <= 0.01) { // reached equilibrium point, decrease coupling constant
+        if (abs(energy.get_total_energy() - old_total_energy) <=
+            0.01) { // reached equilibrium point, decrease coupling constant
             relaxation_time_multiplier = 50;
         }
-        relaxation_time =   relaxation_time_multiplier * time_step; // relaxation time
+        relaxation_time = relaxation_time_multiplier * time_step; // relaxation time
         energy.berendsen_thermostat(atoms, desired_temperature, time_step,
                                     relaxation_time);
     }

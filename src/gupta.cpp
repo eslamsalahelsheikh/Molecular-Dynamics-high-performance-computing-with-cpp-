@@ -45,7 +45,7 @@ double gupta(Atoms &atoms, const NeighborList &neighbor_list, double cutoff, dou
     // compute embedding energies
     Eigen::ArrayXd embedding(atoms.nb_atoms());  // contains first density, later energy
     embedding.setZero();
-    for (auto[i, j]: neighbor_list) {
+    for (auto [i, j]: neighbor_list) {
         if (i < j) {
             Eigen::Array3d distance_vector{atoms.positions.col(i) - atoms.positions.col(j)};
             double distance_sq{(distance_vector * distance_vector).sum()};
@@ -64,7 +64,7 @@ double gupta(Atoms &atoms, const NeighborList &neighbor_list, double cutoff, dou
     Eigen::ArrayXd energies{embedding};
 
     // compute forces
-    for (auto[i, j]: neighbor_list) {
+    for (auto [i, j]: neighbor_list) {
         if (i < j) {
             double d_embedding_density_i{0};
             // this is the derivative of sqrt(embedding)
@@ -109,7 +109,8 @@ double gupta(Atoms &atoms, const NeighborList &neighbor_list, double cutoff, dou
     return energies.sum();
 }
 
-double gupta(int local_atoms_num,Atoms &atoms, const NeighborList &neighbor_list, double cutoff, double A, double xi, double p, double q,
+double gupta(int local_atoms_num, Atoms &atoms, const NeighborList &neighbor_list, double cutoff, double A, double xi,
+             double p, double q,
              double re) {
     auto cutoff_sq{cutoff * cutoff};
     double xi_sq{xi * xi};
@@ -120,7 +121,7 @@ double gupta(int local_atoms_num,Atoms &atoms, const NeighborList &neighbor_list
     // compute embedding energies
     Eigen::ArrayXd embedding(atoms.nb_atoms());  // contains first density, later energy
     embedding.setZero();
-    for (auto[i, j]: neighbor_list) {
+    for (auto [i, j]: neighbor_list) {
         if (i < j) {
             Eigen::Array3d distance_vector{atoms.positions.col(i) - atoms.positions.col(j)};
             double distance_sq{(distance_vector * distance_vector).sum()};
@@ -139,7 +140,7 @@ double gupta(int local_atoms_num,Atoms &atoms, const NeighborList &neighbor_list
     Eigen::ArrayXd energies{embedding};
 
     // compute forces
-    for (auto[i, j]: neighbor_list) {
+    for (auto [i, j]: neighbor_list) {
         if (i < j) {
             double d_embedding_density_i{0};
             // this is the derivative of sqrt(embedding)
