@@ -60,20 +60,3 @@
     To scale and improve the performance of the simulation, we will use parallelization. The parallelization is used to divide the simulation into multiple parts (domain decomposition), and each part is calculated by a different processor. This means that the simulation will be calculated faster, and we can simulate even bigger systems for a longer time.  
     The parallelization is using MPI (Message Passing Interface) to communicate between the processors. MPI is a standard for message passing between processors and for the communication between the processors. It is used to send and receive messages between the processors in the simulation.
     Periodic boundary conditions are used in the simulation. This means that the simulation is a periodic system, and the atoms that are at the edge of the simulation will appear at the other edge of the simulation. This means that the simulation is a closed system, and the atoms will not escape the simulation.
-
-
-
-    The parallelization of the simulation is done using MPI. The algorithm is as follows:
-    \begin{enumerate}
-        \item Initialize the MPI environment.
-        \item Get the number of processes.
-        \item Get the rank of the process.
-        \item Initialize the atoms.
-        \item Calculate the forces.
-        \item Calculate the total energy.
-        \item Calculate the total momentum.
-        \item Calculate the temperature.
-        \item Calculate the pressure.
-        \item Print the results.
-        \item Finalize the MPI environment.
-    \end{enumerate}

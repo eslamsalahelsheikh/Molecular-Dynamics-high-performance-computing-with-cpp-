@@ -109,10 +109,22 @@
             \item Shift the potential energy by
             \begin{equation}
                 4 \epsilon [\left(\frac{\sigma}{cutoff}\right)^{12} - \left(\frac{\sigma}{cutoff}\right)^{6}]
-                % 4 \epsilon [(\sigma/cutoff)^{12} - (\sigma/cutoff)^{6}]
             \end{equation}
         \end{enumerate}
+
+
 \section{Embedded atom method}
+The used Gupta potential is following the steps:
+    \begin{enumerate}
+        \item For each pair of atoms in the neighbour list, calculate the density contribution of the pair.
+        \item Compute the embedding energies of the atoms.
+        \item Compute embedding contribution to the potential energy.
+        \item Compute the repulsive energy and its derivative with respect to the distance between the atoms.
+        \item Compute the derivative of the embedded energy contributions.
+        \item Compute the pair force.
+        \item Sum up the pair forces to get the total force on each atom.
+        \item Sum up the repulsive energies to get the total potential energy.
+        \end{enumerate}
 
 
 \section{Units and specification of the time unit}
@@ -155,3 +167,21 @@
 
 
 \section{Parallelization using MPI}
+The parallelization of the simulation is done using MPI. The algorithm is as follows:
+\begin{enumerate}
+    \item Initialize the MPI environment.
+    \item Get the number of processes.
+    \item Get the rank of the process.
+    \item Initialize the atoms.
+    \item Calculate the first verlet step to update the positions and velocities.
+    \item Exchange the atoms between the processes.
+    \item Update the ghost atoms and the neighbor list.
+    \item Calculate the forces.
+    \item Calculate the total energy.
+    \item Calculate the temperature.
+    \item Calculate the second verlet step to correct the velocities.
+    \item Do a Berendsen thermostat step.
+    \item To export result we have to gather the atoms from all processes to the root process and export the results then distribute the atoms again.
+    \item Keep looping until reaching the equilibrium state.
+    \item Finalize the MPI environment.
+\end{enumerate}
