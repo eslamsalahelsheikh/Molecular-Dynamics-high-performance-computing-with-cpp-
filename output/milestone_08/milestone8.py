@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 
 atoms_number=923
 
-plt.rcParams["figure.figsize"] = [7.00, 3.50]
+plt.rcParams["figure.figsize"] = [20.00, 13.50]
 plt.rcParams["figure.autolayout"] = True
 columns = ["cores","real","user","sys"]
 df = pd.read_csv(str(atoms_number)+"/equilibrium_on_923_atoms.csv", usecols=columns)

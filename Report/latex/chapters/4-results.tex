@@ -123,7 +123,7 @@ The setup for this section is as follows:
     Here, as the cluster size increases the heat capacity increases.
 
 \section{latent heat versus cluster size}
-The setup for this section is the same as the one used in the previous section.
+    The setup for this section is the same as the one used in the previous section.
     \graphicspath{ {./figures/milestone07/} }
     \begin{figure}[!htb]
     \centering
@@ -134,5 +134,34 @@ The setup for this section is the same as the one used in the previous section.
 
 
 \section{Energy conservation with MPI parallelization}
+    \subsection{Total energy versus Time steps}
+    The setup for this section is as follows:
+    \begin{itemize}
+        \item time\_step=1fs
+        \item mass=20405.7294 amu
+        \item simulation\_time=5000fs
+        \item relaxation\_time\_start = 10* time\_step,then after 2000 step, it increases to 1e10*time\_step
+        \item cutoff\_radius = 15 Angstrom
+        \item using cluster file of 923 atoms
+        \item Cores number = 1,2,4,8
+    \end{itemize}
+    \graphicspath{ {./figures/milestone08/} }
+        \begin{figure}[!htb]
+        \centering
+            \includegraphics[scale=0.35]{total_energy_vs_time_steps.png}
+            \caption{Total energy vs Time steps}
+        \end{figure}
+        Here, we can see that the total energy is still can be conserved even when we parallelize the code using MPI.
+
+    \subsection{Time to reach equilibrium vs Cores number}
+    The setup for this section is the same as the one used in the previous subsection for cores number 1:16.
+        \graphicspath{ {./figures/milestone08/} }
+        \begin{figure}[!htb]
+        \centering
+            \includegraphics[scale=0.35]{time_to_demonstrate_energy_conservation_vs_cores_number.png}
+            \caption{Time to reach equilibrium vs Cores number}
+        \end{figure}
+        Here, we can see that the time to reach equilibrium decreases as the number of cores increases. This is because the number of atoms that each core is responsible for decreases as the number of cores increases. So the time to calculate the energy between the atoms decreases as the number of cores increases. This is why the time to reach equilibrium decreases as the number of cores increases.
+
 % \section{Nanowire σ/ɛ}
 \section{Nanowire defects}
