@@ -60,7 +60,7 @@
     \end{figure}
 
 
-\section{simulation time as a function of the size (number of atoms) without neighbor list}
+\section{Simulation time as a function of the size (number of atoms) without neighbor list}
     The setup of the simulation is as follows:
     \begin{itemize}
         \item The simulation is run for 5000 time steps.
@@ -81,7 +81,7 @@
     \end{figure}
     Here we notice that the simulation time increases quadratically with the number of atoms in the system. This is because in the energy update step in the LJ simulation we have to calculate the energy between all the pairs of atoms in the system. So the time complexity of the energy update step is $O(N^2)$ where $N$ is the number of atoms in the system. For example, In the figure above,The  simulation time for 100 atoms is 3.5s and for 200 atoms is 12.9s which is almost 4 times more than the simulation time for 100 atoms.
 
-\section{simulation time as a function of the size (number of atoms) with neighbor list}
+\section{Simulation time as a function of the size (number of atoms) with neighbor list}
     The setup of this simulation is same as the previous section except that we are using the neighbor list to update the energy of the system with cuttoff radius of 1.5.
     \graphicspath{ {./figures/milestone06/} }
     \begin{figure}[!htb]
@@ -93,7 +93,7 @@
 
     Here, it's very clear the linearity of the simulation time with the number of atoms in the system. By introducing the concept of just calculating the energy between the atoms that are close to each other, we have reduced the time complexity of the energy update step from $O(N^2)$ to $O(N)$ where $N$ is the number of atoms in the system. For example, In the figure above,The  simulation time for 100 atoms is 0.56s and for 200 atoms is 1.05s which is almost 2 times more than the simulation time for 100 atoms.
 
-\section{total energy vs temperature}
+\section{Total energy vs temperature}
 The setup for this section is as follows:
     \begin{itemize}
         \item Time\_step=1fs
@@ -125,7 +125,7 @@ The setup for this section is as follows:
 
     Near the melting point we notice that Adding more energy to the system doesn't increase the total energy of the system anymore but instead it decreases the total energy of the system. This is because the atoms are not able to absorb the energy and the system is in equilibrium. So the atoms are vibrating around their equilibrium position and the energy is being transferred between the atoms and the total energy of the system decreases.
 
-\section{melting point versus cluster size}
+\section{Melting point versus cluster size}
     The setup for this section is the same as the one used in the previous section.
     \graphicspath{ {./figures/milestone07/} }
     \begin{figure}[!htb]
@@ -137,7 +137,7 @@ The setup for this section is as follows:
 
     Here, as the cluster size increases the melting point increases because to melt a bigger cluster of atoms we need to add more energy to the system. This is because the atoms in the bigger cluster are more tightly packed and they are more difficult to melt.
 
-\section{heat capacity versus cluster size}
+\section{Heat capacity versus cluster size}
     The setup for this section is the same as the one used in the previous section.
     \graphicspath{ {./figures/milestone07/} }
     \begin{figure}[!htb]
@@ -148,7 +148,7 @@ The setup for this section is as follows:
 
     Here, as the cluster size increases the heat capacity increases.
 
-\section{latent heat versus cluster size}
+\section{Latent heat versus cluster size}
     The setup for this section is the same as the one used in the previous section.
     \graphicspath{ {./figures/milestone07/} }
     \begin{figure}[!htb]
